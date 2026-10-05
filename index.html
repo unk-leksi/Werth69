@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Werth69 | Investments for a bright future</title>
+    <title>Werth69 | Investments for a brighter future</title>
 
     <link rel="icon" type="image/png" href="icons/logo.png">
     <link rel="apple-touch-icon" href="icons/logo.png">
@@ -91,6 +91,7 @@
             50%      { background-position: 5% 5%, 95% 95%, 50% 50%, 0 0; }
         }
 
+        /* ============ ТОПБАР ============ */
         .topbar {
             position: relative;
             display: flex;
@@ -99,18 +100,13 @@
             gap: 20px;
             padding: 16px 28px;
             background-color: rgba(10, 14, 8, 0.78);
-            background-image: url("icons/header-bg.png");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             border: none;
             z-index: 100;
             flex-shrink: 0;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
             overflow: hidden;
             animation: topbarSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+            isolation: isolate;
         }
 
         @keyframes topbarSlide {
@@ -126,6 +122,26 @@
             content: '';
             position: absolute;
             inset: 0;
+            background-image: url("icons/header-bg.png");
+            background-size: cover;
+            background-position: center right;
+            z-index: -2;
+            animation: bgZoom 30s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        @keyframes bgZoom {
+            0%   { transform: scale(1.00); }
+            50%  { transform: scale(1.03); }
+            100% { transform: scale(1.00); }
+        }
+
+        /* === Слой 1: затемнение (под лучами) === */
+        .topbar .topbar-shade {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
             background: linear-gradient(
                 90deg,
                 rgba(10, 14, 8, 0.88) 0%,
@@ -133,11 +149,9 @@
                 rgba(10, 14, 8, 0.55) 60%,
                 rgba(10, 14, 8, 0.88) 100%
             );
-            z-index: 0;
-            pointer-events: none;
         }
 
-        [data-theme="light"] .topbar::before {
+        [data-theme="light"] .topbar .topbar-shade {
             background: linear-gradient(
                 90deg,
                 rgba(20, 30, 15, 0.65) 0%,
@@ -147,11 +161,82 @@
             );
         }
 
+        /* === Слой 3: лучи (поверх затемнения) — смягчённые для тёмной темы === */
+        .topbar::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background-image:
+                linear-gradient(
+                    115deg,
+                    transparent 0%,
+                    transparent 30%,
+                    rgba(168, 255, 62, 0.35) 45%,
+                    rgba(220, 255, 180, 0.5) 50%,
+                    rgba(168, 255, 62, 0.35) 55%,
+                    transparent 70%,
+                    transparent 100%
+                ),
+                linear-gradient(
+                    115deg,
+                    transparent 0%,
+                    transparent 60%,
+                    rgba(124, 255, 43, 0.3) 75%,
+                    rgba(168, 255, 62, 0.4) 80%,
+                    transparent 95%
+                );
+            background-size: 220% 100%, 180% 100%;
+            background-repeat: no-repeat, no-repeat;
+            background-position: -100% 0, -80% 0;
+            animation: lightSweep 14s linear infinite;
+            mix-blend-mode: screen;
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .topbar .light-beam {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            background-image: linear-gradient(
+                115deg,
+                transparent 0%,
+                transparent 40%,
+                rgba(220, 255, 180, 0.3) 48%,
+                rgba(168, 255, 62, 0.45) 52%,
+                transparent 60%,
+                transparent 100%
+            );
+            background-size: 200% 100%;
+            background-position: -100% 0;
+            background-repeat: no-repeat;
+            mix-blend-mode: screen;
+            opacity: 0.6;
+            animation: lightSweep 14s linear infinite;
+            animation-delay: 7s;
+        }
+
+        @keyframes lightSweep {
+            0%   { background-position: -100% 0, -80% 0; }
+            100% { background-position: 220% 0, 200% 0; }
+        }
+
+        /* === Светлая тема: контрастный луч === */
+        [data-theme="light"] .topbar::after,
+        [data-theme="light"] .topbar .light-beam {
+            opacity: 0.9;
+            mix-blend-mode: screen;
+            filter: brightness(0.6) contrast(1.8) saturate(1.5);
+        }
+
+        /* === Слой 4: контент (поверх всего) === */
         .brand,
         .view-switch,
         .topbar-actions {
             position: relative;
-            z-index: 1;
+            z-index: 4;
         }
 
         .brand {
@@ -369,6 +454,7 @@
             transform: rotate(180deg) scale(0.9);
         }
 
+        /* ============ АРЕНА ============ */
         .arena {
             position: relative;
             flex: 1;
@@ -826,6 +912,9 @@
 <body>
 
     <header class="topbar">
+        <div class="topbar-shade"></div>
+        <div class="light-beam"></div>
+
         <div class="brand">
             <div class="brand-logo">
                 <img src="icons/logo.png" alt="Werth69"
