@@ -23,7 +23,6 @@
         :root,
         [data-theme="light"] {
             --bg-base:      #eef5e3;
-            --bg-topbar:    rgba(255, 255, 255, 0.85);
             --bg-card:      #ffffff;
             --bg-card-hover:#f6faee;
             --text:         #0f1a0a;
@@ -42,9 +41,8 @@
 
         [data-theme="dark"] {
             --bg-base:      #070b05;
-            --bg-topbar:    rgba(19, 24, 19, 0.85);
-            --bg-card:      #131813;
-            --bg-card-hover:#1a2117;
+            --bg-card:      #0e1409;
+            --bg-card-hover:#131a0d;
             --text:         #e8f5dd;
             --text-muted:   #8b9a7a;
             --text-invert:  #0a0e08;
@@ -98,7 +96,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            padding: 16px 28px;
+            padding: 14px 28px;
             background-color: rgba(10, 14, 8, 0.78);
             border: none;
             z-index: 100;
@@ -127,7 +125,6 @@
             background-position: center right;
             z-index: -2;
             animation: bgZoom 30s ease-in-out infinite alternate;
-            will-change: transform;
         }
 
         @keyframes bgZoom {
@@ -136,7 +133,6 @@
             100% { transform: scale(1.00); }
         }
 
-        /* === Слой 1: затемнение (под лучами) === */
         .topbar .topbar-shade {
             position: absolute;
             inset: 0;
@@ -161,34 +157,24 @@
             );
         }
 
-        /* === Слой 3: лучи (поверх затемнения) — смягчённые для тёмной темы === */
         .topbar::after {
             content: '';
             position: absolute;
             inset: 0;
             z-index: 3;
-            background-image:
-                linear-gradient(
-                    115deg,
-                    transparent 0%,
-                    transparent 30%,
-                    rgba(168, 255, 62, 0.35) 45%,
-                    rgba(220, 255, 180, 0.5) 50%,
-                    rgba(168, 255, 62, 0.35) 55%,
-                    transparent 70%,
-                    transparent 100%
-                ),
-                linear-gradient(
-                    115deg,
-                    transparent 0%,
-                    transparent 60%,
-                    rgba(124, 255, 43, 0.3) 75%,
-                    rgba(168, 255, 62, 0.4) 80%,
-                    transparent 95%
-                );
-            background-size: 220% 100%, 180% 100%;
-            background-repeat: no-repeat, no-repeat;
-            background-position: -100% 0, -80% 0;
+            background-image: linear-gradient(
+                115deg,
+                transparent 0%,
+                transparent 30%,
+                rgba(168, 255, 62, 0.35) 45%,
+                rgba(220, 255, 180, 0.5) 50%,
+                rgba(168, 255, 62, 0.35) 55%,
+                transparent 70%,
+                transparent 100%
+            );
+            background-size: 220% 100%;
+            background-repeat: no-repeat;
+            background-position: -100% 0;
             animation: lightSweep 14s linear infinite;
             mix-blend-mode: screen;
             pointer-events: none;
@@ -219,11 +205,10 @@
         }
 
         @keyframes lightSweep {
-            0%   { background-position: -100% 0, -80% 0; }
-            100% { background-position: 220% 0, 200% 0; }
+            0%   { background-position: -100% 0; }
+            100% { background-position: 220% 0; }
         }
 
-        /* === Светлая тема: контрастный луч === */
         [data-theme="light"] .topbar::after,
         [data-theme="light"] .topbar .light-beam {
             opacity: 0.9;
@@ -231,7 +216,6 @@
             filter: brightness(0.6) contrast(1.8) saturate(1.5);
         }
 
-        /* === Слой 4: контент (поверх всего) === */
         .brand,
         .view-switch,
         .topbar-actions {
@@ -247,8 +231,8 @@
         }
 
         .brand-logo {
-            width: 52px;
-            height: 52px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             overflow: hidden;
             display: flex;
@@ -286,7 +270,7 @@
 
         .brand-text h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #ffffff;
@@ -305,9 +289,9 @@
         }
 
         .brand-tagline {
-            margin: 3px 0 0;
-            font-size: 10.5px;
-            letter-spacing: 2px;
+            margin: 2px 0 0;
+            font-size: 10px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
             color: #d5e6c5;
             font-weight: 600;
@@ -329,7 +313,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 18px;
+            padding: 8px 16px;
             border: none;
             background: transparent;
             color: #d5e6c5;
@@ -340,46 +324,23 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
             white-space: nowrap;
-            position: relative;
-            overflow: hidden;
         }
 
         .view-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
             display: block;
             flex-shrink: 0;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .view-btn:hover svg {
-            transform: scale(1.15);
-        }
-
-        .view-btn:hover {
-            color: #ffffff;
-        }
+        .view-btn:hover svg { transform: scale(1.15); }
+        .view-btn:hover { color: #ffffff; }
 
         .view-btn.active {
             background: var(--accent);
             color: var(--text-invert);
             box-shadow: 0 0 14px var(--accent-glow);
-            animation: activeGlow 2.5s ease-in-out infinite;
-        }
-
-        @keyframes activeGlow {
-            0%, 100% { box-shadow: 0 0 14px var(--accent-glow); }
-            50%      { box-shadow: 0 0 22px var(--accent-glow), 0 0 32px var(--accent-glow); }
-        }
-
-        .view-btn.active svg {
-            animation: iconBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes iconBounce {
-            0%   { transform: scale(0.8); }
-            50%  { transform: scale(1.2); }
-            100% { transform: scale(1); }
         }
 
         .topbar-actions {
@@ -393,8 +354,8 @@
             background: rgba(0, 0, 0, 0.45);
             border: 1px solid rgba(168, 255, 62, 0.35);
             color: #ffffff;
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -402,14 +363,13 @@
             justify-content: center;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
         }
 
         .theme-toggle svg {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             display: block;
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -420,38 +380,15 @@
             transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .theme-toggle .icon-moon {
-            opacity: 1;
-            transform: rotate(0deg) scale(1);
-        }
-
-        .theme-toggle .icon-sun {
-            opacity: 0;
-            transform: rotate(-90deg) scale(0.5);
-        }
-
-        [data-theme="light"] .theme-toggle .icon-moon {
-            opacity: 0;
-            transform: rotate(90deg) scale(0.5);
-        }
-
-        [data-theme="light"] .theme-toggle .icon-sun {
-            opacity: 1;
-            transform: rotate(0deg) scale(1);
-        }
+        .theme-toggle .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+        .theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+        [data-theme="light"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+        [data-theme="light"] .theme-toggle .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
 
         .theme-toggle:hover {
             background: var(--accent);
             color: var(--text-invert);
             box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .theme-toggle:hover svg {
-            transform: rotate(25deg) scale(1.1);
-        }
-
-        .theme-toggle:active svg {
-            transform: rotate(180deg) scale(0.9);
         }
 
         /* ============ АРЕНА ============ */
@@ -461,43 +398,27 @@
             overflow: hidden;
         }
 
-        .arena::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120%;
-            height: 120%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 55%);
-            opacity: 0.12;
-            pointer-events: none;
-            z-index: 0;
-            animation: arenaPulse 8s ease-in-out infinite;
-        }
+        html[data-view="bubbles"] .list-view,
+        html[data-view="bubbles"] .crypto-view { display: none; }
+        html[data-view="list"]   .bubbles-view,
+        html[data-view="list"]   .crypto-view { display: none; }
+        html[data-view="crypto"] .bubbles-view,
+        html[data-view="crypto"] .list-view { display: none; }
 
-        @keyframes arenaPulse {
-            0%, 100% { opacity: 0.10; transform: translate(-50%, -50%) scale(1); }
-            50%      { opacity: 0.18; transform: translate(-50%, -50%) scale(1.05); }
-        }
-
-        html[data-view="bubbles"] .list-view { display: none; }
-        html[data-view="list"]   .bubbles-view { display: none; }
-
-        .bubbles-view {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            animation: viewFadeIn 0.5s ease both;
-        }
-
-        .list-view {
+        .bubbles-view, .list-view, .crypto-view {
             animation: viewFadeIn 0.5s ease both;
         }
 
         @keyframes viewFadeIn {
             from { opacity: 0; transform: translateY(12px); }
             to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ ПУЗЫРЬКИ ============ */
+        .bubbles-view {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
         }
 
         .bubble {
@@ -527,12 +448,6 @@
                 0 12px 32px rgba(0, 0, 0, 0.55);
             will-change: transform;
             z-index: 1;
-            animation: bubbleIdle 5s ease-in-out infinite;
-        }
-
-        @keyframes bubbleIdle {
-            0%, 100% { filter: brightness(1); }
-            50%      { filter: brightness(1.05); }
         }
 
         .bubble::before {
@@ -564,16 +479,14 @@
         }
 
         .bubble-icon svg {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             fill: #ffffff;
             display: block;
             filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.55));
         }
 
         .bubble-icon img {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: contain;
             display: block;
             filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
@@ -592,7 +505,6 @@
             z-index: 2;
             white-space: nowrap;
             padding: 0 6px;
-            transition: transform 0.3s ease;
         }
 
         .bubble:hover {
@@ -605,19 +517,7 @@
             z-index: 10;
         }
 
-        .bubble:hover .bubble-icon {
-            transform: scale(1.15) rotate(-5deg);
-        }
-
-        .bubble:hover .bubble-label {
-            transform: scale(1.08);
-        }
-
-        .bubble:active {
-            filter: brightness(0.92);
-            transform: scale(0.97);
-        }
-
+        /* ============ СПИСОК ============ */
         .list-view {
             position: absolute;
             inset: 0;
@@ -629,12 +529,6 @@
         .list-header {
             max-width: 900px;
             margin: 0 auto 28px;
-            animation: fadeSlideDown 0.6s ease both;
-        }
-
-        @keyframes fadeSlideDown {
-            from { opacity: 0; transform: translateY(-15px); }
-            to   { opacity: 1; transform: translateY(0); }
         }
 
         .list-header h2 {
@@ -647,7 +541,6 @@
         .list-header h2 span {
             color: var(--accent);
             text-shadow: 0 0 12px var(--accent-glow);
-            animation: accentPulse 3s ease-in-out infinite;
         }
 
         .list-header p {
@@ -676,27 +569,9 @@
             border-radius: 14px;
             text-decoration: none;
             color: var(--text);
-            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                        background 0.25s ease,
-                        border 0.25s ease,
-                        box-shadow 0.35s ease;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: inset 2px 0 0 0 rgba(255, 255, 255, 0.06);
-            isolation: isolate;
-            opacity: 0;
-            animation: cardAppear 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.05s; }
-        .card:nth-child(2) { animation-delay: 0.12s; }
-        .card:nth-child(3) { animation-delay: 0.19s; }
-        .card:nth-child(4) { animation-delay: 0.26s; }
-        .card:nth-child(5) { animation-delay: 0.33s; }
-
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(20px) scale(0.98); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .card-pattern {
@@ -707,8 +582,6 @@
             z-index: 0;
             background-repeat: repeat;
             background-size: 90px 90px;
-            background-position: 0 0;
-            transition: opacity 0.4s ease, transform 0.8s ease;
             mix-blend-mode: multiply;
         }
 
@@ -717,41 +590,11 @@
             mix-blend-mode: screen;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, var(--card-glow) 0%, transparent 55%);
-            opacity: 0;
-            transition: opacity 0.35s ease;
-            pointer-events: none;
-            z-index: 0;
-        }
-
         .card:hover {
             transform: translateX(8px) scale(1.005);
             background: var(--bg-card-hover);
             border-left-width: 6px;
-            box-shadow:
-                0 10px 32px var(--card-glow),
-                inset 2px 0 0 0 var(--card-color);
-        }
-
-        .card:hover .card-pattern {
-            opacity: 0.24;
-            transform: scale(1.08) rotate(2deg);
-        }
-
-        [data-theme="dark"] .card:hover .card-pattern {
-            opacity: 0.30;
-        }
-
-        .card:hover::before {
-            opacity: 0.5;
-        }
-
-        .card:active {
-            transform: translateX(4px) scale(0.995);
+            box-shadow: 0 10px 32px var(--card-glow);
         }
 
         .card-icon {
@@ -768,19 +611,9 @@
                 var(--card-color) 60%,
                 var(--card-dark) 100%
             );
-            box-shadow:
-                inset 0 0 0 2px rgba(255, 255, 255, 0.25),
-                0 4px 16px var(--card-glow);
+            box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25), 0 4px 16px var(--card-glow);
             position: relative;
             z-index: 2;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-        }
-
-        .card:hover .card-icon {
-            transform: scale(1.08) rotate(-6deg);
-            box-shadow:
-                inset 0 0 0 2px rgba(255, 255, 255, 0.4),
-                0 6px 24px var(--card-glow);
         }
 
         .card-icon-inner {
@@ -791,21 +624,8 @@
             justify-content: center;
         }
 
-        .card-icon svg {
-            width: 100%;
-            height: 100%;
-            fill: #ffffff;
-            display: block;
-            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-        }
-
-        .card-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-        }
+        .card-icon svg { width: 100%; height: 100%; fill: #ffffff; display: block; }
+        .card-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
         .card-body {
             flex: 1;
@@ -819,7 +639,6 @@
             font-size: 17px;
             font-weight: 800;
             color: var(--text);
-            transition: color 0.25s ease;
         }
 
         .card-desc {
@@ -845,17 +664,12 @@
             position: relative;
             z-index: 2;
             border: 1.5px solid var(--card-light);
-            text-shadow: 0 0 6px var(--card-glow);
         }
 
         .card:hover .card-arrow {
             background: var(--card-color);
             color: #ffffff;
-            border-color: var(--card-light);
             transform: translateX(6px) scale(1.12);
-            box-shadow:
-                0 0 20px var(--card-glow),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.3);
         }
 
         .hint {
@@ -864,15 +678,13 @@
             left: 50%;
             transform: translateX(-50%);
             padding: 11px 22px;
-            background: var(--bg-topbar);
+            background: rgba(19, 24, 19, 0.9);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border);
             border-radius: 999px;
             font-size: 13px;
             color: var(--text-muted);
             font-weight: 600;
-            letter-spacing: 0.5px;
             z-index: 50;
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
             pointer-events: none;
@@ -884,19 +696,429 @@
             50%      { opacity: 1;    transform: translateX(-50%) translateY(-3px); }
         }
 
-        html[data-view="list"] .hint {
+        html[data-view="list"] .hint,
+        html[data-view="crypto"] .hint { display: none; }
+
+        /* ============================================================
+           КРИПТОКОНЦЕПЦИИ
+           ============================================================ */
+        .crypto-view {
+            position: absolute;
+            inset: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 1;
+            padding: 20px 0 60px;
+        }
+
+        .crypto-stage {
+            position: relative;
+            max-width: 1500px;
+            margin: 0 auto;
+            width: 100%;
+            height: 1150px;
+        }
+
+        .crypto-stage::before,
+        .crypto-stage::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px solid rgba(168, 255, 62, 0.18);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .crypto-stage::before {
+            width: 1000px;
+            height: 1000px;
+        }
+
+        .crypto-stage::after {
+            width: 700px;
+            height: 700px;
+            border-color: rgba(168, 255, 62, 0.12);
+        }
+
+        /* ========== Центральный Bitcoin ========== */
+        .crypto-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .crypto-center-glow {
+            position: absolute;
+            inset: -60%;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(247, 147, 26, 0.50) 0%,
+                rgba(247, 147, 26, 0.15) 40%,
+                transparent 70%);
+            animation: cryptoPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes cryptoPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50%      { transform: scale(1.15); opacity: 1; }
+        }
+
+        .crypto-center-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 60px rgba(247, 147, 26, 0.85));
+            position: relative;
+            z-index: 2;
+            animation: cryptoFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cryptoFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50%      { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .crypto-center-fallback {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #FFD54D 0%, #F7931A 50%, #B86A00 100%);
+            color: #ffffff;
+            font-size: 140px;
+            font-weight: 900;
             display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 80px rgba(247, 147, 26, 0.8),
+                inset 0 0 50px rgba(0, 0, 0, 0.35);
+            font-family: 'Georgia', serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ============================================================
+           9 КАРТОЧЕК — крупные и читаемые
+           ============================================================ */
+        .crypto-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 250px;
+            margin-left: -150px;
+            margin-top: -125px;
+
+            --angle: 0deg;
+            --radius: 400px;
+
+            transform:
+                rotate(var(--angle))
+                translate(0, calc(-1 * var(--radius)))
+                rotate(calc(-1 * var(--angle)));
+
+            transform-origin: 50% 50%;
+
+            background: rgba(10, 14, 8, 0.96);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(168, 255, 62, 0.22);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+            z-index: 3;
+            text-decoration: none;
+            color: var(--text);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+            opacity: 0;
+            animation: cryptoCardIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        [data-theme="light"] .crypto-card {
+            background: rgba(15, 20, 12, 0.94);
+            border-color: rgba(124, 255, 43, 0.30);
+        }
+
+        @keyframes cryptoCardIn {
+            from { opacity: 0; transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) scale(0.85); }
+            to   { opacity: 1; transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) scale(1); }
+        }
+
+        .crypto-card:hover {
+            transform:
+                rotate(var(--angle))
+                translate(0, calc(-1 * var(--radius)))
+                rotate(calc(-1 * var(--angle)))
+                scale(1.05);
+            border-color: var(--accent);
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.7),
+                0 0 40px var(--accent-glow);
+            z-index: 20;
+        }
+
+        .crypto-card-1 { --angle: 0deg;   animation-delay: 0.05s; }
+        .crypto-card-2 { --angle: 40deg;  animation-delay: 0.10s; }
+        .crypto-card-3 { --angle: 80deg;  animation-delay: 0.15s; }
+        .crypto-card-4 { --angle: 120deg; animation-delay: 0.20s; }
+        .crypto-card-5 { --angle: 160deg; animation-delay: 0.25s; }
+        .crypto-card-6 { --angle: 200deg; animation-delay: 0.30s; }
+        .crypto-card-7 { --angle: 240deg; animation-delay: 0.35s; }
+        .crypto-card-8 { --angle: 280deg; animation-delay: 0.40s; }
+        .crypto-card-9 { --angle: 320deg; animation-delay: 0.45s; }
+
+        /* -------- Картинка карточки -------- */
+        .crypto-card-image {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .crypto-card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.75) 100%);
+            pointer-events: none;
+        }
+
+        .crypto-card-tag {
+            position: absolute;
+            top: 12px;
+            left: 14px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+            z-index: 2;
+            padding: 4px 10px;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 8px;
+            backdrop-filter: blur(6px);
+        }
+
+        .crypto-card-emoji {
+            font-size: 46px;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+            position: relative;
+            z-index: 1;
+        }
+
+        /* -------- Тело карточки -------- */
+        .crypto-card-body {
+            padding: 14px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .crypto-card-body h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+
+        .crypto-card-body p {
+            margin: 0;
+            font-size: 12px;
+            color: #b8c9a8;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* ============ АКТУАЛЬНЫЕ АКТИВЫ ============ */
+        .crypto-assets {
+            max-width: 1300px;
+            margin: 20px auto 0;
+            padding: 0 40px;
+        }
+
+        .crypto-assets h2 {
+            margin: 0 0 20px;
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--text);
+            letter-spacing: -0.4px;
+        }
+
+        .crypto-assets-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .crypto-asset-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: 14px;
+            transition: all 0.25s ease;
+        }
+
+        .crypto-asset-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px var(--accent-glow);
+            transform: translateY(-3px);
+        }
+
+        .crypto-asset-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .crypto-asset-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            flex-shrink: 0;
+            border: 1px solid;
+        }
+
+        .crypto-asset-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .crypto-asset-info strong {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .crypto-asset-price {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .crypto-asset-sparkline {
+            width: 100%;
+            height: 36px;
+        }
+
+        .crypto-asset-sparkline svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .crypto-asset-change {
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .crypto-asset-change.up { color: #16a34a; }
+        .crypto-asset-change.down { color: #dc2626; }
+
+        /* ============ АДАПТИВ ============ */
+        @media (max-width: 1400px) {
+            .crypto-card {
+                --radius: 350px;
+                width: 270px;
+                height: 230px;
+                margin-left: -135px;
+                margin-top: -115px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .crypto-card {
+                --radius: 300px;
+                width: 240px;
+                height: 210px;
+                margin-left: -120px;
+                margin-top: -105px;
+            }
+            .crypto-card-body h3 { font-size: 14px; }
+            .crypto-card-body p { font-size: 11px; }
+        }
+
+        @media (max-width: 1000px) {
+            .crypto-stage {
+                height: auto;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+                padding: 20px;
+            }
+            .crypto-stage::before,
+            .crypto-stage::after { display: none; }
+            .crypto-center {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                grid-column: 1 / -1;
+                margin: 20px auto;
+                width: 180px;
+                height: 180px;
+            }
+            .crypto-card {
+                position: relative;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+                margin: 0 !important;
+                width: 100%;
+                height: auto;
+                opacity: 1;
+                animation: none;
+            }
+            .crypto-card:hover {
+                transform: translateY(-5px) scale(1.02) !important;
+            }
+            .crypto-assets-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 780px) {
             .topbar { padding: 12px 16px; gap: 8px; flex-wrap: wrap; }
-            .brand-logo { width: 42px; height: 42px; }
-            .brand-text h1 { font-size: 20px; }
+            .brand-logo { width: 40px; height: 40px; }
+            .brand-text h1 { font-size: 18px; }
             .brand-tagline { display: none; }
-            .view-btn { padding: 6px 12px; font-size: 11.5px; }
-            .view-btn svg { width: 16px; height: 16px; }
-            .theme-toggle { width: 40px; height: 40px; }
-            .theme-toggle svg { width: 20px; height: 20px; }
+            .view-btn { padding: 6px 10px; font-size: 11px; }
+            .view-btn svg { width: 14px; height: 14px; }
+            .theme-toggle { width: 38px; height: 38px; }
             .bubble-label { font-size: 12px; }
             .list-view { padding: 20px 16px 40px; }
             .list-header h2 { font-size: 22px; }
@@ -904,8 +1126,19 @@
             .card-icon { width: 52px; height: 52px; }
             .card-title { font-size: 15px; }
             .card-desc { font-size: 12.5px; }
-            .card-arrow { width: 32px; height: 32px; font-size: 15px; }
-            .card-pattern { background-size: 70px 70px; }
+
+            .crypto-stage {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+            .crypto-assets { padding: 0 16px; margin-top: 30px; }
+            .crypto-assets-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .crypto-assets-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -947,15 +1180,19 @@
                 </svg>
                 Список
             </button>
+            <button class="view-btn" data-view="crypto">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity="0.15"/>
+                    <path d="M9 8h4.5a2 2 0 0 1 0 4H9m0 0h5a2 2 0 0 1 0 4H9m0 0V6"/>
+                </svg>
+                Криптоконцепции
+            </button>
         </div>
 
         <div class="topbar-actions">
             <button id="theme-toggle" class="theme-toggle" title="Переключить тему">
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" fill-opacity="0.25"/>
-                    <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/>
-                    <circle cx="14" cy="8" r="0.8" fill="currentColor" stroke="none"/>
-                    <circle cx="12" cy="14" r="1.2" fill="currentColor" stroke="none"/>
                 </svg>
                 <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="4.5" fill="currentColor" fill-opacity="0.25"/>
@@ -984,18 +1221,21 @@
             <div class="cards" id="cards"></div>
         </div>
 
+        <div class="crypto-view" id="crypto-view"></div>
+
         <div class="hint">Наведи — подсветится · Кликни — откроется</div>
     </div>
 
     <script>
+        /* ============================================================
+           ПЛАТФОРМЫ (для пузырьков и списка)
+           ============================================================ */
         const PLATFORMS = [
             {
                 label: 'Binance',
                 url: 'https://www.binanceuz.co/register?ref=WERTH69',
                 description: 'Крупнейшая криптобиржа: покупка, продажа, стейкинг и торговля криптовалютами.',
-                color: '#F0B90B',
-                light: '#FFD84D',
-                dark:  '#A67C00',
+                color: '#F0B90B', light: '#FFD84D', dark: '#A67C00',
                 pattern: `<svg viewBox="0 0 24 24"><path d="M12 2 8 6l4 4 4-4-4-4zM2 12l4 4 4-4-4-4-4 4zm10 0 4 4 4-4-4-4-4 4zm-10 6 4 4 4-4-4-4-4 4zm10 0 4 4 4-4-4-4-4 4z"/></svg>`,
                 icon: `<img src="icons/binance.png" alt="Binance" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">`,
                 fallback: `<svg viewBox="0 0 24 24" style="display:none"><path d="M12 2 8 6l4 4 4-4-4-4zM2 12l4 4 4-4-4-4-4 4zm10 0 4 4 4-4-4-4-4 4zm-10 6 4 4 4-4-4-4-4 4zm10 0 4 4 4-4-4-4-4 4z"/></svg>`
@@ -1004,9 +1244,7 @@
                 label: 'GoInvest',
                 url: 'https://play.google.com/store/apps/details?id=org.uicgroup.goinvest',
                 description: 'Покупка акций и облигаций Узбекистана. Инвестиции в ценные бумаги через мобильное приложение.',
-                color: '#FFD400',
-                light: '#FFE766',
-                dark:  '#B39500',
+                color: '#FFD400', light: '#FFE766', dark: '#B39500',
                 pattern: `<svg viewBox="0 0 24 24"><path d="M3 20h18v-2H5V4H3v16zm4-3h2v-5H7v5zm4 0h2v-8h-2v8zm4 0h2V6h-2v11z"/></svg>`,
                 icon: `<img src="icons/goinvest.png" alt="GoInvest" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">`,
                 fallback: `<svg viewBox="0 0 24 24" style="display:none"><path d="M3 20h18v-2H5V4H3v16zm4-3h2v-5H7v5zm4 0h2v-8h-2v8zm4 0h2V6h-2v11z"/></svg>`
@@ -1015,9 +1253,7 @@
                 label: 'LinkedIn',
                 url: 'https://www.linkedin.com/in/%D0%BA%D0%BE%D0%BD%D1%81%D1%82%D0%B0%D0%BD%D1%82%D0%B8%D0%BD-%D1%87%D0%B8%D0%BA%D0%B8%D1%80%D0%BE%D0%B2-b16032189/',
                 description: 'Социальная сеть для профессионалов. Новости рынка, деловые контакты и экспертные мнения.',
-                color: '#0A66C2',
-                light: '#4A90D9',
-                dark:  '#053F7A',
+                color: '#0A66C2', light: '#4A90D9', dark: '#053F7A',
                 pattern: `<svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>`,
                 icon: `<img src="icons/linkedin.png" alt="LinkedIn" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">`,
                 fallback: `<svg viewBox="0 0 24 24" style="display:none"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.44-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>`
@@ -1026,9 +1262,7 @@
                 label: 'Telegram',
                 url: 'https://t.me/werth_69',
                 description: 'Канал с обучающим контентом: разборы сделок, аналитика и полезные материалы по инвестициям.',
-                color: '#0088CC',
-                light: '#33AAEE',
-                dark:  '#005A88',
+                color: '#0088CC', light: '#33AAEE', dark: '#005A88',
                 pattern: `<svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>`,
                 icon: `<img src="icons/telegram.png" alt="Telegram" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">`,
                 fallback: `<svg viewBox="0 0 24 24" style="display:none"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>`
@@ -1037,13 +1271,128 @@
                 label: 'TradingView',
                 url: 'https://ru.tradingview.com/pricing/?share_your_love=cikirovkonstantin',
                 description: 'Анализ графиков, идеи по рынку и технический анализ акций, криптовалют и других активов.',
-                color: '#131722',
-                light: '#5A6A9A',
-                dark:  '#05070D',
+                color: '#131722', light: '#5A6A9A', dark: '#05070D',
                 pattern: `<svg viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zM5 13h2v5H5v-5zm4-3h2v8H9v-8zm4-3h2v11h-2V7zm4-4h2v15h-2V3z"/></svg>`,
                 icon: `<img src="icons/tradingview.png" alt="TradingView" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">`,
                 fallback: `<svg viewBox="0 0 24 24" style="display:none"><path d="M3 21h18v-2H3v2zM5 13h2v5H5v-5zm4-3h2v8H9v-8zm4-3h2v11h-2V7zm4-4h2v15h-2V3z"/></svg>`
             },
+        ];
+
+        /* ============================================================
+           9 ПОСТОВ — с эмодзи-иконкой, без смайлов в тексте
+           ============================================================ */
+        const CRYPTO_POSTS = [
+            {
+                tag: '#Биткоин',
+                title: 'Что такое Блокчейн?',
+                excerpt: `Блокчейн — это распределенный цифровой реестр, который фиксирует транзакции в сети компьютеров. В отличие от традиционного банковского реестра, блокчейн децентрализован, то есть поддерживается несколькими пользователями, а не центральным органом.
+
+Данные хранятся в «блоках», которые связаны друг с другом в хронологическую «цепь». После записи данных в блокчейн изменить их чрезвычайно сложно. Это обеспечивает прозрачность системы и ее защиту от несанкционированного вмешательства.`,
+                image: 'icons/picture_1.jpg',
+                emoji: '₿',
+                color: '#F7931A',
+            },
+            {
+                tag: '#Инвестиции',
+                title: 'Что такое децентрализация?',
+                excerpt: `Децентрализация — это переход управления и полномочий по принятию решений от централизованного субъекта (отдельного лица, организации или группы) к распределенной сети.
+
+В сфере криптовалют децентрализация помогает решить проблему доверия и повысить безопасность. Например, Bitcoin дает возможность совершать одноранговые транзакции без посредников, таких как банки. Однако существуют разные уровни децентрализации: одни сети более децентрализованы, чем другие.`,
+                image: 'icons/picture_2.jpg',
+                emoji: '📈',
+                color: '#16a34a',
+            },
+            {
+                tag: '#Аналитика',
+                title: 'Что такое смарт-контракты?',
+                excerpt: `Смарт-контракты — это самоисполняющиеся контракты, условия которых прописаны в коде. Наиболее популярные смарт-контракты работают на высокопрограммируемых блокчейнах, например Ethereum, BNB Chain и Solana.
+
+Смарт-контракт работает как торговый автомат: вы кладете нужную сумму, выбираете продукт — и автомат сам выдает вам товар. Никакой продавец не нужен. Благодаря такой автоматизации можно создавать любые децентрализованные приложения (DApps) и исключить необходимость в посредниках во многих процессах.`,
+                image: 'icons/picture_3.jpg',
+                emoji: '📊',
+                color: '#0A66C2',
+            },
+            {
+                tag: '#Технологии',
+                title: 'Механизмы консенсуса',
+                excerpt: `Proof of Work (PoW) и Proof of Stake (PoS) — это два наиболее распространенных механизма консенсуса, используемых для защиты блокчейнов и подтверждения транзакций.
+
+Proof of Work (PoW): используется в Bitcoin. Здесь майнерам нужно с помощью мощного оборудования решать сложные математические задачи. Этот процесс потребляет много энергии, но обеспечивает высокий уровень безопасности.
+
+Proof of Stake (PoS): используется в Ethereum (начиная с The Merge). Здесь безопасность сети обеспечивают валидаторы, которые «размещают в стейкинге» (блокируют) криптовалюту. PoS намного экономичнее по энергии, чем PoW.`,
+                image: 'icons/picture_4.jpg',
+                emoji: '🔗',
+                color: '#627EEA',
+            },
+            {
+                tag: '#Портфель',
+                title: 'Децентрализованные финансы (DeFi)',
+                excerpt: `DeFi — это экосистема финансовых приложений, созданных на блокчейне. Цель DeFi — создать открытую, общедоступную и прозрачную финансовую систему с открытым кодом, которая работает без какого-либо центрального органа.
+
+В DeFi можно давать в долг, брать займы и обмениваться активами — напрямую с другими пользователями или через смарт-контракты. Никаких банков и посредников.`,
+                image: 'icons/picture_5.jpg',
+                emoji: '💼',
+                color: '#9945FF',
+            },
+            {
+                tag: '#Новости',
+                title: 'Токеномика',
+                excerpt: `Токеномика (сочетание слов «токен» и «экономика») — это экономическая структура криптовалюты, NFT или любого другого цифрового актива. Она связана с характеристиками спроса и предложения токена.
+
+К ключевым аспектам токеномики относятся: общее предложение, количество в обращении, полезность и распределение токенов между командой, инвесторами и сообществом.
+
+Понимание токеномики помогает инвесторам оценить устойчивость проекта в долгосрочной перспективе.`,
+                image: 'icons/picture_6.jpg',
+                emoji: '📰',
+                color: '#dc2626',
+            },
+            {
+                tag: '#Опыт',
+                title: 'Приватные и публичные ключи',
+                excerpt: `Эти ключи — криптографический инструмент для отправки и получения криптовалюты.
+
+Публичный ключ: работает как номер банковского счета или адрес электронной почты. Вы делитесь им с пользователями, чтобы они могли отправлять вам средства.
+
+Приватный ключ: работает как пароль или PIN-код. Он подтверждает право собственности на средства, связанные с вашим публичным ключом. Этот ключ нельзя никому сообщать. Если кто-то получит доступ к вашему приватному ключу, он сможет украсть ваши активы.`,
+                image: 'icons/picture_7.jpg',
+                emoji: '🔑',
+                color: '#22c55e',
+            },
+            {
+                tag: '#Крипто',
+                title: 'Сид-фраза',
+                excerpt: `Сид-фраза (также известная как фраза восстановления или мнемоническая фраза) — это последовательность из 12–24 случайных слов, которая генерируется при создании криптовалютного кошелька. Она служит главной резервной копией всего кошелька.
+
+Важно понимать разницу между приватным ключом и сид-фразой. Приватный ключ предоставляет доступ к одному конкретному адресу. А сид-фраза — это главный ключ, который восстанавливает весь кошелек и приватные ключи, созданные на его основе.
+
+Сид-фраза — это единственный способ вернуть доступ к кошельку в случае потери устройства или забытого пароля. Но если кто-то узнает вашу сид-фразу, он получит полный доступ ко всем аккаунтам в вашем кошельке.`,
+                image: 'icons/picture_8.jpg',
+                emoji: '🔐',
+                color: '#627EEA',
+            },
+            {
+                tag: '#Обучение',
+                title: 'Стейблкоины',
+                excerpt: `Стейблкоины — это криптовалюта, созданная для поддержания стабильной цены. Обычно ее привязывают к фиату, например к доллару США (курс держится примерно на уровне 1 доллара). Многие используют стейблкоины для перевода средств между биржами, защиты от краткосрочных колебаний цен или хранения средств в блокчейне без вывода в фиат.
+
+Существуют разные способы, с помощью которых стейблкоины поддерживают стабильность цены: фиатные (обеспечены резервами), криптовалютные (обеспечены криптой с избыточным обеспечением), алгоритмические (корректируют предложение для удержания привязки).
+
+Хотя эти стейблкоины называют «стабильными», риск все равно есть — отвязка от доллара, проблемы с ликвидностью, регуляторные риски. Выбирайте надежные стейблкоины с проверенной репутацией.`,
+                image: 'icons/picture_9.jpg',
+                emoji: '💵',
+                color: '#eab308',
+            },
+        ];
+
+        /* ============================================================
+           АКТУАЛЬНЫЕ АКТИВЫ
+           ============================================================ */
+        const ASSETS = [
+            { symbol: 'BTC',  name: 'Bitcoin',  price: 67432.12, change:  2.48, icon: '₿', color: '#F7931A' },
+            { symbol: 'ETH',  name: 'Ethereum', price: 3245.67,  change:  3.12, icon: 'Ξ', color: '#627EEA' },
+            { symbol: 'SOL',  name: 'Solana',   price: 142.08,   change:  4.12, icon: '◎', color: '#9945FF' },
+            { symbol: 'AAPL', name: 'Apple',    price: 188.32,   change:  1.56, icon: 'A', color: '#A2AAAD' },
+            { symbol: 'TSLA', name: 'Tesla',    price: 242.16,   change: -2.87, icon: 'T', color: '#E31937' },
         ];
 
         const BUBBLE_SIZE = 180;
@@ -1072,7 +1421,6 @@
                 this.el.style.setProperty('--bubble-light', data.light);
                 this.el.style.setProperty('--bubble-dark',  data.dark);
                 this.el.style.setProperty('--bubble-glow',  this.hexToRgba(data.color, 0.55));
-                this.el.style.animationDelay = (-Math.random() * 5) + 's';
                 this.el.innerHTML = `
                     <div class="bubble-icon">
                         ${data.icon}
@@ -1081,9 +1429,7 @@
                     <div class="bubble-label">${data.label}</div>
                 `;
                 arena.appendChild(this.el);
-                setTimeout(() => {
-                    this.el.style.opacity = '1';
-                }, Math.random() * 400);
+                setTimeout(() => { this.el.style.opacity = '1'; }, Math.random() * 400);
             }
 
             hexToRgba(hex, alpha) {
@@ -1152,7 +1498,6 @@
                 card.style.setProperty('--card-light', data.light);
                 card.style.setProperty('--card-dark',  data.dark);
                 card.style.setProperty('--card-glow',  hexToRgba(data.light, 0.45));
-                card.style.setProperty('--card-bg-soft', hexToRgba(data.color, 0.12));
                 card.innerHTML = `
                     <div class="card-pattern" style="background-image: ${buildPatternDataUrl(data.pattern, data.color)};"></div>
                     <div class="card-icon">
@@ -1169,6 +1514,77 @@
                 `;
                 container.appendChild(card);
             });
+        }
+
+        function renderCryptoView() {
+            const container = document.getElementById('crypto-view');
+            if (!container || container.dataset.rendered === 'true') return;
+            container.dataset.rendered = 'true';
+
+            const cardsHTML = CRYPTO_POSTS.map((p, i) => `
+                <a href="#" class="crypto-card crypto-card-${i + 1}" onclick="event.preventDefault();">
+                    <div class="crypto-card-image"
+                         style="background-image: url('${p.image}'); background-color: ${p.color};">
+                        <span class="crypto-card-tag">${p.tag}</span>
+                        <span class="crypto-card-emoji">${p.emoji}</span>
+                    </div>
+                    <div class="crypto-card-body">
+                        <h3>${p.title}</h3>
+                        <p>${p.excerpt}</p>
+                    </div>
+                </a>
+            `).join('');
+
+            const assetsHTML = ASSETS.map(a => `
+                <div class="crypto-asset-card">
+                    <div class="crypto-asset-head">
+                        <div class="crypto-asset-icon" style="background: ${a.color}25; color: ${a.color}; border-color: ${a.color}50;">
+                            ${a.icon}
+                        </div>
+                        <div class="crypto-asset-info">
+                            <strong>${a.name}</strong>
+                            <span class="crypto-asset-price">$ ${a.price.toFixed(2)}</span>
+                        </div>
+                    </div>
+                    <div class="crypto-asset-sparkline">
+                        ${a.change >= 0
+                            ? `<svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                                <polyline points="0,22 15,20 30,23 45,17 60,18 75,12 90,13 100,10"
+                                          fill="none" stroke="#16a34a" stroke-width="1.8"
+                                          stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>`
+                            : `<svg viewBox="0 0 100 30" preserveAspectRatio="none">
+                                <polyline points="0,10 15,12 30,9 45,14 60,13 75,17 90,18 100,20"
+                                          fill="none" stroke="#dc2626" stroke-width="1.8"
+                                          stroke-linecap="round" stroke-linejoin="round"/>
+                              </svg>`
+                        }
+                    </div>
+                    <span class="crypto-asset-change ${a.change >= 0 ? 'up' : 'down'}">
+                        ${a.change >= 0 ? '+' : ''}${a.change.toFixed(2)}%
+                    </span>
+                </div>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="crypto-stage">
+                    <div class="crypto-center">
+                        <div class="crypto-center-glow"></div>
+                        <img src="icons/bitcoin-hero.png"
+                             alt="Bitcoin"
+                             class="crypto-center-img"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="crypto-center-fallback">₿</div>
+                    </div>
+                    ${cardsHTML}
+                </div>
+                <div class="crypto-assets">
+                    <h2>Актуальные активы</h2>
+                    <div class="crypto-assets-list">
+                        ${assetsHTML}
+                    </div>
+                </div>
+            `;
         }
 
         const bubblesView = document.getElementById('bubbles-view');
@@ -1195,12 +1611,14 @@
                 localStorage.setItem('werth69-view', view);
                 viewBtns.forEach(b => b.classList.toggle('active', b.dataset.view === view));
                 if (view === 'bubbles') {
-                    requestAnimationFrame(() => {
-                        createBubbles();
-                    });
+                    requestAnimationFrame(() => createBubbles());
+                }
+                if (view === 'crypto') {
+                    renderCryptoView();
                 }
             });
         });
+
         const initialView = document.documentElement.getAttribute('data-view') || 'bubbles';
         viewBtns.forEach(b => b.classList.toggle('active', b.dataset.view === initialView));
 
@@ -1231,6 +1649,9 @@
             createBubbles();
             animate();
             renderCards();
+            if (initialView === 'crypto') {
+                renderCryptoView();
+            }
         });
     </script>
 </body>
