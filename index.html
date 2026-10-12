@@ -108,7 +108,6 @@
             z-index: 1;
         }
 
-        /* ============ ТОПБАР ============ */
         .topbar {
             position: relative;
             display: flex;
@@ -353,7 +352,6 @@
             flex-shrink: 0;
         }
 
-        /* ============ АРЕНА ============ */
         .arena {
             position: relative;
             flex: 1;
@@ -361,13 +359,22 @@
         }
 
         html[data-view="bubbles"] .list-view,
-        html[data-view="bubbles"] .crypto-view { display: none; }
-        html[data-view="list"]   .bubbles-view,
-        html[data-view="list"]   .crypto-view { display: none; }
-        html[data-view="crypto"] .bubbles-view,
-        html[data-view="crypto"] .list-view { display: none; }
+        html[data-view="bubbles"] .crypto-view,
+        html[data-view="bubbles"] .mypath-view { display: none; }
 
-        .bubbles-view, .list-view, .crypto-view {
+        html[data-view="list"] .bubbles-view,
+        html[data-view="list"] .crypto-view,
+        html[data-view="list"] .mypath-view { display: none; }
+
+        html[data-view="crypto"] .bubbles-view,
+        html[data-view="crypto"] .list-view,
+        html[data-view="crypto"] .mypath-view { display: none; }
+
+        html[data-view="mypath"] .bubbles-view,
+        html[data-view="mypath"] .list-view,
+        html[data-view="mypath"] .crypto-view { display: none; }
+
+        .bubbles-view, .list-view, .crypto-view, .mypath-view {
             animation: viewFadeIn 0.5s ease both;
         }
 
@@ -376,7 +383,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ============ ПУЗЫРЬКИ ============ */
         .bubbles-view {
             position: absolute;
             inset: 0;
@@ -479,7 +485,6 @@
             z-index: 10;
         }
 
-        /* ============ СПИСОК ============ */
         .list-view {
             position: absolute;
             inset: 0;
@@ -655,11 +660,9 @@
         }
 
         html[data-view="list"] .hint,
-        html[data-view="crypto"] .hint { display: none; }
+        html[data-view="crypto"] .hint,
+        html[data-view="mypath"] .hint { display: none; }
 
-        /* ============================================================
-           КРИПТОКОНЦЕПЦИИ
-           ============================================================ */
         .crypto-view {
             position: absolute;
             inset: 0;
@@ -677,7 +680,6 @@
             height: 1100px;
         }
 
-        /* Декоративные кольца */
         .crypto-stage::before,
         .crypto-stage::after {
             content: '';
@@ -710,7 +712,6 @@
             50%      { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
         }
 
-        /* Лучи от Bitcoin к карточкам */
         .crypto-rays {
             position: absolute;
             inset: 0;
@@ -748,7 +749,6 @@
             50%      { r: 4.5; opacity: 1; }
         }
 
-        /* ========== Центр: Bitcoin + орбита ========== */
         .crypto-center {
             position: absolute;
             top: 50%;
@@ -763,23 +763,16 @@
             pointer-events: none;
         }
 
-        /* Свечение под Bitcoin */
         .crypto-center-glow {
             position: absolute;
-            inset: -35%;
+            inset: -25%;
             border-radius: 50%;
             background: radial-gradient(circle,
-                rgba(247, 147, 26, 0.40) 0%,
-                rgba(247, 147, 26, 0.12) 45%,
+                rgba(247, 147, 26, 0.35) 0%,
+                rgba(247, 147, 26, 0.10) 45%,
                 transparent 70%);
         }
 
-        @keyframes cryptoPulse {
-            0%, 100% { transform: scale(1);    opacity: 0.7; }
-            50%      { transform: scale(1.15); opacity: 1;   }
-        }
-
-        /* ОРБИТА — картинка b_w.png */
         .crypto-orbit {
             position: absolute;
             top: 50%;
@@ -806,44 +799,6 @@
             display: block;
         }
 
-        /* Второе кольцо — реверс */
-        .crypto-orbit-2 {
-            display: none;   /* вторая орбита скрыта */
-        }
-
-        /* Центральный Bitcoin */
-        .crypto-center-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 60px rgba(247, 147, 26, 0.85));
-            position: relative;
-            z-index: 3;
-            /* Bitcoin статичен — без анимаций */
-        }
-
-        .crypto-center-fallback {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #FFD54D 0%, #F7931A 50%, #B86A00 100%);
-            color: #ffffff;
-            font-size: 140px;
-            font-weight: 900;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            box-shadow:
-                0 0 80px rgba(247, 147, 26, 0.7),
-                inset 0 0 50px rgba(0, 0, 0, 0.35);
-            font-family: 'Georgia', serif;
-            position: relative;
-            z-index: 3;
-        }
-
-        /* ============================================================
-           9 карточек — радиус 380px (ближе к Bitcoin)
-           ============================================================ */
         .crypto-card {
             position: absolute;
             top: 50%;
@@ -855,7 +810,6 @@
 
             --angle: 0deg;
             --radius: 380px;
-            --wobble: 0s;
 
             transform:
                 rotate(var(--angle))
@@ -887,36 +841,20 @@
         @keyframes cryptoCardIn {
             from {
                 opacity: 0;
-                transform:
-                    rotate(var(--angle))
-                    translate(0, calc(-1 * var(--radius) - 40px))
-                    rotate(calc(-1 * var(--angle)))
-                    scale(0.85);
+                transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius) - 40px)) rotate(calc(-1 * var(--angle))) scale(0.85);
             }
             to {
                 opacity: 1;
-                transform:
-                    rotate(var(--angle))
-                    translate(0, calc(-1 * var(--radius)))
-                    rotate(calc(-1 * var(--angle)))
-                    scale(1);
+                transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) scale(1);
             }
         }
 
         @keyframes cardWobble {
             0%, 100% {
-                transform:
-                    rotate(var(--angle))
-                    translate(0, calc(-1 * var(--radius)))
-                    rotate(calc(-1 * var(--angle)))
-                    translate(0, 0);
+                transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) translate(0, 0);
             }
             50% {
-                transform:
-                    rotate(var(--angle))
-                    translate(0, calc(-1 * var(--radius)))
-                    rotate(calc(-1 * var(--angle)))
-                    translate(0, -5px);
+                transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) translate(0, -5px);
             }
         }
 
@@ -971,10 +909,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 2;
-            font-size: 24px;
-            font-weight: 900;
             color: #ffffff;
-
             background: rgba(255, 255, 255, 0.10);
             backdrop-filter: blur(16px) saturate(140%);
             -webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -1040,9 +975,6 @@
             overflow: hidden;
         }
 
-        /* ============================================================
-           АКТУАЛЬНЫЕ АКТИВЫ
-           ============================================================ */
         .crypto-assets {
             max-width: 1300px;
             margin: 20px auto 0;
@@ -1139,9 +1071,435 @@
         .crypto-asset-change.up { color: #16a34a; }
         .crypto-asset-change.down { color: #dc2626; }
 
-        /* ============================================================
-           МОДАЛЬНОЕ ОКНО
-           ============================================================ */
+        .mypath-view {
+            position: absolute;
+            inset: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            z-index: 1;
+            padding: 28px 40px 60px;
+        }
+
+        .mypath-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .mypath-hero {
+            position: relative;
+            border-radius: 22px;
+            overflow: hidden;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            padding: 40px 44px;
+            border: 1px solid var(--border-soft);
+            background:
+                linear-gradient(90deg,
+                    rgba(10, 19, 16, 0.85) 0%,
+                    rgba(10, 19, 16, 0.55) 50%,
+                    rgba(10, 19, 16, 0.30) 100%),
+                url('icons/my_way.png') center/cover no-repeat,
+                radial-gradient(circle at 70% 50%, rgba(168, 255, 62, 0.15), transparent 60%);
+        }
+
+        .mypath-hero-text {
+            position: relative;
+            z-index: 1;
+            max-width: 560px;
+        }
+
+        .mypath-hero-text h1 {
+            margin: 0 0 16px;
+            font-family: 'Bungee', sans-serif;
+            font-size: 44px;
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-shadow:
+                3px 3px 0 rgba(0, 0, 0, 0.7),
+                0 0 30px rgba(168, 255, 62, 0.4);
+        }
+
+        .mypath-hero-text h1 span {
+            color: var(--accent);
+            text-shadow:
+                3px 3px 0 rgba(0, 0, 0, 0.7),
+                0 0 24px var(--accent-glow);
+        }
+
+        .mypath-hero-text p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #c8d8b8;
+            max-width: 460px;
+        }
+
+        .mypath-section {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .mypath-section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .mypath-section-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(168, 255, 62, 0.12);
+            border: 1px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 0 18px var(--accent-glow);
+        }
+
+        .mypath-section-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .mypath-section-title h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+        }
+
+        .mypath-section-title .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+            margin-left: 8px;
+        }
+
+        .mypath-section-subtitle {
+            margin: -8px 0 4px 58px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+        }
+
+        .mypath-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .mypath-card {
+            position: relative;
+            background: rgba(15, 26, 21, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            cursor: pointer;
+            min-height: 240px;
+        }
+
+        .mypath-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+        }
+
+        .mypath-card-image {
+            position: relative;
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            background-color: #0d1a12;
+            flex-shrink: 0;
+        }
+
+        .mypath-card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(10, 19, 16, 0.9) 100%);
+            pointer-events: none;
+        }
+
+        .mypath-card-icon {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(168, 255, 62, 0.30);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .mypath-card-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .mypath-card-body {
+            padding: 14px 16px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            position: relative;
+        }
+
+        .mypath-card-body h3 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .mypath-card-body p {
+            margin: 0;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .mypath-card-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 8px;
+        }
+
+        .mypath-card-arrow svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.25s ease;
+        }
+
+        .mypath-card:hover .mypath-card-arrow svg {
+            transform: translateX(4px);
+        }
+
+        .mypath-badge-soon {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(168, 255, 62, 0.12);
+            border: 1px solid var(--accent);
+            border-radius: 999px;
+            color: var(--accent);
+            font-size: 10.5px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            backdrop-filter: blur(6px);
+            z-index: 1;
+        }
+
+        .mypath-badge-soon svg {
+            width: 11px;
+            height: 11px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        .mypath-posts {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .mypath-post {
+            display: flex;
+            flex-direction: column;
+            background: rgba(15, 26, 21, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mypath-post:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+        }
+
+        .mypath-post-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-color: #0d1a12;
+            position: relative;
+        }
+
+        .mypath-post-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(10, 19, 16, 0.85) 100%);
+            pointer-events: none;
+        }
+
+        .mypath-post-body {
+            padding: 16px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .mypath-post-tag {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            padding: 4px 10px;
+            background: rgba(168, 255, 62, 0.14);
+            border: 1px solid var(--accent);
+            border-radius: 999px;
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+
+        .mypath-post-title {
+            margin: 0;
+            font-size: 15.5px;
+            font-weight: 800;
+            line-height: 1.3;
+            color: #ffffff;
+        }
+
+        .mypath-post-text {
+            margin: 0;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .mypath-post.expanded .mypath-post-text {
+            -webkit-line-clamp: unset;
+            display: block;
+            color: var(--text);
+        }
+
+        .mypath-post-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: auto;
+            padding-top: 8px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .mypath-post-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mypath-post-meta svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+
+        .mypath-post-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            transition: opacity 0.2s ease;
+            margin-top: 4px;
+        }
+
+        .mypath-post-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .mypath-post-toggle svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s ease;
+        }
+
+        .mypath-post.expanded .mypath-post-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .mypath-footer {
+            text-align: center;
+            padding: 20px 0 8px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            border-top: 1px solid var(--border-soft);
+            margin-top: 10px;
+        }
+
         .post-modal {
             position: fixed;
             inset: 0;
@@ -1293,7 +1651,6 @@
             border-color: var(--accent);
         }
 
-        /* ============ АДАПТИВ ============ */
         @media (max-width: 1500px) {
             .crypto-card {
                 --radius: 350px;
@@ -1302,8 +1659,7 @@
                 margin-left: -120px;
                 margin-top: -90px;
             }
-            .crypto-orbit    { width: 700px; height: 700px; }
-            .crypto-orbit-2  { width: 900px; height: 900px; }
+            .crypto-orbit { width: 240px; height: 240px; }
         }
 
         @media (max-width: 1300px) {
@@ -1316,8 +1672,8 @@
             }
             .crypto-card-body h3 { font-size: 14px; }
             .crypto-card-body p { font-size: 11px; }
-            .crypto-orbit    { width: 620px; height: 620px; }
-            .crypto-orbit-2  { width: 800px; height: 800px; }
+            .crypto-orbit { width: 220px; height: 220px; }
+            .crypto-center { width: 120px; height: 120px; }
         }
 
         @media (max-width: 1100px) {
@@ -1328,8 +1684,12 @@
                 margin-left: -100px;
                 margin-top: -80px;
             }
-            .crypto-orbit    { width: 540px; height: 540px; }
-            .crypto-orbit-2  { width: 700px; height: 700px; }
+            .crypto-orbit { width: 200px; height: 200px; }
+            .crypto-center { width: 110px; height: 110px; }
+
+            .mypath-cards { grid-template-columns: repeat(2, 1fr); }
+            .mypath-posts { grid-template-columns: repeat(2, 1fr); }
+            .mypath-hero-text h1 { font-size: 34px; }
         }
 
         @media (max-width: 1000px) {
@@ -1344,17 +1704,7 @@
             .crypto-stage::before,
             .crypto-stage::after,
             .crypto-orbit,
-            .crypto-orbit-2 { display: none; }
-            .crypto-center {
-                position: relative;
-                top: auto;
-                left: auto;
-                transform: none;
-                grid-column: 1 / -1;
-                margin: 20px auto;
-                width: 180px;
-                height: 180px;
-            }
+            .crypto-center { display: none; }
             .crypto-card {
                 position: relative;
                 top: auto !important;
@@ -1394,9 +1744,14 @@
                 padding: 16px;
             }
             .crypto-assets { padding: 0 16px; margin-top: 30px; }
-            .crypto-assets-list {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
+
+            .mypath-view { padding: 16px; }
+            .mypath-hero { padding: 24px; min-height: 220px; }
+            .mypath-hero-text h1 { font-size: 26px; }
+            .mypath-cards { grid-template-columns: 1fr; }
+            .mypath-posts { grid-template-columns: 1fr; }
+            .mypath-section-title h2 { font-size: 20px; }
 
             .post-modal { padding: 16px 12px; }
             .post-modal-hero { padding: 12px; }
@@ -1430,7 +1785,7 @@
         </div>
 
         <div class="view-switch">
-            <button class="view-btn active" data-view="bubbles">
+            <button class="view-btn" data-view="bubbles">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="7.5" cy="8" r="3.5" fill="currentColor" fill-opacity="0.15"/>
                     <circle cx="16.5" cy="6.5" r="2.5" fill="currentColor" fill-opacity="0.15"/>
@@ -1457,6 +1812,15 @@
                 </svg>
                 Криптоконцепции
             </button>
+            <button class="view-btn" data-view="mypath">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 20c4-4 6-8 9-12s5-5 9-5"/>
+                    <circle cx="5" cy="18" r="2" fill="currentColor" fill-opacity="0.3"/>
+                    <circle cx="12" cy="11" r="2" fill="currentColor" fill-opacity="0.3"/>
+                    <circle cx="19" cy="5" r="2" fill="currentColor" fill-opacity="0.3"/>
+                </svg>
+                Мой путь
+            </button>
         </div>
 
         <div class="topbar-actions"></div>
@@ -1475,6 +1839,8 @@
         </div>
 
         <div class="crypto-view" id="crypto-view"></div>
+
+        <div class="mypath-view" id="mypath-view"></div>
 
         <div class="hint">Наведи — подсветится · Кликни — откроется</div>
     </div>
@@ -1556,9 +1922,7 @@
 
 Данные хранятся в «блоках», которые связаны друг с другом в хронологическую «цепь». После записи данных в блокчейн изменить их чрезвычайно сложно. Это обеспечивает прозрачность системы и ее защиту от несанкционированного вмешательства.
 
-Каждый блок содержит набор транзакций, временную метку и хеш предыдущего блока. Именно эта связь через хеши и создает «цепь», делая данные практически неизменяемыми. Если кто-то попытается изменить содержимое одного блока, все последующие блоки станут недействительными, и сеть отвергнет их.
-
-Блокчейн используется не только в криптовалютах. Его применяют в логистике, медицине, голосовании, сфере недвижимости и многих других областях, где важны прозрачность и защита данных.`,
+Каждый блок содержит набор транзакций, временную метку и хеш предыдущего блока. Именно эта связь через хеши и создает «цепь», делая данные практически неизменяемыми.`,
                 image: 'icons/picture_1.jpg',
                 color: '#F7931A',
                 icon: `<svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v1H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 6V7a3 3 0 1 1 6 0v1H9z"/></svg>`
@@ -1570,9 +1934,7 @@
 
 В сфере криптовалют децентрализация помогает решить проблему доверия и повысить безопасность. Например, Bitcoin дает возможность совершать одноранговые транзакции без посредников, таких как банки.
 
-Однако существуют разные уровни децентрализации: одни сети более децентрализованы, чем другие. Например, Bitcoin считается максимально децентрализованным, потому что его сеть поддерживается тысячами независимых майнеров по всему миру. А некоторые другие проекты могут управляться небольшой группой разработчиков или фондов.
-
-Децентрализация — это не бинарное состояние (есть/нет), а спектр. Важно понимать, где находится конкретный проект на этом спектре, потому что от этого зависит его устойчивость, безопасность и независимость от внешнего контроля.`,
+Однако существуют разные уровни децентрализации: одни сети более децентрализованы, чем другие. Важно понимать, где находится конкретный проект на этом спектре.`,
                 image: 'icons/picture_2.jpg',
                 color: '#16a34a',
                 icon: `<svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zm0 9-10 5 10 5 10-5-10-5z"/></svg>`
@@ -1584,9 +1946,7 @@
 
 Смарт-контракт работает как торговый автомат: вы кладете нужную сумму, выбираете продукт — и автомат сам выдает вам товар. Никакой продавец не нужен.
 
-Благодаря такой автоматизации можно создавать любые децентрализованные приложения (DApps) и исключить необходимость в посредниках во многих процессах. Смарт-контракты используются в DeFi, NFT, играх, страховании, логистике и голосовании.
-
-Главное преимущество смарт-контрактов — они исполняются автоматически, без возможности вмешательства человека. Это исключает мошенничество и ошибки, связанные с человеческим фактором. Однако код смарт-контракта нельзя изменить после развертывания, поэтому очень важно, чтобы он был написан без ошибок и уязвимостей.`,
+Благодаря такой автоматизации можно создавать любые децентрализованные приложения (DApps).`,
                 image: 'icons/picture_3.jpg',
                 color: '#0A66C2',
                 icon: `<svg viewBox="0 0 24 24"><path d="M9 2v2H7a3 3 0 0 0-3 3v3a3 3 0 0 1-1.5 2.6A3 3 0 0 1 4 13v3a3 3 0 0 0 3 3h2v2h2v-2h2v2h2v-2h2a3 3 0 0 0 3-3v-3a3 3 0 0 1 1.5-2.6A3 3 0 0 1 20 10V7a3 3 0 0 0-3-3h-2V2h-2v2h-2V2H9zm0 11v2h6v-2H9z"/></svg>`
@@ -1596,11 +1956,9 @@
                 excerpt: 'Proof of Work (PoW) и Proof of Stake (PoS) — два основных механизма защиты блокчейнов.',
                 fullText: `Proof of Work (PoW) и Proof of Stake (PoS) — это два наиболее распространенных механизма консенсуса, используемых для защиты блокчейнов и подтверждения транзакций.
 
-Proof of Work (PoW): используется в Bitcoin. Здесь майнерам нужно с помощью мощного оборудования решать сложные математические задачи. Этот процесс потребляет много энергии, но обеспечивает высокий уровень безопасности. Чем больше вычислительная мощность сети, тем сложнее атаковать ее.
+Proof of Work (PoW): используется в Bitcoin. Здесь майнерам нужно с помощью мощного оборудования решать сложные математические задачи. Этот процесс потребляет много энергии, но обеспечивает высокий уровень безопасности.
 
-Proof of Stake (PoS): используется в Ethereum (начиная с The Merge). Здесь безопасность сети обеспечивают валидаторы, которые «размещают в стейкинге» (блокируют) криптовалюту. PoS намного экономичнее по энергии, чем PoW — потребление снижается примерно в 99%.
-
-Выбор между PoW и PoS — это компромисс между безопасностью, энергопотреблением и децентрализацией. PoW считается максимально надежным, но энергозатратным. PoS более экологичен, но требует, чтобы у валидаторов был существенный стейк, что может снижать децентрализацию.`,
+Proof of Stake (PoS): используется в Ethereum (начиная с The Merge). Здесь безопасность сети обеспечивают валидаторы, которые «размещают в стейкинге» криптовалюту. PoS намного экономичнее по энергии, чем PoW.`,
                 image: 'icons/picture_4.jpg',
                 color: '#627EEA',
                 icon: `<svg viewBox="0 0 24 24"><path d="M12 2 5 12l7 4 7-4-7-10zm0 15-7-4 7 10 7-10-7 4z"/></svg>`
@@ -1612,13 +1970,7 @@ Proof of Stake (PoS): используется в Ethereum (начиная с Th
 
 В DeFi можно давать в долг, брать займы и обмениваться активами — напрямую с другими пользователями или через смарт-контракты. Никаких банков и посредников.
 
-Основные категории DeFi-приложений:
-- DEX (децентрализованные биржи) — обмен токенов напрямую между пользователями
-- Lending-протоколы — выдача и получение займов
-- Стейкинг и фарминг — получение дохода за предоставление ликвидности
-- Stablecoins — стейблкоины с привязкой к фиату
-
-DeFi дает доступ к финансовым услугам любому человеку с интернетом, независимо от страны, банка и гражданства. Но вместе с этим приходят новые риски: уязвимости смарт-контрактов, волатильность и отсутствие страхования вкладов.`,
+DeFi дает доступ к финансовым услугам любому человеку с интернетом, независимо от страны и гражданства.`,
                 image: 'icons/picture_5.jpg',
                 color: '#9945FF',
                 icon: `<svg viewBox="0 0 24 24"><path d="M20 7h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-10-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h-4V5z"/></svg>`
@@ -1628,17 +1980,9 @@ DeFi дает доступ к финансовым услугам любому �
                 excerpt: 'Токеномика — экономическая структура криптовалюты, определяющая спрос и предложение токена.',
                 fullText: `Токеномика (сочетание слов «токен» и «экономика») — это экономическая структура криптовалюты, NFT или любого другого цифрового актива. Она связана с характеристиками спроса и предложения токена.
 
-К ключевым аспектам токеномики относятся:
+К ключевым аспектам токеномики относятся: общее предложение, количество в обращении, полезность и распределение токенов между командой, инвесторами и сообществом.
 
-Общее предложение: количество существующих токенов, которые находятся либо в обращении, либо заблокированы.
-
-Количество в обращении: количество токенов, которые сейчас доступны на рынке.
-
-Полезность: для чего используется токен (например, для оплаты комиссий, голосования в управлении, доступа к сервисам).
-
-Распределение: как токены распределяются между командой, инвесторами и сообществом.
-
-Понимание токеномики помогает инвесторам оценить устойчивость проекта в долгосрочной перспективе. Если у проекта слишком высокая инфляция, или большая доля токенов заблокирована у команды, это может негативно сказаться на цене. Хорошая токеномика — залог стабильного роста и доверия сообщества.`,
+Понимание токеномики помогает инвесторам оценить устойчивость проекта в долгосрочной перспективе.`,
                 image: 'icons/picture_6.jpg',
                 color: '#dc2626',
                 icon: `<svg viewBox="0 0 24 24"><path d="M4 4h16v3H4V4zm2 5h12v3H6V9zm-2 5h16v3H4v-3zm2 5h12v3H6v-3z"/></svg>`
@@ -1648,13 +1992,11 @@ DeFi дает доступ к финансовым услугам любому �
                 excerpt: 'Эти ключи — криптографический инструмент для отправки и получения криптовалюты.',
                 fullText: `Эти ключи — криптографический инструмент для отправки и получения криптовалюты.
 
-Публичный ключ: работает как номер банковского счета или адрес электронной почты. Вы делитесь им с пользователями, чтобы они могли отправлять вам средства. Из публичного ключа можно безопасно генерировать адрес кошелька — его можно показывать кому угодно.
+Публичный ключ: работает как номер банковского счета или адрес электронной почты. Вы делитесь им с пользователями, чтобы они могли отправлять вам средства.
 
-Приватный ключ: работает как пароль или PIN-код. Он подтверждает право собственности на средства, связанные с вашим публичным ключом. Этот ключ нельзя никому сообщать. Если кто-то получит доступ к вашему приватному ключу, он сможет украсть ваши активы.
+Приватный ключ: работает как пароль или PIN-код. Он подтверждает право собственности на средства. Этот ключ нельзя никому сообщать. Если кто-то получит доступ к вашему приватному ключу, он сможет украсть ваши активы.
 
-Публичный и приватный ключи связаны математически, но из публичного ключа невозможно вычислить приватный. Это обеспечивает безопасность системы.
-
-Храните приватные ключи в надежном месте: аппаратные кошельки, бумажные копии в сейфе или зашифрованные файлы. Никогда не храните приватные ключи в облаке или мессенджерах.`,
+Храните приватные ключи в надежном месте: аппаратные кошельки, бумажные копии в сейфе или зашифрованные файлы.`,
                 image: 'icons/picture_7.jpg',
                 color: '#22c55e',
                 icon: `<svg viewBox="0 0 24 24"><path d="M14 2a6 6 0 0 0-5.7 8H2v4h2v3h4v-3h2v-3h.3A6 6 0 1 0 14 2zm2 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>`
@@ -1664,11 +2006,9 @@ DeFi дает доступ к финансовым услугам любому �
                 excerpt: 'Сид-фраза — последовательность из 12–24 слов, восстанавливающая весь криптокошелек.',
                 fullText: `Сид-фраза (также известная как фраза восстановления или мнемоническая фраза) — это последовательность из 12–24 случайных слов, которая генерируется при создании криптовалютного кошелька. Она служит главной резервной копией всего кошелька.
 
-Важно понимать разницу между приватным ключом и сид-фразой. Приватный ключ предоставляет доступ к одному конкретному адресу. А сид-фраза — это главный ключ, который восстанавливает весь кошелек и приватные ключи, созданные на его основе.
+Сид-фраза — это единственный способ вернуть доступ к кошельку в случае потери устройства или забытого пароля. Но если кто-то узнает вашу сид-фразу, он получит полный доступ ко всем аккаунтам.
 
-Сид-фраза — это единственный способ вернуть доступ к кошельку в случае потери устройства или забытого пароля. Но если кто-то узнает вашу сид-фразу, он получит полный доступ ко всем аккаунтам в вашем кошельке.
-
-Поэтому храните фразу в надежном месте и ни с кем не делитесь ею. Лучший вариант — записать ее на бумаге и положить в сейф, или выгравировать на металлической пластине (для защиты от пожара и воды). Никогда не храните сид-фразу в цифровом виде — ни в облаке, ни в мессенджерах, ни в фото.`,
+Поэтому храните фразу в надежном месте и ни с кем не делитесь ею.`,
                 image: 'icons/picture_8.jpg',
                 color: '#627EEA',
                 icon: `<svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm0 6a3 3 0 0 1 3 3c0 1.3-.8 2.4-2 2.8V16h-2v-3.2c-1.2-.4-2-1.5-2-2.8a3 3 0 0 1 3-3z"/></svg>`
@@ -1676,17 +2016,11 @@ DeFi дает доступ к финансовым услугам любому �
             {
                 title: 'Стейблкоины',
                 excerpt: 'Стейблкоины — криптовалюта со стабильной ценой, привязанной к фиату или другому активу.',
-                fullText: `Стейблкоины — это криптовалюта, созданная для поддержания стабильной цены. Обычно ее привязывают к фиату, например к доллару США (курс держится примерно на уровне 1 доллара). Многие используют стейблкоины для перевода средств между биржами, защиты от краткосрочных колебаний цен или хранения средств в блокчейне без вывода в фиат.
+                fullText: `Стейблкоины — это криптовалюта, созданная для поддержания стабильной цены. Обычно ее привязывают к фиату, например к доллару США (курс держится примерно на уровне 1 доллара). Многие используют стейблкоины для перевода средств между биржами, защиты от краткосрочных колебаний цен или хранения средств в блокчейне.
 
-Существуют разные способы, с помощью которых стейблкоины поддерживают стабильность цены:
+Существуют разные способы, с помощью которых стейблкоины поддерживают стабильность цены: фиатные (обеспечены резервами), криптовалютные (обеспечены криптой с избыточным обеспечением), алгоритмические (корректируют предложение).
 
-1. Фиатные стейблкоины: обычно обеспечены резервами, такими как фиат и краткосрочный государственный долг, которые хранит компания. Пользователи полагаются на эмитента в вопросах управления резервами и возможности погашения. Примеры: USDT, USDC.
-
-2. Криптовалютные стейблкоины: в качестве обеспечения используют криптовалюту и часто требуют избыточного обеспечения (блокировки большей стоимости, чем выпущено стейблкоинов). Они остаются прозрачными в ончейне, но при высокой волатильности теряют стабильность. Пример: DAI.
-
-3. Алгоритмические стейблкоины: используют механизмы (например, корректировку предложения), чтобы удерживать привязку к курсу. Такие стейблкоины обычно более уязвимы и не выдерживают сильных движений рынка. Яркий пример — крах UST в 2022 году.
-
-Хотя эти стейблкоины называют «стабильными», риск все равно есть. Они могут отвязаться от доллара, столкнуться с проблемами ликвидности или подвергаться влиянию регулирования. Выбирайте надежные стейблкоины с проверенной репутацией и прозрачными резервами.`,
+Хотя эти стейблкоины называют «стабильными», риск все равно есть — отвязка от доллара, проблемы с ликвидностью, регуляторные риски.`,
                 image: 'icons/picture_9.jpg',
                 color: '#eab308',
                 icon: `<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke="#0a1310" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`
@@ -1700,6 +2034,153 @@ DeFi дает доступ к финансовым услугам любому �
             { symbol: 'AAPL', name: 'Apple',    price: 188.32,   change:  1.56, icon: 'A', color: '#A2AAAD' },
             { symbol: 'TSLA', name: 'Tesla',    price: 242.16,   change: -2.87, icon: 'T', color: '#E31937' },
         ];
+
+        const MYPATH = {
+            hero: {
+                title_line1: 'Мой',
+                title_line2: 'путь',
+                text: 'Это не просто путь, это моя история, мои идеи, мечты и шаги к ним. Здесь я делюсь тем, что вдохновляет, и тем, что создаю.',
+                image: 'icons/my_way.png',
+            },
+            cards: [
+                {
+                    title: 'Посты',
+                    text: 'Мысли, заметки, идеи и истории, которые рождаются в голове и превращаются в слова.',
+                    image: 'icons/mypath-text.jpg',
+                    icon: 'doc',
+                    soon: false,
+                    link: '#',
+                },
+                {
+                    title: 'Комиксы',
+                    text: 'Визуальные истории, где каждая страница — новая глава.',
+                    image: 'icons/mypath-comic.jpg',
+                    icon: 'comic',
+                    soon: true,
+                    link: '#',
+                },
+                {
+                    title: 'Мультфильмы / фильмы',
+                    text: 'Мои анимационные проекты и короткие истории на экране.',
+                    image: 'icons/mypath-mult.jpg',
+                    icon: 'film',
+                    soon: true,
+                    link: '#',
+                },
+            ],
+            posts: [
+                {
+                    tag: '#Мой путь',
+                    title: 'МОЯ СТРАТЕГИЯ. Как $10 в месяц превратились в доход.',
+                    text: `Хочу поделиться своей историей. Не хвастовства ради, а чтобы показать: начать можно с ЛЮБОЙ суммы.
+
+Старт: март 2024. Инструмент: Binance. Актив: TRX.
+Каждый месяц я покупал монеты на $10. Иногда — больше, но никогда — меньше. Система — это главное.
+
+Итог за год:
+• 242 монеты
+• Средняя цена входа — $0.1457
+• Текущий рост — 123.88%
+
+Дальше — больше. Перевел всё в стейкинг. Для тех, кто не знает: стейкинг — это когда твои монеты работают на тебя. Ты их блокируешь, а они приносят доход. Никакой магии — просто математика.
+
+Мой прогноз: через 3-4 года TRX вырастет в 10+ раз. Тогда и увидим, кто тут правильно мыслил.
+
+2026 год — год активных действий. Я не останавливаюсь на крипте, осваиваю новые горизонты. Подробности — в следующих постах.
+
+Продолжение следует...`,
+                    image: 'icons/my_way1.jpg',
+                    likes: 128,
+                    comments: 24,
+                    date: '12.10.2026',
+                },
+                {
+                    tag: '#Мой путь',
+                    title: 'ПРОДОЛЖЕНИЕ. Как я потерял 70% и вывел свои уроки.',
+                    text: `Помните мой первый пост про старт с $10 на Binance? Тогда всё выглядело красиво: +123%, стейкинг, планы на х10.
+
+А теперь — честная часть. Та, о которой мало кто говорит.
+
+Дальше — больше. Я увлекся. Мне казалось: раз TRX вырос, значит и другие монеты будут так же расти. Я начал вкладывать в разные активы, не особо разбираясь. Думал: "Залетай, рынок растёт — я заработаю кучу денег!"
+
+Весь 2025 год я активно закидывал деньги в крипту. В итоге — зашёл на сумму около $3000. Без стратегии, без анализа, без риск-менеджмента.
+
+Итог? Жесткая просадка. На сегодняшний день мой портфель упал на 60-70%. Да, вы не ослышались. От $3000 осталось совсем немного. Было больно. Очень.
+
+Но я сделал выводы. Я осознал простую истину: каждый актив нужно изучать. Нельзя покупать "на всю котлету". Нельзя верить, что всё будет вечно расти.
+
+2026 год — полная перезагрузка. С января я полностью пересмотрел подход:
+✅ Начал покупать только фундаментальные активы.
+✅ Ввёл риск-менеджмент.
+✅ Захожу маленькими суммами, постепенно накапливая позиции.
+✅ Анализирую каждый шаг.
+
+И результат не заставил ждать. С января по сентябрь 2026 года я уже в плюсе на 50%. Да, рынок волатильный — то вверх, то вниз. Но я на этом почти не нервничаю, потому что сижу в надёжных активах, где просадка максимум 20%.
+
+А в конце августа рынок дал хороший рост — и я смог покрыть свои прошлогодние убытки.
+
+Теперь я точно знаю: лёгких денег не бывает. Только дисциплина, анализ и терпение.
+
+Продолжение следует...`,
+                    image: 'icons/post2.jpg',
+                    likes: 96,
+                    comments: 18,
+                    date: '08.10.2026',
+                },
+                {
+                    tag: '#Мой путь',
+                    title: 'КАК ФИЛЬМ "ИГРА НА ПОНИЖЕНИЕ" ПРИВЕЛ МЕНЯ К IPO УЗБЕКИСТАНА?',
+                    text: `Помните, я рассказывал про старт в крипте? А теперь — предыстория. То, с чего всё НА САМОМ ДЕЛЕ началось.
+
+2024 год. Первый раз в жизни я посмотрел фильм «Игра на понижение». Очень рекомендую к просмотру! Фильм крутой — про то, как умные люди зарабатывают на кризисе. И он перевернул моё мышление.
+
+Я начал углубляться: что такое фондовый рынок? Акции? Облигации? Почему вокруг всего этого ажиотаж?
+
+И тут — судьба. Сентябрь 2024 года. Я впервые услышал о брокере JEТТ (Узбекистан). Решил попробовать — закинул 100 000 сум, просто чтобы посмотреть, как всё работает.
+
+И тогда я наткнулся на новость: «Ипотека-банк планирует листинг на Мосбирже». Я сел, почитал, что такое Мосбиржа. Огромный рынок РФ. И понял: если банк выходит на такой уровень, строит интеграции — значит, спрос будет. Акции будут расти.
+
+Логика простая: строят структуру → будет листинг → будет спрос → цена растёт.
+
+Я начал покупать акции Ипотека-банка. По 20 000 сум в течение всего сентября. Тогда курс был копеечный — около 1.1 сум за акцию. Казалось смешно: банк, такая организация, а акции дармовые. Но я купил и... забыл.
+
+И вот — апрель 2026 года. Я открываю портфель и вижу: курс акций Ипотека-банка — 3.34 сум за акцию! Рост в 3.3 раза!
+
+Я сижу и думаю: "Блин, это намного круче, чем я ожидал. Надо было сюда вкладываться, а не шататься по крипте!"
+
+Но я не расстроился. Я сделал вывод: если акции Узбекистана дают такой рост, значит и другие компании могут выстрелить.
+
+С этого момента я начал глубоко изучать экономику Узбекистана. Смотрел, какие компании есть, что покупать, как всё устроено. И постепенно пришел к тому, что...
+
+Май 2026 года. Go Invest. Почему я выбрал именно эту платформу?
+✅ Не нужно покупать подписки, чтобы получать дивиденды.
+✅ Дивиденды автоматически падают на депозитарий Uz CSD.
+✅ Приемлемые комиссии.
+
+Теперь я инвестирую в акции и облигации Узбекистана. Кстати, про облигации: рекомендую брать те, где годовые купоны. Они выплачивают дивиденды, а по окончании срока возвращают вложенную сумму. За год или полгода можно заработать 20-30% годовых. Акции же приносят дивиденды ежемесячно, квартально или ежегодно — зависит от компании.
+
+Я уже пришёл к осознанному выбору. А вы?
+
+Продолжение следует...`,
+                    image: 'icons/post3.jpg',
+                    likes: 74,
+                    comments: 12,
+                    date: '03.10.2026',
+                },
+            ],
+        };
+
+        const MYPATH_ICONS = {
+            compass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polygon points="16 8 14 14 8 16 10 10 16 8" fill="currentColor" fill-opacity="0.15"/></svg>`,
+            doc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="14 3 14 9 20 9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
+            comic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v14H7l-4 4z"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>`,
+            film: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="2" y1="9" x2="7" y2="9"/><line x1="2" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="22" y2="9"/><line x1="17" y1="15" x2="22" y2="15"/></svg>`,
+            arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+            heart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`,
+            comment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>`,
+            hourglass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M6 2v6a6 6 0 0 0 6 6 6 6 0 0 0 6-6V2M6 22v-6a6 6 0 0 1 6-6 6 6 0 0 1 6 6v6"/></svg>`,
+            chevronDown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+        };
 
         const BUBBLE_SIZE = 180;
         const CARD_RADIUS = 380;
@@ -1867,7 +2348,7 @@ DeFi дает доступ к финансовым услугам любому �
             const raysHTML = CRYPTO_POSTS.map((p, i) => {
                 const angleDeg = i * 40 - 90;
                 const angleRad = angleDeg * Math.PI / 180;
-                const startR = 150;
+                const startR = 110;
                 const endR = CARD_RADIUS - 20;
                 const x1 = cx + Math.cos(angleRad) * startR;
                 const y1 = cy + Math.sin(angleRad) * startR;
@@ -1879,7 +2360,7 @@ DeFi дает доступ к финансовым услугам любому �
                 `;
             }).join('');
 
-                        container.innerHTML = `
+            container.innerHTML = `
                 <div class="crypto-stage">
                     <div class="crypto-rays">
                         <svg viewBox="0 0 1500 1100" preserveAspectRatio="xMidYMid meet">
@@ -1903,6 +2384,131 @@ DeFi дает доступ к финансовым услугам любому �
                     </div>
                 </div>
             `;
+        }
+
+        function renderMypathView() {
+            const container = document.getElementById('mypath-view');
+            if (!container || container.dataset.rendered === 'true') return;
+            container.dataset.rendered = 'true';
+
+            const hero = MYPATH.hero;
+
+            const cardsHTML = MYPATH.cards.map(card => `
+                <a href="${card.link}" class="mypath-card" onclick="event.preventDefault();">
+                    <div class="mypath-card-image" style="background-image: url('${card.image}');">
+                        <div class="mypath-card-icon">
+                            ${MYPATH_ICONS[card.icon] || MYPATH_ICONS.doc}
+                        </div>
+                        ${card.soon ? `
+                            <span class="mypath-badge-soon">
+                                ${MYPATH_ICONS.hourglass}
+                                скоро
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="mypath-card-body">
+                        <h3>${card.title}</h3>
+                        <p>${card.text}</p>
+                        <div class="mypath-card-arrow">
+                            ${MYPATH_ICONS.arrow}
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+
+            const postsHTML = MYPATH.posts.map((post, i) => {
+                const isLong = post.text.length > 200;
+                const shortText = isLong ? post.text.slice(0, 180).trim() + '...' : post.text;
+                return `
+                <a href="#" class="mypath-post" data-post-index="${i}" onclick="event.preventDefault();">
+                    <div class="mypath-post-image" style="background-image: url('${post.image}');"></div>
+                    <div class="mypath-post-body">
+                        <span class="mypath-post-tag">${post.tag}</span>
+                        <h3 class="mypath-post-title">${post.title}</h3>
+                        <p class="mypath-post-text">${shortText}</p>
+                        ${isLong ? `
+                            <span class="mypath-post-toggle">
+                                Читать полностью
+                                ${MYPATH_ICONS.chevronDown}
+                            </span>
+                        ` : ''}
+                        <div class="mypath-post-meta">
+                            <span>${MYPATH_ICONS.comment} ${post.comments}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="mypath-main">
+
+                    <section class="mypath-hero">
+                        <div class="mypath-hero-text">
+                            <h1>${hero.title_line1} <span>${hero.title_line2}</span></h1>
+                            <p>${hero.text}</p>
+                        </div>
+                    </section>
+
+                    <section class="mypath-section">
+                        <div class="mypath-section-title">
+                            <div class="mypath-section-icon">
+                                ${MYPATH_ICONS.compass}
+                            </div>
+                            <h2>Мой путь</h2>
+                            <div class="line"></div>
+                        </div>
+                        <p class="mypath-section-subtitle">Разделы моего пути. Здесь — то, что формирует меня.</p>
+
+                        <div class="mypath-cards">
+                            ${cardsHTML}
+                        </div>
+                    </section>
+
+                    <section class="mypath-section">
+                        <div class="mypath-section-title">
+                            <div class="mypath-section-icon">
+                                ${MYPATH_ICONS.doc}
+                            </div>
+                            <h2>Посты</h2>
+                            <div class="line"></div>
+                        </div>
+
+                        <div class="mypath-posts" id="mypath-posts">
+                            ${postsHTML}
+                        </div>
+                    </section>
+
+                    <div class="mypath-footer">
+                        Всё самое интересное ещё впереди
+                    </div>
+
+                </div>
+            `;
+
+            container.querySelectorAll('.mypath-post').forEach(postEl => {
+                const index = parseInt(postEl.dataset.postIndex);
+                postEl.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const post = MYPATH.posts[index];
+                    if (!post) return;
+
+                    const textEl = this.querySelector('.mypath-post-text');
+                    const toggleEl = this.querySelector('.mypath-post-toggle');
+
+                    if (this.classList.contains('expanded')) {
+                        this.classList.remove('expanded');
+                        textEl.textContent = post.text.length > 200
+                            ? post.text.slice(0, 180).trim() + '...'
+                            : post.text;
+                        if (toggleEl) toggleEl.innerHTML = `Читать полностью ${MYPATH_ICONS.chevronDown}`;
+                    } else {
+                        this.classList.add('expanded');
+                        textEl.textContent = post.text;
+                        if (toggleEl) toggleEl.innerHTML = `Свернуть ${MYPATH_ICONS.chevronDown}`;
+                    }
+                });
+            });
         }
 
         const postModal = document.getElementById('post-modal');
@@ -1971,6 +2577,9 @@ DeFi дает доступ к финансовым услугам любому �
                 if (view === 'crypto') {
                     renderCryptoView();
                 }
+                if (view === 'mypath') {
+                    renderMypathView();
+                }
             });
         });
 
@@ -1998,6 +2607,9 @@ DeFi дает доступ к финансовым услугам любому �
             renderCards();
             if (initialView === 'crypto') {
                 renderCryptoView();
+            }
+            if (initialView === 'mypath') {
+                renderMypathView();
             }
         });
     </script>
