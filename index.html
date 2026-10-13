@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCT<!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -1114,9 +1114,6 @@
         .crypto-asset-change.up { color: #16a34a; }
         .crypto-asset-change.down { color: #dc2626; }
 
-        /* ============================================================
-           MY PATH VIEW
-           ============================================================ */
         .mypath-view {
             position: absolute;
             inset: 0;
@@ -1137,7 +1134,6 @@
             align-items: start;
         }
 
-        /* ============ ЛЕВАЯ ПАНЕЛЬ ============ */
         .mypath-side-left {
             position: sticky;
             top: 28px;
@@ -1297,7 +1293,6 @@
             pointer-events: none;
         }
 
-        /* ============ ПРАВАЯ ПАНЕЛЬ ============ */
         .mypath-side-right {
             position: sticky;
             top: 28px;
@@ -1396,7 +1391,6 @@
             }
         }
 
-        /* ============ ЦЕНТРАЛЬНЫЙ КОНТЕНТ ============ */
         .mypath-main {
             display: flex;
             flex-direction: column;
@@ -2248,9 +2242,6 @@
             .side-coin { width: 48px; height: 48px; font-size: 18px; }
         }
 
-        /* ============================================================
-           ПЛАНШЕТЫ — боковые панели превращаются в горизонтальные
-           ============================================================ */
         @media (max-width: 1100px) {
             .crypto-card {
                 --radius: 280px;
@@ -2275,7 +2266,6 @@
                 max-width: 1200px;
             }
 
-            /* Левая панель — горизонтальная полоса сверху */
             .mypath-side-left {
                 position: relative;
                 top: auto;
@@ -2344,28 +2334,11 @@
                 100% { left: 100%; opacity: 0; }
             }
 
-            .mypath-side-left .side-step {
-                width: 30px;
-                height: 30px;
-            }
+            .mypath-side-left .side-step { width: 30px; height: 30px; }
+            .mypath-side-left .side-step::before { width: 6px; height: 6px; }
+            .mypath-side-left .side-step-active::before { width: 10px; height: 10px; }
+            .mypath-side-left .side-compass { width: 130px; height: 130px; opacity: 0.22; }
 
-            .mypath-side-left .side-step::before {
-                width: 6px;
-                height: 6px;
-            }
-
-            .mypath-side-left .side-step-active::before {
-                width: 10px;
-                height: 10px;
-            }
-
-            .mypath-side-left .side-compass {
-                width: 130px;
-                height: 130px;
-                opacity: 0.22;
-            }
-
-            /* Правая панель — горизонтальная полоса снизу */
             .mypath-side-right {
                 position: relative;
                 top: auto;
@@ -2414,7 +2387,6 @@
                 50%      { transform: translateY(-6px) rotate(4deg); }
             }
 
-            /* Частицы взлетают слева-направо */
             .mypath-side-right .side-particle {
                 bottom: 0 !important;
                 animation: particleRiseMobile linear infinite !important;
@@ -2447,11 +2419,45 @@
                 gap: 20px;
                 padding: 20px;
             }
+
             .crypto-rays,
             .crypto-stage::before,
             .crypto-stage::after,
-            .crypto-rotor,
-            .crypto-center { display: none; }
+            .crypto-rotor {
+                display: none;
+            }
+
+            .crypto-center {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                width: 100%;
+                height: 220px;
+                z-index: 5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+                margin-bottom: 10px;
+                grid-column: 1 / -1;
+            }
+
+            .crypto-coin {
+                width: 160px;
+                height: 160px;
+                z-index: 2;
+            }
+
+            .crypto-coin img,
+            .crypto-coin-fallback {
+                animation: coinPulse 4s ease-in-out infinite;
+            }
+
+            .crypto-center-glow {
+                inset: -35%;
+            }
+
             .crypto-card {
                 position: relative;
                 top: auto !important;
@@ -2479,27 +2485,165 @@
         }
 
         @media (max-width: 780px) {
-            .topbar { padding: 12px 16px; gap: 8px; flex-wrap: wrap; }
-            .brand-logo { width: 44px; height: 44px; }
-            .brand-text h1 { font-size: 22px; letter-spacing: 0.5px; }
-            .brand-tagline { display: none; }
-            .view-btn { padding: 6px 10px; font-size: 11px; }
-            .view-btn svg { width: 14px; height: 14px; }
-            .bubble-label { font-size: 12px; }
-            .list-view { padding: 20px 16px 40px; }
-            .list-header h2 { font-size: 22px; }
-            .card { padding: 14px 16px; gap: 14px; }
-            .card-icon { width: 52px; height: 52px; }
-            .card-title { font-size: 15px; }
-            .card-desc { font-size: 12.5px; }
+            .topbar {
+                padding: 10px 12px;
+                gap: 10px;
+                flex-wrap: wrap;
+                overflow: visible;
+            }
 
+            .brand {
+                gap: 10px;
+            }
+
+            .brand-logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .brand-text h1 {
+                font-size: 20px;
+                letter-spacing: 0.5px;
+            }
+
+            .brand-tagline {
+                display: none;
+            }
+
+            .view-switch {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+                padding: 3px;
+                flex-shrink: 0;
+            }
+
+            .view-switch::-webkit-scrollbar {
+                display: none;
+            }
+
+            .view-btn {
+                padding: 7px 12px;
+                font-size: 11.5px;
+                flex-shrink: 0;
+            }
+
+            .view-btn svg {
+                width: 14px;
+                height: 14px;
+            }
+
+            .topbar-actions {
+                display: none;
+            }
+
+            /* ============================================================
+               ПУЗЫРЬКИ — УМЕНЬШЕНЫ ДЛЯ МОБИЛЬНЫХ
+               ============================================================ */
+            .bubble {
+                transition: opacity 0.8s ease, filter 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .bubble-label {
+                font-size: 11px;
+                padding: 0 4px;
+            }
+
+            .bubble-icon {
+                margin-bottom: 4px;
+            }
+
+            /* ============================================================
+               КРИПТОКОНЦЕПЦИИ — КРАСИВОЕ СВЕЧЕНИЕ И СВЯЗЬ С КАРТОЧКАМИ
+               ============================================================ */
             .crypto-stage {
                 grid-template-columns: 1fr;
                 padding: 16px;
+                gap: 14px;
+                position: relative;
             }
+
+            .crypto-center {
+                height: 200px;
+                margin-bottom: 4px;
+                position: relative;
+            }
+
+            /* Добавляем пульсирующие кольца вокруг монеты */
+            .crypto-center::before,
+            .crypto-center::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                border: 1px solid rgba(247, 147, 26, 0.35);
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .crypto-center::before {
+                width: 170px;
+                height: 170px;
+                animation: mobileRingPulse 3s ease-in-out infinite;
+            }
+
+            .crypto-center::after {
+                width: 210px;
+                height: 210px;
+                border-color: rgba(247, 147, 26, 0.18);
+                animation: mobileRingPulse 3s ease-in-out infinite;
+                animation-delay: 1.5s;
+            }
+
+            @keyframes mobileRingPulse {
+                0% {
+                    transform: translate(-50%, -50%) scale(0.85);
+                    opacity: 0.9;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(1.35);
+                    opacity: 0;
+                }
+            }
+
+            .crypto-coin {
+                width: 130px;
+                height: 130px;
+                filter:
+                    drop-shadow(0 0 30px rgba(247, 147, 26, 0.85))
+                    drop-shadow(0 0 70px rgba(247, 147, 26, 0.55));
+            }
+
+            /* Декоративная линия от монеты к первой карточке */
+            .crypto-center + .crypto-card::before {
+                content: '';
+                position: absolute;
+                top: -30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 2px;
+                height: 30px;
+                background: linear-gradient(180deg,
+                    rgba(247, 147, 26, 0.7),
+                    rgba(168, 255, 62, 0.3),
+                    transparent);
+                filter: blur(0.5px);
+                pointer-events: none;
+                z-index: 10;
+            }
+
             .crypto-assets { padding: 0 16px; margin-top: 30px; }
             .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
 
+            /* ============================================================
+               КАРТОЧКИ МОЙ ПУТЬ — ФОН ВОЗВРАЩАЕМ НАВЕРХ
+               ============================================================ */
             .mypath-view { padding: 16px; }
             .mypath-hero { padding: 28px 24px; min-height: 220px; }
             .mypath-hero-title .line1,
@@ -2508,11 +2652,71 @@
             .mypath-posts { grid-template-columns: 1fr; }
             .mypath-section-title h2 { font-size: 20px; }
             .mypath-section-subtitle { margin-left: 0; }
-            .mypath-card-info { padding: 22px 24px; }
-            .mypath-card-info h3 { font-size: 22px; letter-spacing: 1px; }
+
+            /* ГЛАВНОЕ: картинка карточки сверху, а не снизу */
+            .mypath-card {
+                flex-direction: column;
+                min-height: 0;
+            }
+
+            .mypath-card-info {
+                padding: 24px 22px 22px;
+                max-width: 100%;
+                gap: 10px;
+                order: 2;                /* текст — после картинки */
+            }
+
+            .mypath-card-visual {
+                width: 100%;
+                min-width: 0;
+                height: 180px;           /* фиксированная высота — картинка видна */
+                flex: 0 0 180px;
+                order: 1;                /* картинка — первой */
+                position: relative;
+            }
+
+            /* Убираем верхний градиент, оставляем только лёгкий нижний */
+            .mypath-card-visual::before {
+                background: linear-gradient(180deg,
+                    transparent 0%,
+                    transparent 55%,
+                    rgba(15, 26, 21, 0.6) 85%,
+                    rgba(15, 26, 21, 1) 100%);
+            }
+
+            .mypath-card-visual::after {
+                background: linear-gradient(180deg, transparent 60%, rgba(10, 19, 16, 0.55) 100%);
+            }
+
+            .mypath-card-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                margin-bottom: 2px;
+            }
+
+            .mypath-card-icon svg {
+                width: 22px;
+                height: 22px;
+            }
+
+            .mypath-card-info h3 {
+                font-size: 24px;
+                letter-spacing: 1px;
+            }
+
+            .mypath-card-info p {
+                font-size: 13px;
+                max-width: 100%;
+            }
+
+            .mypath-card-btn {
+                padding: 9px 16px 9px 13px;
+                font-size: 12px;
+            }
+
             .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
 
-            /* Мобильная полоса шагов — компактнее */
             .mypath-side-left { padding: 16px 0 18px; }
             .mypath-side-left .side-label { font-size: 8px; letter-spacing: 3px; margin-bottom: 10px; }
             .mypath-side-left .side-track { padding: 0 10px; }
@@ -2521,7 +2725,6 @@
             .mypath-side-left .side-step-active::before { width: 8px; height: 8px; }
             .mypath-side-left .side-compass { width: 100px; height: 100px; }
 
-            /* Мобильная полоса монет — компактнее */
             .mypath-side-right .side-floaters {
                 height: 74px;
                 padding: 8px 12px;
@@ -2545,6 +2748,62 @@
         @media (max-width: 480px) {
             .crypto-assets-list { grid-template-columns: 1fr; }
 
+            .crypto-center {
+                height: 170px;
+            }
+
+            .crypto-center::before {
+                width: 140px;
+                height: 140px;
+            }
+
+            .crypto-center::after {
+                width: 175px;
+                height: 175px;
+            }
+
+            .crypto-coin {
+                width: 110px;
+                height: 110px;
+            }
+
+            /* Карточки My Path — компактнее */
+            .mypath-card-visual {
+                height: 150px;
+                flex: 0 0 150px;
+            }
+
+            .mypath-card-info {
+                padding: 20px 18px 18px;
+                gap: 8px;
+            }
+
+            .mypath-card-info h3 {
+                font-size: 22px;
+                letter-spacing: 0.8px;
+            }
+
+            .mypath-card-info p {
+                font-size: 12.5px;
+                line-height: 1.5;
+            }
+
+            .mypath-card-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .mypath-card-icon svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .mypath-card-btn {
+                padding: 8px 14px 8px 12px;
+                font-size: 11.5px;
+                gap: 8px;
+            }
+
             .mypath-side-left .side-track { padding: 0 6px; }
             .mypath-side-left .side-step { width: 20px; height: 20px; }
             .mypath-side-left .side-step::before { width: 4px; height: 4px; }
@@ -2562,6 +2821,21 @@
                 height: 32px;
                 font-size: 12px;
                 flex-shrink: 0;
+            }
+        }
+
+        /* ============================================================
+           МАЛЕНЬКИЕ ЭКРАНЫ — ПУЗЫРЬКИ ЕЩЁ МЕНЬШЕ (за счёт JS)
+           ============================================================ */
+        @media (max-width: 520px) {
+            .bubble-label {
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .bubble-label {
+                font-size: 9px;
             }
         }
     </style>
