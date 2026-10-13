@@ -1115,7 +1115,7 @@
         .crypto-asset-change.down { color: #dc2626; }
 
         /* ============================================================
-           MY PATH VIEW — с боковыми анимированными панелями
+           MY PATH VIEW
            ============================================================ */
         .mypath-view {
             position: absolute;
@@ -1137,7 +1137,7 @@
             align-items: start;
         }
 
-        /* ============ ЛЕВАЯ ПАНЕЛЬ — Шкала пути ============ */
+        /* ============ ЛЕВАЯ ПАНЕЛЬ ============ */
         .mypath-side-left {
             position: sticky;
             top: 28px;
@@ -1297,7 +1297,7 @@
             pointer-events: none;
         }
 
-        /* ============ ПРАВАЯ ПАНЕЛЬ — Крипто-символы ============ */
+        /* ============ ПРАВАЯ ПАНЕЛЬ ============ */
         .mypath-side-right {
             position: sticky;
             top: 28px;
@@ -2220,6 +2220,9 @@
             border-color: var(--accent);
         }
 
+        /* ============================================================
+           АДАПТИВ
+           ============================================================ */
         @media (max-width: 1500px) {
             .crypto-card {
                 --radius: 350px;
@@ -2241,10 +2244,13 @@
             }
             .crypto-card-body h3 { font-size: 14px; }
             .crypto-card-body p { font-size: 11px; }
-            .mypath-layout { grid-template-columns: 160px 1fr 160px; gap: 24px; }
+            .mypath-layout { grid-template-columns: 170px 1fr 170px; gap: 24px; }
             .side-coin { width: 48px; height: 48px; font-size: 18px; }
         }
 
+        /* ============================================================
+           ПЛАНШЕТЫ — боковые панели превращаются в горизонтальные
+           ============================================================ */
         @media (max-width: 1100px) {
             .crypto-card {
                 --radius: 280px;
@@ -2262,14 +2268,174 @@
             .mypath-hero-title .line2 { font-size: 44px; letter-spacing: 2px; }
             .mypath-card-info { padding: 26px 28px; max-width: 60%; }
             .mypath-card-info h3 { font-size: 26px; }
+
             .mypath-layout {
                 grid-template-columns: 1fr;
                 gap: 20px;
                 max-width: 1200px;
             }
-            .mypath-side-left,
+
+            /* Левая панель — горизонтальная полоса сверху */
+            .mypath-side-left {
+                position: relative;
+                top: auto;
+                height: auto;
+                min-height: 0;
+                padding: 22px 0 26px;
+                order: -1;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .mypath-side-left .side-label {
+                position: static;
+                writing-mode: horizontal-tb;
+                text-orientation: initial;
+                transform: none;
+                left: auto;
+                top: auto;
+                margin-bottom: 14px;
+                font-size: 9px;
+                letter-spacing: 4px;
+                text-align: center;
+                color: rgba(168, 255, 62, 0.55);
+            }
+
+            .mypath-side-left .side-track {
+                flex-direction: row;
+                height: auto;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 20px;
+            }
+
+            .mypath-side-left .side-track-line {
+                top: 50%;
+                bottom: auto;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 2px;
+                transform: translateY(-50%);
+                background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(168, 255, 62, 0.15) 10%,
+                    rgba(168, 255, 62, 0.4) 50%,
+                    rgba(168, 255, 62, 0.15) 90%,
+                    transparent 100%);
+            }
+
+            .mypath-side-left .side-track-line::after {
+                top: 0;
+                left: -80px;
+                width: 80px;
+                height: 100%;
+                background: linear-gradient(90deg,
+                    transparent 0%,
+                    var(--accent) 50%,
+                    transparent 100%);
+                animation: pulseTravelRight 6s ease-in-out infinite;
+            }
+
+            @keyframes pulseTravelRight {
+                0%   { left: -80px; opacity: 0; }
+                10%  { opacity: 1; }
+                90%  { opacity: 1; }
+                100% { left: 100%; opacity: 0; }
+            }
+
+            .mypath-side-left .side-step {
+                width: 30px;
+                height: 30px;
+            }
+
+            .mypath-side-left .side-step::before {
+                width: 6px;
+                height: 6px;
+            }
+
+            .mypath-side-left .side-step-active::before {
+                width: 10px;
+                height: 10px;
+            }
+
+            .mypath-side-left .side-compass {
+                width: 130px;
+                height: 130px;
+                opacity: 0.22;
+            }
+
+            /* Правая панель — горизонтальная полоса снизу */
             .mypath-side-right {
-                display: none;
+                position: relative;
+                top: auto;
+                height: auto;
+                min-height: 0;
+                padding: 0;
+                order: 999;
+            }
+
+            .mypath-side-right .side-floaters {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: 90px;
+                padding: 10px 20px;
+                gap: 8px;
+                position: relative;
+                overflow: hidden;
+                background: linear-gradient(180deg,
+                    rgba(15, 26, 21, 0.4) 0%,
+                    rgba(15, 26, 21, 0.7) 100%);
+                border-radius: 16px;
+                border: 1px solid var(--border-soft);
+                margin-top: 20px;
+            }
+
+            .mypath-side-right .side-coin {
+                position: static;
+                width: 44px;
+                height: 44px;
+                font-size: 17px;
+                animation: coinFloatMobile 4s ease-in-out infinite;
+            }
+
+            .mypath-side-right .side-coin-1 { animation-delay: 0s; }
+            .mypath-side-right .side-coin-2 { animation-delay: 0.3s; }
+            .mypath-side-right .side-coin-3 { animation-delay: 0.6s; }
+            .mypath-side-right .side-coin-4 { animation-delay: 0.9s; }
+            .mypath-side-right .side-coin-5 { animation-delay: 1.2s; }
+            .mypath-side-right .side-coin-6 { animation-delay: 1.5s; }
+            .mypath-side-right .side-coin-7 { animation-delay: 1.8s; }
+
+            @keyframes coinFloatMobile {
+                0%, 100% { transform: translateY(0) rotate(0deg); }
+                50%      { transform: translateY(-6px) rotate(4deg); }
+            }
+
+            /* Частицы взлетают слева-направо */
+            .mypath-side-right .side-particle {
+                bottom: 0 !important;
+                animation: particleRiseMobile linear infinite !important;
+            }
+
+            @keyframes particleRiseMobile {
+                0% {
+                    transform: translateY(0) scale(0);
+                    opacity: 0;
+                }
+                20% {
+                    opacity: 0.9;
+                    transform: translateY(-30px) scale(1);
+                }
+                80% {
+                    opacity: 0.9;
+                }
+                100% {
+                    transform: translateY(-80px) scale(0.3);
+                    opacity: 0;
+                }
             }
         }
 
@@ -2346,6 +2512,27 @@
             .mypath-card-info h3 { font-size: 22px; letter-spacing: 1px; }
             .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
 
+            /* Мобильная полоса шагов — компактнее */
+            .mypath-side-left { padding: 16px 0 18px; }
+            .mypath-side-left .side-label { font-size: 8px; letter-spacing: 3px; margin-bottom: 10px; }
+            .mypath-side-left .side-track { padding: 0 10px; }
+            .mypath-side-left .side-step { width: 24px; height: 24px; }
+            .mypath-side-left .side-step::before { width: 5px; height: 5px; }
+            .mypath-side-left .side-step-active::before { width: 8px; height: 8px; }
+            .mypath-side-left .side-compass { width: 100px; height: 100px; }
+
+            /* Мобильная полоса монет — компактнее */
+            .mypath-side-right .side-floaters {
+                height: 74px;
+                padding: 8px 12px;
+                gap: 6px;
+            }
+            .mypath-side-right .side-coin {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
             .post-modal { padding: 16px 12px; }
             .post-modal-hero { padding: 12px; }
             .post-modal-hero img { max-height: 260px; }
@@ -2357,6 +2544,25 @@
 
         @media (max-width: 480px) {
             .crypto-assets-list { grid-template-columns: 1fr; }
+
+            .mypath-side-left .side-track { padding: 0 6px; }
+            .mypath-side-left .side-step { width: 20px; height: 20px; }
+            .mypath-side-left .side-step::before { width: 4px; height: 4px; }
+            .mypath-side-left .side-step-active::before { width: 7px; height: 7px; }
+            .mypath-side-left .side-compass { width: 80px; height: 80px; opacity: 0.18; }
+
+            .mypath-side-right .side-floaters {
+                height: 66px;
+                padding: 6px 10px;
+                gap: 4px;
+                overflow: hidden;
+            }
+            .mypath-side-right .side-coin {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+                flex-shrink: 0;
+            }
         }
     </style>
 </head>
