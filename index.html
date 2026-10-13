@@ -10,7 +10,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Bungee+Inline&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <script>
         (function () {
@@ -754,8 +754,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 130px;
-            height: 130px;
+            width: 220px;
+            height: 220px;
             z-index: 5;
             display: flex;
             align-items: center;
@@ -771,32 +771,75 @@
                 rgba(247, 147, 26, 0.35) 0%,
                 rgba(247, 147, 26, 0.10) 45%,
                 transparent 70%);
+            z-index: 1;
         }
 
-        .crypto-orbit {
+        .crypto-rotor {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 260px;
-            height: 260px;
+            width: 380px;
+            height: 380px;
             transform: translate(-50%, -50%);
-            z-index: 1;
+            z-index: 0;
             pointer-events: none;
-            animation: orbitSpin 60s linear infinite;
-            filter: drop-shadow(0 0 18px rgba(247, 147, 26, 0.55));
-            opacity: 0.95;
+            animation: rotorSpin 24s linear infinite;
         }
 
-        @keyframes orbitSpin {
+        .crypto-rotor svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        @keyframes rotorSpin {
             from { transform: translate(-50%, -50%) rotate(0deg); }
             to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        .crypto-orbit img {
+        .crypto-coin {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter:
+                drop-shadow(0 0 24px rgba(247, 147, 26, 0.75))
+                drop-shadow(0 0 60px rgba(247, 147, 26, 0.45));
+        }
+
+        .crypto-coin img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             display: block;
+            animation: coinPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes coinPulse {
+            0%, 100% { transform: scale(1); }
+            50%      { transform: scale(1.04); }
+        }
+
+        .crypto-coin-fallback {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #ffd35a 0%, #f7931a 55%, #a75c00 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 92px;
+            font-weight: 900;
+            color: #ffffff;
+            font-family: 'Bungee', sans-serif;
+            box-shadow:
+                inset 0 0 0 6px rgba(255, 255, 255, 0.25),
+                inset 0 0 40px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
         }
 
         .crypto-card {
@@ -1071,6 +1114,9 @@
         .crypto-asset-change.up { color: #16a34a; }
         .crypto-asset-change.down { color: #dc2626; }
 
+        /* ============================================================
+           MY PATH VIEW — с боковыми анимированными панелями
+           ============================================================ */
         .mypath-view {
             position: absolute;
             inset: 0;
@@ -1078,14 +1124,284 @@
             overflow-x: hidden;
             z-index: 1;
             padding: 28px 40px 60px;
+            scroll-behavior: smooth;
         }
 
-        .mypath-main {
-            max-width: 1200px;
+        .mypath-layout {
+            position: relative;
+            max-width: 1700px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 240px 1fr 240px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* ============ ЛЕВАЯ ПАНЕЛЬ — Шкала пути ============ */
+        .mypath-side-left {
+            position: sticky;
+            top: 28px;
+            height: calc(100vh - 120px);
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            pointer-events: none;
+            opacity: 0;
+            animation: sideFadeIn 1s ease 0.3s forwards;
+        }
+
+        @keyframes sideFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .side-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .side-track-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            transform: translateX(-50%);
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(168, 255, 62, 0.15) 10%,
+                rgba(168, 255, 62, 0.4) 50%,
+                rgba(168, 255, 62, 0.15) 90%,
+                transparent 100%);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .side-track-line::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                var(--accent) 50%,
+                transparent 100%);
+            filter: blur(2px);
+            animation: pulseTravelDown 6s ease-in-out infinite;
+        }
+
+        @keyframes pulseTravelDown {
+            0%   { top: -80px; opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .side-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(15, 26, 21, 0.9);
+            border: 1.5px solid rgba(168, 255, 62, 0.35);
+            backdrop-filter: blur(6px);
+            transition: all 0.4s ease;
+            animation: stepPulse 3s ease-in-out infinite;
+        }
+
+        .side-step:nth-child(2) { animation-delay: 0s; }
+        .side-step:nth-child(3) { animation-delay: 0.6s; }
+        .side-step:nth-child(4) { animation-delay: 1.2s; }
+        .side-step:nth-child(5) { animation-delay: 1.8s; }
+        .side-step:nth-child(6) { animation-delay: 2.4s; }
+
+        @keyframes stepPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(168, 255, 62, 0.4);
+                border-color: rgba(168, 255, 62, 0.35);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(168, 255, 62, 0);
+                border-color: var(--accent);
+            }
+        }
+
+        .side-step::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        .side-step-active {
+            background: rgba(168, 255, 62, 0.15);
+            border-color: var(--accent);
+        }
+
+        .side-step-active::before {
+            width: 12px;
+            height: 12px;
+            background: var(--accent-hover);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .side-compass {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 180px;
+            opacity: 0.35;
+            pointer-events: none;
+            animation: compassSpin 60s linear infinite;
+        }
+
+        @keyframes compassSpin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .side-compass svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .side-label {
+            position: absolute;
+            font-family: 'Bungee', sans-serif;
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: rgba(168, 255, 62, 0.4);
+            text-transform: uppercase;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* ============ ПРАВАЯ ПАНЕЛЬ — Крипто-символы ============ */
+        .mypath-side-right {
+            position: sticky;
+            top: 28px;
+            height: calc(100vh - 120px);
+            min-height: 700px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            pointer-events: none;
+            opacity: 0;
+            animation: sideFadeIn 1s ease 0.5s forwards;
+        }
+
+        .side-floaters {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .side-coin {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%,
+                rgba(168, 255, 62, 0.25) 0%,
+                rgba(15, 26, 21, 0.9) 60%,
+                rgba(10, 19, 16, 0.95) 100%);
+            border: 1px solid rgba(168, 255, 62, 0.3);
+            color: var(--accent);
+            font-family: 'Bungee', sans-serif;
+            font-size: 22px;
+            backdrop-filter: blur(8px);
+            box-shadow:
+                inset 0 0 20px rgba(168, 255, 62, 0.1),
+                0 0 20px rgba(168, 255, 62, 0.15);
+            animation: coinFloat 6s ease-in-out infinite;
+        }
+
+        .side-coin-1  { top: 5%;  left: 10%; animation-delay: 0s;   }
+        .side-coin-2  { top: 18%; right: 15%; animation-delay: 1s; }
+        .side-coin-3  { top: 35%; left: 5%;  animation-delay: 2s; animation-duration: 7s; }
+        .side-coin-4  { top: 52%; right: 10%; animation-delay: 0.5s; }
+        .side-coin-5  { top: 68%; left: 18%; animation-delay: 1.5s; animation-duration: 8s; }
+        .side-coin-6  { top: 82%; right: 20%; animation-delay: 2.5s; }
+        .side-coin-7  { top: 92%; left: 8%; animation-delay: 3s; }
+
+        @keyframes coinFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50%      { transform: translateY(-15px) rotate(6deg); }
+        }
+
+        .side-coin-2 { color: #627EEA; border-color: rgba(98, 126, 234, 0.4); }
+        .side-coin-3 { color: #9945FF; border-color: rgba(153, 69, 255, 0.4); }
+        .side-coin-4 { color: #F7931A; border-color: rgba(247, 147, 26, 0.4); }
+        .side-coin-5 { color: #16a34a; border-color: rgba(22, 163, 74, 0.4); }
+        .side-coin-6 { color: #eab308; border-color: rgba(234, 179, 8, 0.4); }
+        .side-coin-7 { color: #dc2626; border-color: rgba(220, 38, 38, 0.4); }
+
+        .side-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .side-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 6px var(--accent);
+            animation: particleRise linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes particleRise {
+            0% {
+                transform: translateY(0) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+                transform: translateY(-20vh) scale(1);
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-90vh) scale(0.4);
+                opacity: 0;
+            }
+        }
+
+        /* ============ ЦЕНТРАЛЬНЫЙ КОНТЕНТ ============ */
+        .mypath-main {
             display: flex;
             flex-direction: column;
             gap: 28px;
+            min-width: 0;
         }
 
         .mypath-hero {
@@ -1095,13 +1411,13 @@
             min-height: 280px;
             display: flex;
             align-items: center;
-            padding: 40px 44px;
+            padding: 44px 48px;
             border: 1px solid var(--border-soft);
             background:
                 linear-gradient(90deg,
-                    rgba(10, 19, 16, 0.85) 0%,
-                    rgba(10, 19, 16, 0.55) 50%,
-                    rgba(10, 19, 16, 0.30) 100%),
+                    rgba(10, 19, 16, 0.92) 0%,
+                    rgba(10, 19, 16, 0.65) 45%,
+                    rgba(10, 19, 16, 0.25) 100%),
                 url('icons/my_way.png') center/cover no-repeat,
                 radial-gradient(circle at 70% 50%, rgba(168, 255, 62, 0.15), transparent 60%);
         }
@@ -1109,31 +1425,59 @@
         .mypath-hero-text {
             position: relative;
             z-index: 1;
-            max-width: 560px;
+            max-width: 620px;
         }
 
-        .mypath-hero-text h1 {
-            margin: 0 0 16px;
+        .mypath-hero-title {
+            margin: 0 0 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            position: relative;
+        }
+
+        .mypath-hero-title .line1,
+        .mypath-hero-title .line2 {
             font-family: 'Bungee', sans-serif;
-            font-size: 44px;
             font-weight: 400;
-            line-height: 1.05;
-            letter-spacing: 1px;
-            color: #ffffff;
-            text-shadow:
-                3px 3px 0 rgba(0, 0, 0, 0.7),
-                0 0 30px rgba(168, 255, 62, 0.4);
+            line-height: 1;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #d8f0c0 40%,
+                var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter:
+                drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.7))
+                drop-shadow(0 0 30px rgba(168, 255, 62, 0.4));
+            position: relative;
         }
 
-        .mypath-hero-text h1 span {
-            color: var(--accent);
-            text-shadow:
-                3px 3px 0 rgba(0, 0, 0, 0.7),
-                0 0 24px var(--accent-glow);
+        .mypath-hero-title .line1 { font-size: 56px; }
+        .mypath-hero-title .line2 { font-size: 56px; padding-left: 4px; }
+
+        .mypath-hero-title .line2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -12px;
+            width: 90px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            border-radius: 3px;
+            animation: heroLinePulse 3s ease-in-out infinite;
+        }
+
+        @keyframes heroLinePulse {
+            0%, 100% { width: 90px; opacity: 1; }
+            50%      { width: 160px; opacity: 0.8; }
         }
 
         .mypath-hero-text p {
-            margin: 0;
+            margin: 20px 0 0;
             font-size: 15px;
             line-height: 1.7;
             color: #c8d8b8;
@@ -1197,8 +1541,8 @@
         }
 
         .mypath-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 18px;
         }
 
@@ -1208,59 +1552,122 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--border-soft);
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            align-items: stretch;
             text-decoration: none;
             color: var(--text);
-            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: pointer;
-            min-height: 240px;
+            min-height: 230px;
         }
 
-        .mypath-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
-        }
-
-        .mypath-card-image {
-            position: relative;
-            height: 140px;
-            background-size: cover;
-            background-position: center;
-            background-color: #0d1a12;
-            flex-shrink: 0;
-        }
-
-        .mypath-card-image::after {
+        .mypath-card::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(10, 19, 16, 0.9) 100%);
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg,
+                rgba(168, 255, 62, 0.5) 0%,
+                rgba(168, 255, 62, 0.05) 30%,
+                transparent 50%,
+                rgba(168, 255, 62, 0.05) 70%,
+                rgba(168, 255, 62, 0.5) 100%);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
             pointer-events: none;
+            z-index: 3;
+        }
+
+        .mypath-card:hover::before { opacity: 1; }
+
+        .mypath-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(115deg,
+                transparent 0%,
+                rgba(168, 255, 62, 0.06) 40%,
+                rgba(220, 255, 180, 0.12) 50%,
+                rgba(168, 255, 62, 0.06) 60%,
+                transparent 100%);
+            pointer-events: none;
+            z-index: 2;
+            transition: left 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mypath-card:hover::after { left: 120%; }
+
+        .mypath-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(168, 255, 62, 0.5);
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.55),
+                0 0 40px var(--accent-glow),
+                inset 0 0 60px rgba(168, 255, 62, 0.05);
+        }
+
+        .mypath-card-info {
+            flex: 1;
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            z-index: 4;
+            justify-content: center;
+            max-width: 55%;
         }
 
         .mypath-card-icon {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px solid rgba(168, 255, 62, 0.30);
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(168, 255, 62, 0.10);
+            border: 1px solid rgba(168, 255, 62, 0.35);
             backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1;
+            flex-shrink: 0;
+            margin-bottom: 4px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        .mypath-card-icon::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 18px;
+            background: radial-gradient(circle at center, rgba(168, 255, 62, 0.35) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .mypath-card:hover .mypath-card-icon {
+            transform: scale(1.1) rotate(-4deg);
+            border-color: var(--accent);
+            box-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .mypath-card:hover .mypath-card-icon::before { opacity: 1; }
 
         .mypath-card-icon svg {
-            width: 18px;
-            height: 18px;
+            width: 26px;
+            height: 26px;
             fill: none;
             stroke: var(--accent);
             stroke-width: 2;
@@ -1268,79 +1675,205 @@
             stroke-linejoin: round;
         }
 
-        .mypath-card-body {
-            padding: 14px 16px 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-            position: relative;
-        }
-
-        .mypath-card-body h3 {
+        .mypath-card-info h3 {
             margin: 0;
-            font-size: 15px;
-            font-weight: 800;
+            font-family: 'Bungee', sans-serif;
+            font-size: 30px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            line-height: 1.1;
             color: #ffffff;
+            text-transform: uppercase;
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #d8f0c0 40%,
+                var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.6));
+            transition: all 0.4s ease;
+            position: relative;
+            display: inline-block;
         }
 
-        .mypath-card-body p {
-            margin: 0;
-            font-size: 12.5px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            flex: 1;
-        }
-
-        .mypath-card-arrow {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 8px;
-        }
-
-        .mypath-card-arrow svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: var(--accent);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: transform 0.25s ease;
-        }
-
-        .mypath-card:hover .mypath-card-arrow svg {
-            transform: translateX(4px);
-        }
-
-        .mypath-badge-soon {
+        .mypath-card-info h3::after {
+            content: '';
             position: absolute;
-            bottom: 12px;
-            left: 12px;
+            left: 0;
+            bottom: -6px;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            border-radius: 2px;
+        }
+
+        .mypath-card:hover .mypath-card-info h3 {
+            letter-spacing: 2.5px;
+            filter:
+                drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.6))
+                drop-shadow(0 0 20px var(--accent-glow));
+        }
+
+        .mypath-card:hover .mypath-card-info h3::after { width: 100%; }
+
+        .mypath-card-info p {
+            margin: 0;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            flex: 0 1 auto;
+            max-width: 340px;
+            transition: color 0.3s ease;
+        }
+
+        .mypath-card:hover .mypath-card-info p { color: #b8c9a8; }
+
+        .mypath-card-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            background: rgba(168, 255, 62, 0.12);
-            border: 1px solid var(--accent);
+            gap: 10px;
+            padding: 10px 18px 10px 14px;
+            background: rgba(168, 255, 62, 0.08);
+            border: 1px solid rgba(168, 255, 62, 0.55);
             border-radius: 999px;
             color: var(--accent);
-            font-size: 10.5px;
+            font-size: 13px;
             font-weight: 800;
-            letter-spacing: 0.6px;
-            text-transform: uppercase;
-            backdrop-filter: blur(6px);
-            z-index: 1;
+            letter-spacing: 0.3px;
+            width: fit-content;
+            transition: all 0.3s ease;
+            margin-top: 4px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .mypath-badge-soon svg {
-            width: 11px;
-            height: 11px;
+        .mypath-card-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(115deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        .mypath-card:hover .mypath-card-btn::before { left: 100%; }
+
+        .mypath-card-btn .btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .mypath-card-btn .btn-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .mypath-card-btn .btn-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .mypath-card-btn .btn-arrow svg {
+            width: 100%;
+            height: 100%;
             fill: none;
             stroke: currentColor;
             stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
+
+        .mypath-card:hover .mypath-card-btn {
+            background: var(--accent);
+            color: var(--text-invert);
+            box-shadow: 0 0 30px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .mypath-card:hover .mypath-card-btn .btn-arrow { transform: translateX(4px); }
+
+        .mypath-card-btn.soon {
+            background: rgba(168, 255, 62, 0.06);
+            border-color: rgba(168, 255, 62, 0.3);
+            color: rgba(168, 255, 62, 0.75);
+            cursor: default;
+        }
+
+        .mypath-card:hover .mypath-card-btn.soon {
+            background: rgba(168, 255, 62, 0.06);
+            color: rgba(168, 255, 62, 0.75);
+            box-shadow: none;
+            border-color: rgba(168, 255, 62, 0.3);
+        }
+
+        .mypath-card:hover .mypath-card-btn.soon .btn-arrow { transform: none; }
+
+        .mypath-card-btn.soon .btn-icon {
+            animation: hourglassSpin 4s ease-in-out infinite;
+        }
+
+        @keyframes hourglassSpin {
+            0%, 100% { transform: rotate(0deg); }
+            50%      { transform: rotate(180deg); }
+        }
+
+        .mypath-card-visual {
+            position: relative;
+            flex: 1;
+            min-width: 45%;
+            background-size: cover;
+            background-position: center;
+            background-color: #0d1a12;
+            overflow: hidden;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .mypath-card-visual::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                rgba(15, 26, 21, 1) 0%,
+                rgba(15, 26, 21, 0.7) 15%,
+                rgba(15, 26, 21, 0.15) 45%,
+                transparent 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .mypath-card-visual::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(10, 19, 16, 0.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .mypath-card:hover .mypath-card-visual { transform: scale(1.06); }
 
         .mypath-posts {
             display: grid;
@@ -1349,6 +1882,7 @@
         }
 
         .mypath-post {
+            position: relative;
             display: flex;
             flex-direction: column;
             background: rgba(15, 26, 21, 0.85);
@@ -1359,14 +1893,41 @@
             overflow: hidden;
             text-decoration: none;
             color: var(--text);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: pointer;
         }
 
+        .mypath-post::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg,
+                rgba(168, 255, 62, 0.5) 0%,
+                rgba(168, 255, 62, 0.05) 30%,
+                transparent 50%,
+                rgba(168, 255, 62, 0.05) 70%,
+                rgba(168, 255, 62, 0.5) 100%);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .mypath-post:hover::before { opacity: 1; }
+
         .mypath-post:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--accent-glow);
+            transform: translateY(-6px);
+            border-color: rgba(168, 255, 62, 0.4);
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.55),
+                0 0 40px var(--accent-glow);
         }
 
         .mypath-post-image {
@@ -1375,6 +1936,8 @@
             background-position: center;
             background-color: #0d1a12;
             position: relative;
+            overflow: hidden;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .mypath-post-image::after {
@@ -1385,19 +1948,23 @@
             pointer-events: none;
         }
 
+        .mypath-post:hover .mypath-post-image { transform: scale(1.05); }
+
         .mypath-post-body {
-            padding: 16px 18px 18px;
+            padding: 18px 20px 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             flex: 1;
+            position: relative;
+            z-index: 2;
         }
 
         .mypath-post-tag {
             display: inline-flex;
             align-items: center;
             width: fit-content;
-            padding: 4px 10px;
+            padding: 4px 12px;
             background: rgba(168, 255, 62, 0.14);
             border: 1px solid var(--accent);
             border-radius: 999px;
@@ -1405,21 +1972,48 @@
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 0.4px;
+            transition: all 0.3s ease;
+        }
+
+        .mypath-post:hover .mypath-post-tag {
+            background: var(--accent);
+            color: var(--text-invert);
+            box-shadow: 0 0 18px var(--accent-glow);
         }
 
         .mypath-post-title {
             margin: 0;
-            font-size: 15.5px;
-            font-weight: 800;
-            line-height: 1.3;
-            color: #ffffff;
+            font-family: 'Bungee', sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.25;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            background: linear-gradient(180deg,
+                #ffffff 0%,
+                #d8f0c0 45%,
+                var(--accent) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.55));
+            transition: all 0.4s ease;
+            position: relative;
+            display: inline-block;
+        }
+
+        .mypath-post:hover .mypath-post-title {
+            letter-spacing: 1.5px;
+            filter:
+                drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.55))
+                drop-shadow(0 0 20px var(--accent-glow));
         }
 
         .mypath-post-text {
             margin: 0;
             font-size: 12.5px;
             color: var(--text-muted);
-            line-height: 1.55;
+            line-height: 1.6;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -1433,46 +2027,28 @@
             color: var(--text);
         }
 
-        .mypath-post-meta {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-top: auto;
-            padding-top: 8px;
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .mypath-post-meta span {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .mypath-post-meta svg {
-            width: 14px;
-            height: 14px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-        }
-
         .mypath-post-toggle {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             color: var(--accent);
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: 0.3px;
             cursor: pointer;
             user-select: none;
-            transition: opacity 0.2s ease;
-            margin-top: 4px;
+            transition: all 0.25s ease;
+            margin-top: 6px;
+            width: fit-content;
+            padding: 6px 12px;
+            background: rgba(168, 255, 62, 0.06);
+            border: 1px solid rgba(168, 255, 62, 0.3);
+            border-radius: 999px;
         }
 
         .mypath-post-toggle:hover {
-            opacity: 0.8;
+            background: rgba(168, 255, 62, 0.15);
+            border-color: var(--accent);
         }
 
         .mypath-post-toggle svg {
@@ -1598,9 +2174,7 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
-        .post-modal-body {
-            padding: 28px 36px 36px;
-        }
+        .post-modal-body { padding: 28px 36px 36px; }
 
         .post-modal-title {
             margin: 0 0 20px;
@@ -1617,13 +2191,8 @@
             color: var(--text);
         }
 
-        .post-modal-text p {
-            margin: 0 0 16px;
-        }
-
-        .post-modal-text p:last-child {
-            margin-bottom: 0;
-        }
+        .post-modal-text p { margin: 0 0 16px; }
+        .post-modal-text p:last-child { margin-bottom: 0; }
 
         .post-modal-footer {
             display: flex;
@@ -1659,7 +2228,7 @@
                 margin-left: -120px;
                 margin-top: -90px;
             }
-            .crypto-orbit { width: 240px; height: 240px; }
+            .mypath-layout { grid-template-columns: 200px 1fr 200px; gap: 30px; }
         }
 
         @media (max-width: 1300px) {
@@ -1672,8 +2241,8 @@
             }
             .crypto-card-body h3 { font-size: 14px; }
             .crypto-card-body p { font-size: 11px; }
-            .crypto-orbit { width: 220px; height: 220px; }
-            .crypto-center { width: 120px; height: 120px; }
+            .mypath-layout { grid-template-columns: 160px 1fr 160px; gap: 24px; }
+            .side-coin { width: 48px; height: 48px; font-size: 18px; }
         }
 
         @media (max-width: 1100px) {
@@ -1684,12 +2253,24 @@
                 margin-left: -100px;
                 margin-top: -80px;
             }
-            .crypto-orbit { width: 200px; height: 200px; }
-            .crypto-center { width: 110px; height: 110px; }
+            .crypto-center { width: 180px; height: 180px; }
+            .crypto-coin { width: 140px; height: 140px; }
+            .crypto-rotor { width: 300px; height: 300px; }
 
-            .mypath-cards { grid-template-columns: repeat(2, 1fr); }
             .mypath-posts { grid-template-columns: repeat(2, 1fr); }
-            .mypath-hero-text h1 { font-size: 34px; }
+            .mypath-hero-title .line1,
+            .mypath-hero-title .line2 { font-size: 44px; letter-spacing: 2px; }
+            .mypath-card-info { padding: 26px 28px; max-width: 60%; }
+            .mypath-card-info h3 { font-size: 26px; }
+            .mypath-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 1200px;
+            }
+            .mypath-side-left,
+            .mypath-side-right {
+                display: none;
+            }
         }
 
         @media (max-width: 1000px) {
@@ -1703,7 +2284,7 @@
             .crypto-rays,
             .crypto-stage::before,
             .crypto-stage::after,
-            .crypto-orbit,
+            .crypto-rotor,
             .crypto-center { display: none; }
             .crypto-card {
                 position: relative;
@@ -1721,6 +2302,13 @@
             }
             .crypto-assets-list {
                 grid-template-columns: repeat(3, 1fr);
+            }
+
+            .mypath-card { flex-direction: column-reverse; }
+            .mypath-card-info { max-width: 100%; }
+            .mypath-card-visual { width: 100%; min-width: 0; height: 220px; }
+            .mypath-card-visual::before {
+                background: linear-gradient(180deg, transparent 0%, rgba(15, 26, 21, 0.6) 50%, rgba(15, 26, 21, 1) 100%);
             }
         }
 
@@ -1747,11 +2335,16 @@
             .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
 
             .mypath-view { padding: 16px; }
-            .mypath-hero { padding: 24px; min-height: 220px; }
-            .mypath-hero-text h1 { font-size: 26px; }
-            .mypath-cards { grid-template-columns: 1fr; }
+            .mypath-hero { padding: 28px 24px; min-height: 220px; }
+            .mypath-hero-title .line1,
+            .mypath-hero-title .line2 { font-size: 32px; letter-spacing: 1.5px; }
+            .mypath-hero-text p { font-size: 13.5px; }
             .mypath-posts { grid-template-columns: 1fr; }
             .mypath-section-title h2 { font-size: 20px; }
+            .mypath-section-subtitle { margin-left: 0; }
+            .mypath-card-info { padding: 22px 24px; }
+            .mypath-card-info h3 { font-size: 22px; letter-spacing: 1px; }
+            .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
 
             .post-modal { padding: 16px 12px; }
             .post-modal-hero { padding: 12px; }
@@ -2037,8 +2630,8 @@ DeFi дает доступ к финансовым услугам любому �
 
         const MYPATH = {
             hero: {
-                title_line1: 'Мой',
-                title_line2: 'путь',
+                line1: 'Мой',
+                line2: 'путь',
                 text: 'Это не просто путь, это моя история, мои идеи, мечты и шаги к ним. Здесь я делюсь тем, что вдохновляет, и тем, что создаю.',
                 image: 'icons/my_way.png',
             },
@@ -2046,23 +2639,23 @@ DeFi дает доступ к финансовым услугам любому �
                 {
                     title: 'Посты',
                     text: 'Мысли, заметки, идеи и истории, которые рождаются в голове и превращаются в слова.',
-                    image: 'icons/mypath-text.jpg',
+                    image: 'icons/my_way.png',
                     icon: 'doc',
                     soon: false,
-                    link: '#',
+                    link: 'posts',
                 },
                 {
-                    title: 'Комиксы',
+                    title: 'Комикс',
                     text: 'Визуальные истории, где каждая страница — новая глава.',
-                    image: 'icons/mypath-comic.jpg',
+                    image: 'icons/comic.png',
                     icon: 'comic',
                     soon: true,
                     link: '#',
                 },
                 {
-                    title: 'Мультфильмы / фильмы',
-                    text: 'Мои анимационные проекты и короткие истории на экране.',
-                    image: 'icons/mypath-mult.jpg',
+                    title: 'Мультик / Фильм',
+                    text: 'Короткие истории, которые оживают в движении.',
+                    image: 'icons/movie.png',
                     icon: 'film',
                     soon: true,
                     link: '#',
@@ -2090,9 +2683,6 @@ DeFi дает доступ к финансовым услугам любому �
 
 Продолжение следует...`,
                     image: 'icons/my_way1.jpg',
-                    likes: 128,
-                    comments: 24,
-                    date: '12.10.2026',
                 },
                 {
                     tag: '#Мой путь',
@@ -2123,9 +2713,6 @@ DeFi дает доступ к финансовым услугам любому �
 
 Продолжение следует...`,
                     image: 'icons/post2.jpg',
-                    likes: 96,
-                    comments: 18,
-                    date: '08.10.2026',
                 },
                 {
                     tag: '#Мой путь',
@@ -2163,9 +2750,122 @@ DeFi дает доступ к финансовым услугам любому �
 
 Продолжение следует...`,
                     image: 'icons/post3.jpg',
-                    likes: 74,
-                    comments: 12,
-                    date: '03.10.2026',
+                },
+                {
+                    tag: '#Мой путь',
+                    title: 'КАК Я СОБРАЛ МИЛЛИОН PEPE БЕЗ ВЛОЖЕНИЙ',
+                    text: `Продолжаю свою историю. Сегодня расскажу, с чего всё начиналось — до того, как я пришёл на серьёзный рынок.
+
+Раньше я выполнял задания. Подписки, лайки, комментарии. Платили копейки — где-то 5-10 копеек, иногда рубль, иногда 5 рублей. Сидишь пару часов в день, набегает приличная сумма за месяц.
+
+Потом начал искать другие варианты пассивного дохода без вложений. И наткнулся на крипто-краны.
+
+Что это такое?
+
+Регистрируешься на кошельке. Заходишь на платформу крана. Вводишь адрес почты, на который зарегистрирован кошелёк. И каждую минуту или каждые 5 минут нажимаешь кнопку «Кран» — тебе на кошелёк падает какая-то часть криптовалюты.
+
+Я начал собирать PEPE🤣 — ту самую зелёную лягушку, нашумевший мемкоин.
+
+За одно задание платили около 500 PEPE. Потом появились короткие ссылки — там уже платили 1000-2000 PEPE за задание.
+
+Я загорелся. Думаю: «Реально можно собирать крипту бесплатно, за простые действия, которые не занимают много времени!»
+
+Причём я совмещал с работой. У меня было свободное время — и я параллельно выполнял задания.
+
+Поставил цель: накопить 1 000 000 PEPE.
+
+Загорелся этим в 2024 году в начале весны. Ближе к концу лета — где-то в августе — я достиг цели. Собрал миллион! И... забыл про них.
+
+Прошло 2-3 месяца. Я не заходил на кошелёк.
+
+И вот — ноябрь 2024 года. Пик роста PEPE.
+
+Захожу на кошелёк. Смотрю — $28.
+
+Я такой: «Что-то сломалось, наверное». Перезагружаю страницу. Не работает?
+
+А на самом деле эти PEPE, которые я собирал за простые задания, превратились в 28 долларов.
+
+За 3-4 месяца без вложений. Просто за действия, которые я делал параллельно с работой.
+
+Для меня это было приятно. Блин, как же это круто! Оказывается, есть такие возможности — пособирать вот так.
+
+И вот — сентябрь 2026 года.
+
+Я снова зашёл на свой старый аккаунт этих кранов и бирж заданий. И думаю: «А почему бы не запустить челлендж снова?»
+
+Цель: собрать миллион PEPE до конца 2026 года.
+
+Интересно, что получится в этот раз? Сколько будет на кошельке?
+
+К тому же рынок сейчас — эти качели. Если соберу к концу года и оставлю на год — может, будет $30-40. А может, и больше.
+
+Продолжение следует...`,
+                    image: 'icons/my_way4.jpg',
+                },
+                {
+                    tag: '#Мой путь',
+                    title: 'КАК Я ПОЛУЧИЛ ПЕРВЫЙ ДРОП В КРИПТЕ. История с Notcoin',
+                    text: `Продолжаю свою историю. Сегодня расскажу, как я впервые получил свой первый дроп в криптовалюте.
+
+Что такое дроп?
+
+Дроп (airdrop) — это когда ты приходишь, тестируешь продукт разработчика, а в конце он вознаграждает тебя токенами. Эти токены листятся на биржах — их можно продать и получить деньги.
+
+Всё началось с Notcoin.
+
+В Telegram появилась такая штука: тапаешь по монетке, получаешь поинты. Тогда это было не особо на хайпе — просто забавная игрушка.
+
+Я кликал какое-то время, достиг золотого уровня, накопил кучу монет. Выполнял задания.
+
+И в один момент мне это надоело.
+
+Плюс все вокруг начали говорить: «Это скам. Миллионы пользователей, всем нужно будет раздать деньги — так не бывает».
+
+Я забросил это дело на полгода.
+
+Проходит полгода. И начинается хайп вокруг Notcoin.
+
+«Airdrop скоро! Дроп! Тапайте больше!»
+
+Мы с ребятами начинаем тапать, получать уровни. И в моменте получается то, чего никто не ожидал: компания действительно выпускает продукт, листит монету на биржах и раздаёт пользователям эти монеты.
+
+Для меня это было шоком.
+
+Казалось бы: просто тапал, кликал по экрану — и получил за это вознаграждение. Точное количество не помню, но примерно $70 на тот момент, когда монета залистилась.
+
+Тут был вариант оставить в стейкинге.
+
+В приложении можно было застейкать монеты на месяц или три месяца, и в конце срока давали дополнительное вознаграждение.
+
+Но я тогда был зелёный. Думал: «Стейкинг? Цена упадёт — и я ничего не получу».
+
+В итоге вывел на Telegram-кошелёк. Проходит время, цена немного падает. На балансе — $50.
+
+Думаю: «Ладно, давай ещё подождём».
+
+И тут начались эмоции🥵😁😂☺️
+
+Продай! Сейчас продай! Лучший момент! Если не продашь — монета обесценится!
+
+Месяц, два держу. Цена начинает расти. Смотрю на баланс — $98.
+
+Я такой: «Всё. Это тот момент, когда нужно продать».
+
+Продаю. Получаю $98.
+
+И проходит буквально 2-3 месяца.
+
+Notcoin начинает жёстко откатываться. Прям на самое дно.
+
+И я такой: «Хорошо, что я тогда продал!»
+
+Да, я был на эмоциях. Да, я не знал, что делаю. Но я получил свою первую выплату с дропа.
+
+Это был мой первый опыт. И он многому меня научил.
+
+Продолжение следует...`,
+                    image: 'icons/my_way5.jpg',
                 },
             ],
         };
@@ -2175,11 +2875,21 @@ DeFi дает доступ к финансовым услугам любому �
             doc: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="14 3 14 9 20 9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
             comic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v14H7l-4 4z"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>`,
             film: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="2" y1="9" x2="7" y2="9"/><line x1="2" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="22" y2="9"/><line x1="17" y1="15" x2="22" y2="15"/></svg>`,
-            arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+            arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
             heart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`,
             comment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>`,
             hourglass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M6 2v6a6 6 0 0 0 6 6 6 6 0 0 0 6-6V2M6 22v-6a6 6 0 0 1 6-6 6 6 0 0 1 6 6v6"/></svg>`,
             chevronDown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+            compassBig: `<svg viewBox="0 0 200 200" fill="none" stroke="rgba(168,255,62,0.5)" stroke-width="0.8">
+                <circle cx="100" cy="100" r="88" stroke-dasharray="2 6"/>
+                <circle cx="100" cy="100" r="70" stroke-dasharray="1 10"/>
+                <circle cx="100" cy="100" r="50" stroke-dasharray="3 8"/>
+                <line x1="100" y1="10" x2="100" y2="190" stroke-dasharray="2 4"/>
+                <line x1="10" y1="100" x2="190" y2="100" stroke-dasharray="2 4"/>
+                <polygon points="100,35 105,100 100,165 95,100" fill="rgba(168,255,62,0.15)" stroke="rgba(168,255,62,0.5)" stroke-width="0.6"/>
+                <polygon points="35,100 100,95 165,100 100,105" fill="rgba(168,255,62,0.08)" stroke="rgba(168,255,62,0.3)" stroke-width="0.6"/>
+                <circle cx="100" cy="100" r="4" fill="rgba(168,255,62,0.7)"/>
+            </svg>`,
         };
 
         const BUBBLE_SIZE = 180;
@@ -2293,6 +3003,46 @@ DeFi дает доступ к финансовым услугам любому �
             });
         }
 
+        function buildRotorSVG() {
+            const cx = 190;
+            const cy = 190;
+            const dots = 12;
+            let items = '';
+
+            items += `<circle cx="${cx}" cy="${cy}" r="140" fill="none" stroke="rgba(247, 147, 26, 0.35)" stroke-width="1.5" stroke-dasharray="4 8"/>`;
+            items += `<circle cx="${cx}" cy="${cy}" r="165" fill="none" stroke="rgba(247, 147, 26, 0.20)" stroke-width="1" stroke-dasharray="2 10"/>`;
+            items += `<circle cx="${cx}" cy="${cy}" r="115" fill="none" stroke="rgba(247, 147, 26, 0.25)" stroke-width="1" stroke-dasharray="3 6"/>`;
+
+            for (let i = 0; i < dots; i++) {
+                const a = (i / dots) * Math.PI * 2;
+                const x = cx + Math.cos(a) * 140;
+                const y = cy + Math.sin(a) * 140;
+                items += `<circle cx="${x}" cy="${y}" r="3" fill="rgba(247, 147, 26, 0.95)" filter="url(#glowDot)"/>`;
+            }
+
+            for (let i = 0; i < 6; i++) {
+                const a = (i / 6) * Math.PI * 2 + Math.PI / 6;
+                const x = cx + Math.cos(a) * 165;
+                const y = cy + Math.sin(a) * 165;
+                items += `<circle cx="${x}" cy="${y}" r="2" fill="rgba(168, 255, 62, 0.85)"/>`;
+            }
+
+            return `
+                <svg viewBox="0 0 380 380" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <filter id="glowDot" x="-200%" y="-200%" width="500%" height="500%">
+                            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                            <feMerge>
+                                <feMergeNode in="blur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    ${items}
+                </svg>
+            `;
+        }
+
         function renderCryptoView() {
             const container = document.getElementById('crypto-view');
             if (!container || container.dataset.rendered === 'true') return;
@@ -2371,8 +3121,14 @@ DeFi дает доступ к финансовым услугам любому �
                     <div class="crypto-center">
                         <div class="crypto-center-glow"></div>
 
-                        <div class="crypto-orbit">
-                            <img src="icons/b_w.png" alt="" onerror="this.style.display='none';">
+                        <div class="crypto-rotor">
+                            ${buildRotorSVG()}
+                        </div>
+
+                        <div class="crypto-coin">
+                            <img src="icons/b_w.png" alt="Bitcoin"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <div class="crypto-coin-fallback" style="display:none;">₿</div>
                         </div>
                     </div>
                     ${cardsHTML}
@@ -2386,33 +3142,91 @@ DeFi дает доступ к финансовым услугам любому �
             `;
         }
 
+        function buildSidePanels() {
+            const leftHTML = `
+                <aside class="mypath-side-left">
+                    <div class="side-label">Путь · Шаги · Рост</div>
+                    <div class="side-track">
+                        <div class="side-track-line"></div>
+                        <div class="side-step side-step-active"></div>
+                        <div class="side-step"></div>
+                        <div class="side-step"></div>
+                        <div class="side-step"></div>
+                        <div class="side-step"></div>
+                        <div class="side-step"></div>
+                        <div class="side-compass">
+                            ${MYPATH_ICONS.compassBig}
+                        </div>
+                    </div>
+                </aside>
+            `;
+
+            const coins = [
+                { cls: 'side-coin-1', sym: '₿' },
+                { cls: 'side-coin-2', sym: 'Ξ' },
+                { cls: 'side-coin-3', sym: '◎' },
+                { cls: 'side-coin-4', sym: '$' },
+                { cls: 'side-coin-5', sym: '₽' },
+                { cls: 'side-coin-6', sym: '¥' },
+                { cls: 'side-coin-7', sym: '€' },
+            ];
+
+            const coinsHTML = coins.map(c => `
+                <div class="side-coin ${c.cls}">${c.sym}</div>
+            `).join('');
+
+            let particlesHTML = '';
+            for (let i = 0; i < 18; i++) {
+                const left = Math.random() * 100;
+                const duration = 6 + Math.random() * 8;
+                const delay = Math.random() * 8;
+                const size = 1 + Math.random() * 2;
+                particlesHTML += `<span class="side-particle" style="left: ${left}%; bottom: -20px; width: ${size}px; height: ${size}px; animation-duration: ${duration}s; animation-delay: ${delay}s;"></span>`;
+            }
+
+            const rightHTML = `
+                <aside class="mypath-side-right">
+                    <div class="side-floaters">
+                        ${coinsHTML}
+                        <div class="side-particles">
+                            ${particlesHTML}
+                        </div>
+                    </div>
+                </aside>
+            `;
+
+            return { leftHTML, rightHTML };
+        }
+
         function renderMypathView() {
             const container = document.getElementById('mypath-view');
             if (!container || container.dataset.rendered === 'true') return;
             container.dataset.rendered = 'true';
 
             const hero = MYPATH.hero;
+            const { leftHTML, rightHTML } = buildSidePanels();
 
             const cardsHTML = MYPATH.cards.map(card => `
-                <a href="${card.link}" class="mypath-card" onclick="event.preventDefault();">
-                    <div class="mypath-card-image" style="background-image: url('${card.image}');">
+                <a href="${card.link}" class="mypath-card" data-card-link="${card.link}" onclick="event.preventDefault();">
+                    <div class="mypath-card-info">
                         <div class="mypath-card-icon">
                             ${MYPATH_ICONS[card.icon] || MYPATH_ICONS.doc}
                         </div>
-                        ${card.soon ? `
-                            <span class="mypath-badge-soon">
-                                ${MYPATH_ICONS.hourglass}
-                                скоро
-                            </span>
-                        ` : ''}
-                    </div>
-                    <div class="mypath-card-body">
                         <h3>${card.title}</h3>
                         <p>${card.text}</p>
-                        <div class="mypath-card-arrow">
-                            ${MYPATH_ICONS.arrow}
-                        </div>
+                        ${card.soon
+                            ? `<span class="mypath-card-btn soon">
+                                <span class="btn-icon">${MYPATH_ICONS.hourglass}</span>
+                                <span>Скоро</span>
+                                <span class="btn-arrow">${MYPATH_ICONS.arrow}</span>
+                               </span>`
+                            : `<span class="mypath-card-btn">
+                                <span>Открыть</span>
+                                <span class="btn-arrow">${MYPATH_ICONS.arrow}</span>
+                               </span>`
+                        }
                     </div>
+                    <div class="mypath-card-visual" style="background-image: url('${card.image}');"></div>
                 </a>
             `).join('');
 
@@ -2432,59 +3246,76 @@ DeFi дает доступ к финансовым услугам любому �
                                 ${MYPATH_ICONS.chevronDown}
                             </span>
                         ` : ''}
-                        <div class="mypath-post-meta">
-                            <span>${MYPATH_ICONS.comment} ${post.comments}</span>
-                        </div>
                     </div>
                 </a>
             `;
             }).join('');
 
             container.innerHTML = `
-                <div class="mypath-main">
+                <div class="mypath-layout">
+                    ${leftHTML}
+                    <div class="mypath-main">
 
-                    <section class="mypath-hero">
-                        <div class="mypath-hero-text">
-                            <h1>${hero.title_line1} <span>${hero.title_line2}</span></h1>
-                            <p>${hero.text}</p>
-                        </div>
-                    </section>
-
-                    <section class="mypath-section">
-                        <div class="mypath-section-title">
-                            <div class="mypath-section-icon">
-                                ${MYPATH_ICONS.compass}
+                        <section class="mypath-hero">
+                            <div class="mypath-hero-text">
+                                <h1 class="mypath-hero-title">
+                                    <span class="line1">${hero.line1}</span>
+                                    <span class="line2">${hero.line2}</span>
+                                </h1>
+                                <p>${hero.text}</p>
                             </div>
-                            <h2>Мой путь</h2>
-                            <div class="line"></div>
-                        </div>
-                        <p class="mypath-section-subtitle">Разделы моего пути. Здесь — то, что формирует меня.</p>
+                        </section>
 
-                        <div class="mypath-cards">
-                            ${cardsHTML}
-                        </div>
-                    </section>
-
-                    <section class="mypath-section">
-                        <div class="mypath-section-title">
-                            <div class="mypath-section-icon">
-                                ${MYPATH_ICONS.doc}
+                        <section class="mypath-section">
+                            <div class="mypath-section-title">
+                                <div class="mypath-section-icon">
+                                    ${MYPATH_ICONS.compass}
+                                </div>
+                                <h2>Мой путь</h2>
+                                <div class="line"></div>
                             </div>
-                            <h2>Посты</h2>
-                            <div class="line"></div>
+                            <p class="mypath-section-subtitle">Разделы моего пути. Здесь — то, что формирует меня.</p>
+
+                            <div class="mypath-cards">
+                                ${cardsHTML}
+                            </div>
+                        </section>
+
+                        <section class="mypath-section" id="mypath-posts-section">
+                            <div class="mypath-section-title">
+                                <div class="mypath-section-icon">
+                                    ${MYPATH_ICONS.doc}
+                                </div>
+                                <h2>Посты</h2>
+                                <div class="line"></div>
+                            </div>
+
+                            <div class="mypath-posts" id="mypath-posts">
+                                ${postsHTML}
+                            </div>
+                        </section>
+
+                        <div class="mypath-footer">
+                            Всё самое интересное ещё впереди
                         </div>
 
-                        <div class="mypath-posts" id="mypath-posts">
-                            ${postsHTML}
-                        </div>
-                    </section>
-
-                    <div class="mypath-footer">
-                        Всё самое интересное ещё впереди
                     </div>
-
+                    ${rightHTML}
                 </div>
             `;
+
+            container.querySelectorAll('.mypath-card').forEach(cardEl => {
+                cardEl.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const link = this.dataset.cardLink;
+                    if (link === 'posts') {
+                        const postsSection = document.getElementById('mypath-posts-section');
+                        if (postsSection) {
+                            postsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
 
             container.querySelectorAll('.mypath-post').forEach(postEl => {
                 const index = parseInt(postEl.dataset.postIndex);
