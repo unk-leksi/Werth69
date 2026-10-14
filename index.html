@@ -1,4 +1,4 @@
-<!DOCT<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -2013,6 +2013,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             transition: all 0.4s ease;
+            white-space: pre-line;
         }
 
         .mypath-post.expanded .mypath-post-text {
@@ -2060,6 +2061,86 @@
             transform: rotate(180deg);
         }
 
+        /* Кнопка перехода в Telegram — появляется внутри раскрытого поста */
+        .mypath-post-tg {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            width: fit-content;
+            padding: 9px 16px 9px 12px;
+            margin-top: 4px;
+            background: rgba(0, 136, 204, 0.14);
+            border: 1px solid rgba(51, 170, 238, 0.55);
+            border-radius: 999px;
+            color: #4fc3f7;
+            font-size: 12.5px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mypath-post.expanded .mypath-post-tg {
+            display: inline-flex;
+            animation: tgFadeIn 0.4s ease;
+        }
+
+        @keyframes tgFadeIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .mypath-post-tg:hover {
+            background: #4fc3f7;
+            color: #0a1310;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 22px rgba(79, 195, 247, 0.55);
+        }
+
+        .mypath-post-tg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(115deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.35) 50%,
+                transparent 100%);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        .mypath-post-tg:hover::before {
+            left: 100%;
+        }
+
+        .mypath-post-tg svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .mypath-post-tg .arrow {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .mypath-post-tg:hover .arrow {
+            transform: translateX(3px);
+        }
+
         .mypath-footer {
             text-align: center;
             padding: 20px 0 8px;
@@ -2070,153 +2151,6 @@
             margin-top: 10px;
         }
 
-        .post-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 40px 20px;
-            overflow-y: auto;
-        }
-
-        .post-modal.hidden { display: none; }
-
-        .post-modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            animation: fadeIn 0.25s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-
-        .post-modal-dialog {
-            position: relative;
-            width: 100%;
-            max-width: 880px;
-            background: rgba(15, 26, 21, 0.96);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
-            animation: postDialogIn 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            z-index: 1;
-            margin: auto;
-        }
-
-        @keyframes postDialogIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .post-modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.55);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            font-size: 22px;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s ease;
-            z-index: 5;
-        }
-
-        .post-modal-close:hover {
-            background: var(--accent);
-            color: var(--text-invert);
-            border-color: var(--accent);
-            transform: rotate(90deg);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .post-modal-hero {
-            width: 100%;
-            background-color: #000;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 20px;
-        }
-
-        .post-modal-hero img {
-            max-width: 100%;
-            max-height: 420px;
-            width: auto;
-            height: auto;
-            display: block;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .post-modal-body { padding: 28px 36px 36px; }
-
-        .post-modal-title {
-            margin: 0 0 20px;
-            font-size: 28px;
-            font-weight: 900;
-            line-height: 1.25;
-            letter-spacing: -0.4px;
-            color: var(--text);
-        }
-
-        .post-modal-text {
-            font-size: 15px;
-            line-height: 1.75;
-            color: var(--text);
-        }
-
-        .post-modal-text p { margin: 0 0 16px; }
-        .post-modal-text p:last-child { margin-bottom: 0; }
-
-        .post-modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            padding: 20px 36px 28px;
-            border-top: 1px solid var(--border-soft);
-        }
-
-        .post-modal-footer .btn {
-            padding: 12px 26px;
-            font-size: 14px;
-            font-family: inherit;
-            font-weight: 700;
-            border-radius: 10px;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-muted);
-            transition: all 0.2s ease;
-        }
-
-        .post-modal-footer .btn:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
-        /* ============================================================
-           АДАПТИВ
-           ============================================================ */
         @media (max-width: 1500px) {
             .crypto-card {
                 --radius: 350px;
@@ -2492,23 +2426,10 @@
                 overflow: visible;
             }
 
-            .brand {
-                gap: 10px;
-            }
-
-            .brand-logo {
-                width: 40px;
-                height: 40px;
-            }
-
-            .brand-text h1 {
-                font-size: 20px;
-                letter-spacing: 0.5px;
-            }
-
-            .brand-tagline {
-                display: none;
-            }
+            .brand { gap: 10px; }
+            .brand-logo { width: 40px; height: 40px; }
+            .brand-text h1 { font-size: 20px; letter-spacing: 0.5px; }
+            .brand-tagline { display: none; }
 
             .view-switch {
                 order: 3;
@@ -2521,59 +2442,22 @@
                 padding: 3px;
                 flex-shrink: 0;
             }
+            .view-switch::-webkit-scrollbar { display: none; }
+            .view-btn { padding: 7px 12px; font-size: 11.5px; flex-shrink: 0; }
+            .view-btn svg { width: 14px; height: 14px; }
+            .topbar-actions { display: none; }
 
-            .view-switch::-webkit-scrollbar {
-                display: none;
-            }
+            .bubble-label { font-size: 11px; padding: 0 4px; }
+            .bubble-icon { margin-bottom: 4px; }
 
-            .view-btn {
-                padding: 7px 12px;
-                font-size: 11.5px;
-                flex-shrink: 0;
-            }
-
-            .view-btn svg {
-                width: 14px;
-                height: 14px;
-            }
-
-            .topbar-actions {
-                display: none;
-            }
-
-            /* ============================================================
-               ПУЗЫРЬКИ — УМЕНЬШЕНЫ ДЛЯ МОБИЛЬНЫХ
-               ============================================================ */
-            .bubble {
-                transition: opacity 0.8s ease, filter 0.3s ease, box-shadow 0.3s ease;
-            }
-
-            .bubble-label {
-                font-size: 11px;
-                padding: 0 4px;
-            }
-
-            .bubble-icon {
-                margin-bottom: 4px;
-            }
-
-            /* ============================================================
-               КРИПТОКОНЦЕПЦИИ — КРАСИВОЕ СВЕЧЕНИЕ И СВЯЗЬ С КАРТОЧКАМИ
-               ============================================================ */
             .crypto-stage {
                 grid-template-columns: 1fr;
                 padding: 16px;
                 gap: 14px;
-                position: relative;
             }
 
-            .crypto-center {
-                height: 200px;
-                margin-bottom: 4px;
-                position: relative;
-            }
+            .crypto-center { height: 200px; margin-bottom: 4px; position: relative; }
 
-            /* Добавляем пульсирующие кольца вокруг монеты */
             .crypto-center::before,
             .crypto-center::after {
                 content: '';
@@ -2586,41 +2470,29 @@
                 pointer-events: none;
                 z-index: 1;
             }
-
             .crypto-center::before {
-                width: 170px;
-                height: 170px;
+                width: 170px; height: 170px;
                 animation: mobileRingPulse 3s ease-in-out infinite;
             }
-
             .crypto-center::after {
-                width: 210px;
-                height: 210px;
+                width: 210px; height: 210px;
                 border-color: rgba(247, 147, 26, 0.18);
                 animation: mobileRingPulse 3s ease-in-out infinite;
                 animation-delay: 1.5s;
             }
 
             @keyframes mobileRingPulse {
-                0% {
-                    transform: translate(-50%, -50%) scale(0.85);
-                    opacity: 0.9;
-                }
-                100% {
-                    transform: translate(-50%, -50%) scale(1.35);
-                    opacity: 0;
-                }
+                0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.9; }
+                100% { transform: translate(-50%, -50%) scale(1.35); opacity: 0; }
             }
 
             .crypto-coin {
-                width: 130px;
-                height: 130px;
+                width: 130px; height: 130px;
                 filter:
                     drop-shadow(0 0 30px rgba(247, 147, 26, 0.85))
                     drop-shadow(0 0 70px rgba(247, 147, 26, 0.55));
             }
 
-            /* Декоративная линия от монеты к первой карточке */
             .crypto-center + .crypto-card::before {
                 content: '';
                 position: absolute;
@@ -2641,9 +2513,6 @@
             .crypto-assets { padding: 0 16px; margin-top: 30px; }
             .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
 
-            /* ============================================================
-               КАРТОЧКИ МОЙ ПУТЬ — ФОН ВОЗВРАЩАЕМ НАВЕРХ
-               ============================================================ */
             .mypath-view { padding: 16px; }
             .mypath-hero { padding: 28px 24px; min-height: 220px; }
             .mypath-hero-title .line1,
@@ -2653,29 +2522,21 @@
             .mypath-section-title h2 { font-size: 20px; }
             .mypath-section-subtitle { margin-left: 0; }
 
-            /* ГЛАВНОЕ: картинка карточки сверху, а не снизу */
-            .mypath-card {
-                flex-direction: column;
-                min-height: 0;
-            }
-
+            .mypath-card { flex-direction: column; min-height: 0; }
             .mypath-card-info {
                 padding: 24px 22px 22px;
                 max-width: 100%;
                 gap: 10px;
-                order: 2;                /* текст — после картинки */
+                order: 2;
             }
-
             .mypath-card-visual {
                 width: 100%;
                 min-width: 0;
-                height: 180px;           /* фиксированная высота — картинка видна */
+                height: 180px;
                 flex: 0 0 180px;
-                order: 1;                /* картинка — первой */
+                order: 1;
                 position: relative;
             }
-
-            /* Убираем верхний градиент, оставляем только лёгкий нижний */
             .mypath-card-visual::before {
                 background: linear-gradient(180deg,
                     transparent 0%,
@@ -2683,38 +2544,15 @@
                     rgba(15, 26, 21, 0.6) 85%,
                     rgba(15, 26, 21, 1) 100%);
             }
-
             .mypath-card-visual::after {
                 background: linear-gradient(180deg, transparent 60%, rgba(10, 19, 16, 0.55) 100%);
             }
 
-            .mypath-card-icon {
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-                margin-bottom: 2px;
-            }
-
-            .mypath-card-icon svg {
-                width: 22px;
-                height: 22px;
-            }
-
-            .mypath-card-info h3 {
-                font-size: 24px;
-                letter-spacing: 1px;
-            }
-
-            .mypath-card-info p {
-                font-size: 13px;
-                max-width: 100%;
-            }
-
-            .mypath-card-btn {
-                padding: 9px 16px 9px 13px;
-                font-size: 12px;
-            }
-
+            .mypath-card-icon { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px; }
+            .mypath-card-icon svg { width: 22px; height: 22px; }
+            .mypath-card-info h3 { font-size: 24px; letter-spacing: 1px; }
+            .mypath-card-info p { font-size: 13px; max-width: 100%; }
+            .mypath-card-btn { padding: 9px 16px 9px 13px; font-size: 12px; }
             .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
 
             .mypath-side-left { padding: 16px 0 18px; }
@@ -2725,84 +2563,24 @@
             .mypath-side-left .side-step-active::before { width: 8px; height: 8px; }
             .mypath-side-left .side-compass { width: 100px; height: 100px; }
 
-            .mypath-side-right .side-floaters {
-                height: 74px;
-                padding: 8px 12px;
-                gap: 6px;
-            }
-            .mypath-side-right .side-coin {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-
-            .post-modal { padding: 16px 12px; }
-            .post-modal-hero { padding: 12px; }
-            .post-modal-hero img { max-height: 260px; }
-            .post-modal-body { padding: 20px 22px 26px; }
-            .post-modal-title { font-size: 22px; }
-            .post-modal-text { font-size: 14px; }
-            .post-modal-footer { padding: 16px 22px 22px; }
+            .mypath-side-right .side-floaters { height: 74px; padding: 8px 12px; gap: 6px; }
+            .mypath-side-right .side-coin { width: 36px; height: 36px; font-size: 14px; }
         }
 
         @media (max-width: 480px) {
             .crypto-assets-list { grid-template-columns: 1fr; }
+            .crypto-center { height: 170px; }
+            .crypto-center::before { width: 140px; height: 140px; }
+            .crypto-center::after { width: 175px; height: 175px; }
+            .crypto-coin { width: 110px; height: 110px; }
 
-            .crypto-center {
-                height: 170px;
-            }
-
-            .crypto-center::before {
-                width: 140px;
-                height: 140px;
-            }
-
-            .crypto-center::after {
-                width: 175px;
-                height: 175px;
-            }
-
-            .crypto-coin {
-                width: 110px;
-                height: 110px;
-            }
-
-            /* Карточки My Path — компактнее */
-            .mypath-card-visual {
-                height: 150px;
-                flex: 0 0 150px;
-            }
-
-            .mypath-card-info {
-                padding: 20px 18px 18px;
-                gap: 8px;
-            }
-
-            .mypath-card-info h3 {
-                font-size: 22px;
-                letter-spacing: 0.8px;
-            }
-
-            .mypath-card-info p {
-                font-size: 12.5px;
-                line-height: 1.5;
-            }
-
-            .mypath-card-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .mypath-card-icon svg {
-                width: 20px;
-                height: 20px;
-            }
-
-            .mypath-card-btn {
-                padding: 8px 14px 8px 12px;
-                font-size: 11.5px;
-                gap: 8px;
-            }
+            .mypath-card-visual { height: 150px; flex: 0 0 150px; }
+            .mypath-card-info { padding: 20px 18px 18px; gap: 8px; }
+            .mypath-card-info h3 { font-size: 22px; letter-spacing: 0.8px; }
+            .mypath-card-info p { font-size: 12.5px; line-height: 1.5; }
+            .mypath-card-icon { width: 40px; height: 40px; }
+            .mypath-card-icon svg { width: 20px; height: 20px; }
+            .mypath-card-btn { padding: 8px 14px 8px 12px; font-size: 11.5px; gap: 8px; }
 
             .mypath-side-left .side-track { padding: 0 6px; }
             .mypath-side-left .side-step { width: 20px; height: 20px; }
@@ -2817,27 +2595,232 @@
                 overflow: hidden;
             }
             .mypath-side-right .side-coin {
-                width: 32px;
-                height: 32px;
-                font-size: 12px;
-                flex-shrink: 0;
+                width: 32px; height: 32px; font-size: 12px; flex-shrink: 0;
             }
         }
 
-        /* ============================================================
-           МАЛЕНЬКИЕ ЭКРАНЫ — ПУЗЫРЬКИ ЕЩЁ МЕНЬШЕ (за счёт JS)
-           ============================================================ */
-        @media (max-width: 520px) {
-            .bubble-label {
-                font-size: 10px;
+        /* =========================================================
+           КРИПТОКОНЦЕПЦИИ — МОДАЛЬНОЕ ОКНО
+           Карточка -> окно с картинкой + полным текстом ->
+           отдельная ссылка на конкретный пост Telegram.
+           ========================================================= */
+
+        body.crypto-modal-open {
+            overflow: hidden;
+        }
+
+        .crypto-card {
+            cursor: pointer;
+        }
+
+        .crypto-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .crypto-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            visibility: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .crypto-modal.open {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .crypto-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 8, 5, 0.82);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .crypto-modal-dialog {
+            position: relative;
+            width: min(820px, 100%);
+            max-height: min(88vh, 900px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: rgba(15, 26, 21, 0.98);
+            border: 1px solid rgba(168, 255, 62, 0.30);
+            border-radius: 24px;
+            box-shadow:
+                0 30px 100px rgba(0, 0, 0, 0.80),
+                0 0 60px rgba(168, 255, 62, 0.12);
+            transform: translateY(24px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .crypto-modal.open .crypto-modal-dialog {
+            transform: translateY(0) scale(1);
+        }
+
+        .crypto-modal-image {
+            width: 100%;
+            height: 300px;
+            flex-shrink: 0;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .crypto-modal-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg,
+                    rgba(10, 19, 16, 0.05) 25%,
+                    rgba(10, 19, 16, 0.92) 100%);
+        }
+
+        .crypto-modal-content {
+            padding: 26px 30px 30px;
+            overflow-y: auto;
+        }
+
+        .crypto-modal-tag {
+            display: inline-flex;
+            align-items: center;
+            width: fit-content;
+            padding: 5px 12px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(168, 255, 62, 0.45);
+            border-radius: 999px;
+            background: rgba(168, 255, 62, 0.10);
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .crypto-modal-content h2 {
+            margin: 0 0 18px;
+            color: #ffffff;
+            font-size: clamp(24px, 3vw, 34px);
+            line-height: 1.2;
+            font-weight: 900;
+        }
+
+        .crypto-modal-content p {
+            margin: 0;
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.75;
+            white-space: pre-line;
+        }
+
+        .crypto-modal-telegram {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            width: fit-content;
+            margin-top: 26px;
+            padding: 12px 18px 12px 14px;
+            border: 1px solid rgba(51, 170, 238, 0.55);
+            border-radius: 999px;
+            background: rgba(0, 136, 204, 0.14);
+            color: #4fc3f7;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+            transition: all 0.3s ease;
+        }
+
+        .crypto-modal-telegram:hover {
+            background: #4fc3f7;
+            color: #0a1310;
+            border-color: #4fc3f7;
+            box-shadow: 0 0 24px rgba(79, 195, 247, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .crypto-modal-telegram svg {
+            width: 17px;
+            height: 17px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .crypto-modal-telegram .arrow {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-left: 2px;
+        }
+
+        .crypto-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 5;
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50%;
+            background: rgba(5, 12, 9, 0.68);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 28px;
+            line-height: 1;
+            transition: all 0.25s ease;
+        }
+
+        .crypto-modal-close:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: var(--text-invert);
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 700px) {
+            .crypto-modal {
+                padding: 14px;
+            }
+
+            .crypto-modal-dialog {
+                max-height: 92vh;
+                border-radius: 18px;
+            }
+
+            .crypto-modal-image {
+                height: 220px;
+            }
+
+            .crypto-modal-content {
+                padding: 22px 20px 24px;
+            }
+
+            .crypto-modal-content p {
+                font-size: 14px;
+                line-height: 1.65;
+            }
+
+            .crypto-modal-telegram {
+                width: 100%;
+                justify-content: center;
             }
         }
 
-        @media (max-width: 400px) {
-            .bubble-label {
-                font-size: 9px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -2918,26 +2901,6 @@
         <div class="hint">Наведи — подсветится · Кликни — откроется</div>
     </div>
 
-    <div class="post-modal hidden" id="post-modal">
-        <div class="post-modal-backdrop" onclick="closePostModal()"></div>
-        <div class="post-modal-dialog">
-            <button class="post-modal-close" onclick="closePostModal()" title="Закрыть (Esc)">×</button>
-
-            <div class="post-modal-hero">
-                <img src="" alt="" id="post-modal-image">
-            </div>
-
-            <div class="post-modal-body">
-                <h2 class="post-modal-title" id="post-modal-title"></h2>
-                <div class="post-modal-text" id="post-modal-text"></div>
-            </div>
-
-            <div class="post-modal-footer">
-                <button class="btn" onclick="closePostModal()">Закрыть</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         const PLATFORMS = [
             {
@@ -2998,7 +2961,8 @@
 Каждый блок содержит набор транзакций, временную метку и хеш предыдущего блока. Именно эта связь через хеши и создает «цепь», делая данные практически неизменяемыми.`,
                 image: 'icons/picture_1.jpg',
                 color: '#F7931A',
-                icon: `<svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v1H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 6V7a3 3 0 1 1 6 0v1H9z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v1H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 6V7a3 3 0 1 1 6 0v1H9z"/></svg>`,
+                url: 'https://t.me/werth_69/368'
             },
             {
                 title: 'Что такое децентрализация?',
@@ -3010,7 +2974,8 @@
 Однако существуют разные уровни децентрализации: одни сети более децентрализованы, чем другие. Важно понимать, где находится конкретный проект на этом спектре.`,
                 image: 'icons/picture_2.jpg',
                 color: '#16a34a',
-                icon: `<svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zm0 9-10 5 10 5 10-5-10-5z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zm0 9-10 5 10 5 10-5-10-5z"/></svg>`,
+                url: 'https://t.me/werth_69/369'
             },
             {
                 title: 'Что такое смарт-контракты?',
@@ -3022,7 +2987,8 @@
 Благодаря такой автоматизации можно создавать любые децентрализованные приложения (DApps).`,
                 image: 'icons/picture_3.jpg',
                 color: '#0A66C2',
-                icon: `<svg viewBox="0 0 24 24"><path d="M9 2v2H7a3 3 0 0 0-3 3v3a3 3 0 0 1-1.5 2.6A3 3 0 0 1 4 13v3a3 3 0 0 0 3 3h2v2h2v-2h2v2h2v-2h2a3 3 0 0 0 3-3v-3a3 3 0 0 1 1.5-2.6A3 3 0 0 1 20 10V7a3 3 0 0 0-3-3h-2V2h-2v2h-2V2H9zm0 11v2h6v-2H9z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M9 2v2H7a3 3 0 0 0-3 3v3a3 3 0 0 1-1.5 2.6A3 3 0 0 1 4 13v3a3 3 0 0 0 3 3h2v2h2v-2h2v2h2v-2h2a3 3 0 0 0 3-3v-3a3 3 0 0 1 1.5-2.6A3 3 0 0 1 20 10V7a3 3 0 0 0-3-3h-2V2h-2v2h-2V2H9zm0 11v2h6v-2H9z"/></svg>`,
+                url: 'https://t.me/werth_69/371'
             },
             {
                 title: 'Механизмы консенсуса',
@@ -3034,7 +3000,8 @@ Proof of Work (PoW): используется в Bitcoin. Здесь майне�
 Proof of Stake (PoS): используется в Ethereum (начиная с The Merge). Здесь безопасность сети обеспечивают валидаторы, которые «размещают в стейкинге» криптовалюту. PoS намного экономичнее по энергии, чем PoW.`,
                 image: 'icons/picture_4.jpg',
                 color: '#627EEA',
-                icon: `<svg viewBox="0 0 24 24"><path d="M12 2 5 12l7 4 7-4-7-10zm0 15-7-4 7 10 7-10-7 4z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M12 2 5 12l7 4 7-4-7-10zm0 15-7-4 7 10 7-10-7 4z"/></svg>`,
+                url: 'https://t.me/werth_69/373'
             },
             {
                 title: 'Децентрализованные финансы (DeFi)',
@@ -3046,7 +3013,8 @@ Proof of Stake (PoS): используется в Ethereum (начиная с Th
 DeFi дает доступ к финансовым услугам любому человеку с интернетом, независимо от страны и гражданства.`,
                 image: 'icons/picture_5.jpg',
                 color: '#9945FF',
-                icon: `<svg viewBox="0 0 24 24"><path d="M20 7h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-10-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h-4V5z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M20 7h-4V5a3 3 0 0 0-3-3h-2a3 3 0 0 0-3 3v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zm-10-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h-4V5z"/></svg>`,
+                url: 'https://t.me/werth_69/376'
             },
             {
                 title: 'Токеномика',
@@ -3058,7 +3026,8 @@ DeFi дает доступ к финансовым услугам любому �
 Понимание токеномики помогает инвесторам оценить устойчивость проекта в долгосрочной перспективе.`,
                 image: 'icons/picture_6.jpg',
                 color: '#dc2626',
-                icon: `<svg viewBox="0 0 24 24"><path d="M4 4h16v3H4V4zm2 5h12v3H6V9zm-2 5h16v3H4v-3zm2 5h12v3H6v-3z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M4 4h16v3H4V4zm2 5h12v3H6V9zm-2 5h16v3H4v-3zm2 5h12v3H6v-3z"/></svg>`,
+                url: 'https://t.me/werth_69/380'
             },
             {
                 title: 'Приватные и публичные ключи',
@@ -3072,7 +3041,8 @@ DeFi дает доступ к финансовым услугам любому �
 Храните приватные ключи в надежном месте: аппаратные кошельки, бумажные копии в сейфе или зашифрованные файлы.`,
                 image: 'icons/picture_7.jpg',
                 color: '#22c55e',
-                icon: `<svg viewBox="0 0 24 24"><path d="M14 2a6 6 0 0 0-5.7 8H2v4h2v3h4v-3h2v-3h.3A6 6 0 1 0 14 2zm2 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M14 2a6 6 0 0 0-5.7 8H2v4h2v3h4v-3h2v-3h.3A6 6 0 1 0 14 2zm2 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg>`,
+                url: 'https://t.me/werth_69/382'
             },
             {
                 title: 'Сид-фраза',
@@ -3084,7 +3054,8 @@ DeFi дает доступ к финансовым услугам любому �
 Поэтому храните фразу в надежном месте и ни с кем не делитесь ею.`,
                 image: 'icons/picture_8.jpg',
                 color: '#627EEA',
-                icon: `<svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm0 6a3 3 0 0 1 3 3c0 1.3-.8 2.4-2 2.8V16h-2v-3.2c-1.2-.4-2-1.5-2-2.8a3 3 0 0 1 3-3z"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4zm0 6a3 3 0 0 1 3 3c0 1.3-.8 2.4-2 2.8V16h-2v-3.2c-1.2-.4-2-1.5-2-2.8a3 3 0 0 1 3-3z"/></svg>`,
+                url: 'https://t.me/werth_69/386'
             },
             {
                 title: 'Стейблкоины',
@@ -3096,7 +3067,8 @@ DeFi дает доступ к финансовым услугам любому �
 Хотя эти стейблкоины называют «стабильными», риск все равно есть — отвязка от доллара, проблемы с ликвидностью, регуляторные риски.`,
                 image: 'icons/picture_9.jpg',
                 color: '#eab308',
-                icon: `<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke="#0a1310" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`
+                icon: `<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke="#0a1310" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
+                url: 'https://t.me/werth_69/389'
             },
         ];
 
@@ -3163,6 +3135,7 @@ DeFi дает доступ к финансовым услугам любому �
 
 Продолжение следует...`,
                     image: 'icons/my_way1.jpg',
+                    url: 'https://t.me/werth_69/286',
                 },
                 {
                     tag: '#Мой путь',
@@ -3192,7 +3165,8 @@ DeFi дает доступ к финансовым услугам любому �
 Теперь я точно знаю: лёгких денег не бывает. Только дисциплина, анализ и терпение.
 
 Продолжение следует...`,
-                    image: 'icons/post2.jpg',
+                    image: 'icons/my_way2.png',
+                    url: 'https://t.me/werth_69/289',
                 },
                 {
                     tag: '#Мой путь',
@@ -3229,7 +3203,8 @@ DeFi дает доступ к финансовым услугам любому �
 Я уже пришёл к осознанному выбору. А вы?
 
 Продолжение следует...`,
-                    image: 'icons/post3.jpg',
+                    image: 'icons/my_way3.png',
+                    url: 'https://t.me/werth_69/290',
                 },
                 {
                     tag: '#Мой путь',
@@ -3282,6 +3257,7 @@ DeFi дает доступ к финансовым услугам любому �
 
 Продолжение следует...`,
                     image: 'icons/my_way4.jpg',
+                    url: 'https://t.me/werth_69/372',
                 },
                 {
                     tag: '#Мой путь',
@@ -3346,6 +3322,7 @@ Notcoin начинает жёстко откатываться. Прям на с
 
 Продолжение следует...`,
                     image: 'icons/my_way5.jpg',
+                    url: 'https://t.me/werth_69/402',
                 },
             ],
         };
@@ -3360,6 +3337,8 @@ Notcoin начинает жёстко откатываться. Прям на с
             comment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>`,
             hourglass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M6 2v6a6 6 0 0 0 6 6 6 6 0 0 0 6-6V2M6 22v-6a6 6 0 0 1 6-6 6 6 0 0 1 6 6v6"/></svg>`,
             chevronDown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+            telegram: `<svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>`,
+            arrowSmall: `<svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
             compassBig: `<svg viewBox="0 0 200 200" fill="none" stroke="rgba(168,255,62,0.5)" stroke-width="0.8">
                 <circle cx="100" cy="100" r="88" stroke-dasharray="2 6"/>
                 <circle cx="100" cy="100" r="70" stroke-dasharray="1 10"/>
@@ -3529,7 +3508,11 @@ Notcoin начинает жёстко откатываться. Прям на с
             container.dataset.rendered = 'true';
 
             const cardsHTML = CRYPTO_POSTS.map((p, i) => `
-                <a href="#" class="crypto-card crypto-card-${i + 1}" onclick="event.preventDefault(); openPostModal(${i});">
+                <div class="crypto-card crypto-card-${i + 1}"
+                     data-crypto-index="${i}"
+                     role="button"
+                     tabindex="0"
+                     aria-label="Открыть пост: ${p.title}">
                     <div class="crypto-card-image"
                          style="background-image: url('${p.image}'); background-color: ${p.color};">
                         <div class="crypto-card-glass-icon">
@@ -3540,7 +3523,7 @@ Notcoin начинает жёстко откатываться. Прям на с
                         <h3>${p.title}</h3>
                         <p>${p.excerpt}</p>
                     </div>
-                </a>
+                </div>
             `).join('');
 
             const assetsHTML = ASSETS.map(a => `
@@ -3619,7 +3602,96 @@ Notcoin начинает жёстко откатываться. Прям на с
                         ${assetsHTML}
                     </div>
                 </div>
+
+                <!-- Криптоконцепция открывается внутри сайта.
+                     Telegram открывается только по отдельной кнопке после текста. -->
+                <div class="crypto-modal" id="crypto-modal" aria-hidden="true">
+                    <div class="crypto-modal-backdrop" data-close-crypto-modal></div>
+
+                    <div class="crypto-modal-dialog"
+                         role="dialog"
+                         aria-modal="true"
+                         aria-labelledby="crypto-modal-title">
+
+                        <button class="crypto-modal-close"
+                                type="button"
+                                aria-label="Закрыть"
+                                data-close-crypto-modal>
+                            <span>×</span>
+                        </button>
+
+                        <div class="crypto-modal-image" id="crypto-modal-image"></div>
+
+                        <div class="crypto-modal-content">
+                            <div class="crypto-modal-tag">КРИПТОКОНЦЕПЦИЯ</div>
+                            <h2 id="crypto-modal-title"></h2>
+                            <p id="crypto-modal-text"></p>
+
+                            <a id="crypto-modal-telegram"
+                               class="crypto-modal-telegram"
+                               href="#"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                ${MYPATH_ICONS.telegram}
+                                <span>Читать полный пост в Telegram</span>
+                                ${MYPATH_ICONS.arrowSmall}
+                            </a>
+                        </div>
+                    </div>
+                </div>
             `;
+
+            const modal = container.querySelector('#crypto-modal');
+            const modalImage = container.querySelector('#crypto-modal-image');
+            const modalTitle = container.querySelector('#crypto-modal-title');
+            const modalText = container.querySelector('#crypto-modal-text');
+            const modalTelegram = container.querySelector('#crypto-modal-telegram');
+
+            const openCryptoModal = (index) => {
+                const post = CRYPTO_POSTS[index];
+                if (!post || !modal) return;
+
+                modalImage.style.backgroundImage = `url('${post.image}')`;
+                modalImage.style.backgroundColor = post.color;
+                modalTitle.textContent = post.title;
+                modalText.textContent = post.fullText;
+                modalTelegram.href = post.url;
+
+                modal.classList.add('open');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('crypto-modal-open');
+                modal.querySelector('.crypto-modal-close').focus();
+            };
+
+            const closeCryptoModal = () => {
+                if (!modal) return;
+                modal.classList.remove('open');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('crypto-modal-open');
+            };
+
+            container.querySelectorAll('.crypto-card').forEach((card) => {
+                const index = Number(card.dataset.cryptoIndex);
+
+                card.addEventListener('click', () => openCryptoModal(index));
+
+                card.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openCryptoModal(index);
+                    }
+                });
+            });
+
+            container.querySelectorAll('[data-close-crypto-modal]').forEach((element) => {
+                element.addEventListener('click', closeCryptoModal);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && modal?.classList.contains('open')) {
+                    closeCryptoModal();
+                }
+            });
         }
 
         function buildSidePanels() {
@@ -3714,7 +3786,7 @@ Notcoin начинает жёстко откатываться. Прям на с
                 const isLong = post.text.length > 200;
                 const shortText = isLong ? post.text.slice(0, 180).trim() + '...' : post.text;
                 return `
-                <a href="#" class="mypath-post" data-post-index="${i}" onclick="event.preventDefault();">
+                <div class="mypath-post" data-post-index="${i}">
                     <div class="mypath-post-image" style="background-image: url('${post.image}');"></div>
                     <div class="mypath-post-body">
                         <span class="mypath-post-tag">${post.tag}</span>
@@ -3726,8 +3798,13 @@ Notcoin начинает жёстко откатываться. Прям на с
                                 ${MYPATH_ICONS.chevronDown}
                             </span>
                         ` : ''}
+                        <a href="${post.url}" target="_blank" rel="noopener" class="mypath-post-tg" onclick="event.stopPropagation();">
+                            ${MYPATH_ICONS.telegram}
+                            <span>Читать в Telegram</span>
+                            ${MYPATH_ICONS.arrowSmall}
+                        </a>
                     </div>
-                </a>
+                </div>
             `;
             }).join('');
 
@@ -3797,10 +3874,13 @@ Notcoin начинает жёстко откатываться. Прям на с
                 });
             });
 
+            /* Раскрытие/сворачивание постов по клику на карточку */
             container.querySelectorAll('.mypath-post').forEach(postEl => {
                 const index = parseInt(postEl.dataset.postIndex);
                 postEl.addEventListener('click', function(e) {
-                    e.preventDefault();
+                    /* Если клик по ссылке Telegram — не перехватываем */
+                    if (e.target.closest('.mypath-post-tg')) return;
+
                     const post = MYPATH.posts[index];
                     if (!post) return;
 
@@ -3821,43 +3901,6 @@ Notcoin начинает жёстко откатываться. Прям на с
                 });
             });
         }
-
-        const postModal = document.getElementById('post-modal');
-        const postModalImage = document.getElementById('post-modal-image');
-        const postModalTitle = document.getElementById('post-modal-title');
-        const postModalText = document.getElementById('post-modal-text');
-
-        function openPostModal(index) {
-            const post = CRYPTO_POSTS[index];
-            if (!post) return;
-
-            postModalImage.src = post.image;
-            postModalImage.alt = post.title;
-            postModalTitle.textContent = post.title;
-
-            const paragraphs = (post.fullText || post.excerpt)
-                .split('\n\n')
-                .map(p => p.trim())
-                .filter(p => p.length > 0);
-
-            postModalText.innerHTML = paragraphs
-                .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`)
-                .join('');
-
-            postModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closePostModal() {
-            postModal.classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !postModal.classList.contains('hidden')) {
-                closePostModal();
-            }
-        });
 
         const bubblesView = document.getElementById('bubbles-view');
         const bubbles = [];
