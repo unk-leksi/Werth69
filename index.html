@@ -771,10 +771,16 @@
             inset: -25%;
             border-radius: 50%;
             background: radial-gradient(circle,
-                rgba(247, 147, 26, 0.35) 0%,
-                rgba(247, 147, 26, 0.10) 45%,
+                rgba(39, 235, 210, 0.34) 0%,
+                rgba(39, 235, 210, 0.12) 45%,
                 transparent 70%);
             z-index: 1;
+            animation: turquoiseGlow 3.5s ease-in-out infinite;
+        }
+
+        @keyframes turquoiseGlow {
+            0%, 100% { transform: scale(0.94); opacity: 0.72; }
+            50%      { transform: scale(1.08); opacity: 1; }
         }
 
         .crypto-rotor {
@@ -809,9 +815,110 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
             filter:
-                drop-shadow(0 0 24px rgba(247, 147, 26, 0.75))
-                drop-shadow(0 0 60px rgba(247, 147, 26, 0.45));
+                drop-shadow(0 0 24px rgba(39, 235, 210, 0.80))
+                drop-shadow(0 0 60px rgba(39, 235, 210, 0.48));
+            transition: filter 0.35s ease, transform 0.35s ease;
+        }
+
+        .crypto-coin::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 2px solid rgba(39, 235, 210, 0.72);
+            box-shadow:
+                0 0 14px rgba(39, 235, 210, 0.85),
+                0 0 34px rgba(39, 235, 210, 0.48),
+                inset 0 0 18px rgba(39, 235, 210, 0.20);
+            opacity: 0.9;
+            animation: coinTurquoiseRing 2.8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes coinTurquoiseRing {
+            0%, 100% { transform: scale(0.98); opacity: 0.68; }
+            50%      { transform: scale(1.05); opacity: 1; }
+        }
+
+        .crypto-coin:hover {
+            filter:
+                drop-shadow(0 0 32px rgba(39, 235, 210, 0.95))
+                drop-shadow(0 0 78px rgba(39, 235, 210, 0.60));
+            transform: scale(1.035);
+        }
+
+        .crypto-stage.posts-hidden .crypto-card,
+        .crypto-stage.posts-hidden .crypto-rays {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .crypto-stage.posts-hidden .crypto-card {
+            animation: none;
+        }
+
+        .crypto-stage.posts-hidden .crypto-rays {
+            transition: opacity 0.45s ease;
+        }
+
+        .crypto-stage .crypto-card,
+        .crypto-stage .crypto-rays {
+            transition: opacity 0.55s ease;
+        }
+
+        .crypto-posts-hint {
+            position: absolute;
+            left: 50%;
+            top: calc(50% + 125px);
+            transform: translateX(-50%);
+            z-index: 7;
+            padding: 8px 14px;
+            border: 1px solid rgba(39, 235, 210, 0.25);
+            border-radius: 999px;
+            background: rgba(10, 19, 16, 0.58);
+            color: rgba(184, 255, 247, 0.86);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .crypto-stage:not(.posts-hidden) .crypto-posts-hint {
+            opacity: 0;
+        }
+
+        .crypto-secondary-coin {
+            width: 120px;
+            height: 120px;
+            margin: 8px auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            filter:
+                drop-shadow(0 0 20px rgba(39, 235, 210, 0.42))
+                drop-shadow(0 0 44px rgba(39, 235, 210, 0.20));
+            opacity: 0.92;
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+
+        .crypto-secondary-coin img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .crypto-secondary-coin:hover {
+            transform: translateY(-5px) scale(1.06);
+            filter:
+                drop-shadow(0 0 26px rgba(39, 235, 210, 0.70))
+                drop-shadow(0 0 58px rgba(39, 235, 210, 0.35));
         }
 
         .crypto-coin img {
@@ -2348,7 +2455,7 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 border-radius: 50%;
-                border: 1px solid rgba(247, 147, 26, 0.35);
+                border: 1px solid rgba(39, 235, 210, 0.45);
                 pointer-events: none;
                 z-index: 1;
             }
@@ -2358,7 +2465,7 @@
             }
             .crypto-center::after {
                 width: 210px; height: 210px;
-                border-color: rgba(247, 147, 26, 0.18);
+                border-color: rgba(39, 235, 210, 0.24);
                 animation: mobileRingPulse 3s ease-in-out infinite;
                 animation-delay: 1.5s;
             }
@@ -2371,8 +2478,14 @@
             .crypto-coin {
                 width: 130px; height: 130px;
                 filter:
-                    drop-shadow(0 0 30px rgba(247, 147, 26, 0.85))
-                    drop-shadow(0 0 70px rgba(247, 147, 26, 0.55));
+                    drop-shadow(0 0 30px rgba(39, 235, 210, 0.85))
+                    drop-shadow(0 0 70px rgba(39, 235, 210, 0.55));
+            }
+
+            .crypto-secondary-coin {
+                width: 96px;
+                height: 96px;
+                margin: 4px auto 24px;
             }
 
             .crypto-center + .crypto-card::before {
@@ -2384,7 +2497,7 @@
                 width: 2px;
                 height: 30px;
                 background: linear-gradient(180deg,
-                    rgba(247, 147, 26, 0.7),
+                    rgba(39, 235, 210, 0.7),
                     rgba(168, 255, 62, 0.3),
                     transparent);
                 filter: blur(0.5px);
@@ -2937,7 +3050,7 @@
                     <circle cx="12" cy="12" r="9" fill="currentColor" fill-opacity="0.15"/>
                     <path d="M9 8h4.5a2 2 0 0 1 0 4H9m0 0h5a2 2 0 0 1 0 4H9m0 0V6"/>
                 </svg>
-                Криптоконцепции
+                Концепции
             </button>
             <button class="view-btn" data-view="mypath">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3720,7 +3833,8 @@ Notcoin начинает жёстко откатываться. Прям на с
             }).join('');
 
             container.innerHTML = `
-                <div class="crypto-stage">
+                <div class="crypto-stage posts-hidden">
+                    <div class="crypto-posts-hint">Нажмите на монету, чтобы открыть посты</div>
                     <div class="crypto-rays">
                         <svg viewBox="0 0 1500 1100" preserveAspectRatio="xMidYMid meet">
                             ${raysHTML}
@@ -3734,13 +3848,17 @@ Notcoin начинает жёстко откатываться. Прям на с
                             ${buildRotorSVG()}
                         </div>
 
-                        <div class="crypto-coin">
-                            <img src="icons/b_w.png" alt="Bitcoin"
+                        <div class="crypto-coin" role="button" tabindex="0" aria-label="Показать посты вокруг Bitcoin">
+                            <img src="icons/c_w.png" alt="Bitcoin"
                                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                             <div class="crypto-coin-fallback" style="display:none;">₿</div>
                         </div>
                     </div>
                     ${cardsHTML}
+                </div>
+                <div class="crypto-secondary-coin" role="button" tabindex="0" aria-label="Будущая монета для новых постов">
+                    <img src="icons/b_w.png" alt="Новая монета"
+                         onerror="this.style.display='none';">
                 </div>
                 <div class="crypto-assets">
                     <h2>Актуальные активы</h2>
@@ -3781,6 +3899,24 @@ Notcoin начинает жёстко откатываться. Прям на с
                 modal.setAttribute('aria-hidden', 'true');
                 document.body.classList.remove('crypto-modal-open');
             };
+
+            const cryptoStage = container.querySelector('.crypto-stage');
+            const cryptoCoin = container.querySelector('.crypto-coin');
+
+            const toggleCryptoPosts = () => {
+                if (!cryptoStage) return;
+                cryptoStage.classList.toggle('posts-hidden');
+            };
+
+            if (cryptoCoin) {
+                cryptoCoin.addEventListener('click', toggleCryptoPosts);
+                cryptoCoin.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleCryptoPosts();
+                    }
+                });
+            }
 
             container.querySelectorAll('.crypto-card').forEach((card) => {
                 const index = Number(card.dataset.cryptoIndex);
