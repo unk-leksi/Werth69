@@ -231,6 +231,7 @@
             flex-shrink: 0;
         }
 
+        /* Логотип: без салатового фона, только крутящееся видео */
         .brand-logo {
             width: 54px;
             height: 54px;
@@ -239,21 +240,23 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
-            box-shadow: 0 0 24px var(--accent-glow);
+            background: transparent;
+            box-shadow: none;
             flex-shrink: 0;
-            transition: transform 0.25s ease, box-shadow 0.3s ease;
-            animation: logoFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50%      { transform: translateY(-3px); }
+            transition: transform 0.25s ease;
+            position: relative;
         }
 
         .brand-logo:hover {
-            transform: scale(1.08);
-            box-shadow: 0 0 36px var(--accent-glow);
+            transform: scale(1.06);
+        }
+
+        .brand-logo video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+            background: transparent;
         }
 
         .brand-logo img {
@@ -2008,137 +2011,16 @@
             font-size: 12.5px;
             color: var(--text-muted);
             line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            transition: all 0.4s ease;
             white-space: pre-line;
         }
 
-        .mypath-post.expanded .mypath-post-text {
-            -webkit-line-clamp: unset;
-            display: block;
-            color: var(--text);
-        }
-
-        .mypath-post-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.25s ease;
-            margin-top: 6px;
-            width: fit-content;
-            padding: 6px 12px;
-            background: rgba(168, 255, 62, 0.06);
-            border: 1px solid rgba(168, 255, 62, 0.3);
-            border-radius: 999px;
-        }
-
-        .mypath-post-toggle:hover {
-            background: rgba(168, 255, 62, 0.15);
-            border-color: var(--accent);
-        }
-
-        .mypath-post-toggle svg {
-            width: 14px;
-            height: 14px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: transform 0.3s ease;
-        }
-
-        .mypath-post.expanded .mypath-post-toggle svg {
-            transform: rotate(180deg);
-        }
-
-        /* Кнопка перехода в Telegram — появляется внутри раскрытого поста */
-        .mypath-post-tg {
-            display: none;
-            align-items: center;
-            gap: 8px;
-            width: fit-content;
-            padding: 9px 16px 9px 12px;
-            margin-top: 4px;
-            background: rgba(0, 136, 204, 0.14);
-            border: 1px solid rgba(51, 170, 238, 0.55);
-            border-radius: 999px;
-            color: #4fc3f7;
+        .mypath-post-dots {
+            color: var(--text-muted);
             font-size: 12.5px;
+            letter-spacing: 2px;
             font-weight: 800;
-            letter-spacing: 0.3px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .mypath-post.expanded .mypath-post-tg {
-            display: inline-flex;
-            animation: tgFadeIn 0.4s ease;
-        }
-
-        @keyframes tgFadeIn {
-            from { opacity: 0; transform: translateY(-6px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .mypath-post-tg:hover {
-            background: #4fc3f7;
-            color: #0a1310;
-            border-color: #4fc3f7;
-            box-shadow: 0 0 22px rgba(79, 195, 247, 0.55);
-        }
-
-        .mypath-post-tg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(115deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.35) 50%,
-                transparent 100%);
-            transition: left 0.6s ease;
-            pointer-events: none;
-        }
-
-        .mypath-post-tg:hover::before {
-            left: 100%;
-        }
-
-        .mypath-post-tg svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
-
-        .mypath-post-tg .arrow {
-            width: 14px;
-            height: 14px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2.4;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            margin-left: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        .mypath-post-tg:hover .arrow {
-            transform: translateX(3px);
+            margin-top: -4px;
+            user-select: none;
         }
 
         .mypath-footer {
@@ -2600,9 +2482,10 @@
         }
 
         /* =========================================================
-           КРИПТОКОНЦЕПЦИИ — МОДАЛЬНОЕ ОКНО
-           Карточка -> окно с картинкой + полным текстом ->
-           отдельная ссылка на конкретный пост Telegram.
+           МОДАЛЬНОЕ ОКНО (для «Криптоконцепций» и «Мой путь»)
+           Флекс-строка: слева картинка (object-fit: contain),
+           справа текст со скроллом. Позиция — фиксированная к окну,
+           скролл страницы под модалкой не меняется.
            ========================================================= */
 
         body.crypto-modal-open {
@@ -2621,7 +2504,7 @@
         .crypto-modal {
             position: fixed;
             inset: 0;
-            z-index: 1000;
+            z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2641,24 +2524,29 @@
         .crypto-modal-backdrop {
             position: absolute;
             inset: 0;
-            background: rgba(2, 8, 5, 0.82);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(2, 8, 5, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
         }
 
+        /* Горизонтальный диалог: flex, фиксированная высота */
         .crypto-modal-dialog {
             position: relative;
-            width: min(820px, 100%);
-            max-height: min(88vh, 900px);
+            width: min(1180px, 100%);
+            height: min(88vh, 780px);
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             overflow: hidden;
-            background: rgba(15, 26, 21, 0.98);
+            background:
+                linear-gradient(135deg,
+                    rgba(15, 26, 21, 0.98) 0%,
+                    rgba(12, 22, 17, 0.98) 50%,
+                    rgba(10, 19, 16, 0.98) 100%);
             border: 1px solid rgba(168, 255, 62, 0.30);
             border-radius: 24px;
             box-shadow:
-                0 30px 100px rgba(0, 0, 0, 0.80),
-                0 0 60px rgba(168, 255, 62, 0.12);
+                0 30px 100px rgba(0, 0, 0, 0.85),
+                0 0 60px rgba(168, 255, 62, 0.15);
             transform: translateY(24px) scale(0.97);
             transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -2667,29 +2555,63 @@
             transform: translateY(0) scale(1);
         }
 
+        /* Левая колонка — картинка целиком */
         .crypto-modal-image {
-            width: 100%;
-            height: 300px;
-            flex-shrink: 0;
-            background-position: center;
-            background-size: cover;
-            background-repeat: no-repeat;
+            position: relative;
+            flex: 0 0 480px;
+            width: 480px;
+            height: 100%;
+            background: radial-gradient(circle at 50% 40%,
+                rgba(22, 42, 16, 0.9) 0%,
+                rgba(10, 19, 16, 0.95) 60%,
+                #06110a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+            border-right: 1px solid rgba(168, 255, 62, 0.12);
+        }
+
+        .crypto-modal-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+            border-radius: 12px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(168, 255, 62, 0.15);
+        }
+
+        /* Правая колонка — текст, скроллится внутри */
+        .crypto-modal-content {
+            flex: 1 1 auto;
+            min-width: 0;
+            height: 100%;
+            padding: 34px 34px 30px;
+            overflow-y: auto;
+            background:
+                linear-gradient(180deg,
+                    rgba(15, 26, 21, 0.85) 0%,
+                    rgba(10, 19, 16, 0.92) 100%);
             position: relative;
         }
 
-        .crypto-modal-image::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(180deg,
-                    rgba(10, 19, 16, 0.05) 25%,
-                    rgba(10, 19, 16, 0.92) 100%);
+        .crypto-modal-content::-webkit-scrollbar {
+            width: 8px;
         }
-
-        .crypto-modal-content {
-            padding: 26px 30px 30px;
-            overflow-y: auto;
+        .crypto-modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        .crypto-modal-content::-webkit-scrollbar-thumb {
+            background: rgba(168, 255, 62, 0.25);
+            border-radius: 4px;
+        }
+        .crypto-modal-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(168, 255, 62, 0.5);
         }
 
         .crypto-modal-tag {
@@ -2697,7 +2619,7 @@
             align-items: center;
             width: fit-content;
             padding: 5px 12px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             border: 1px solid rgba(168, 255, 62, 0.45);
             border-radius: 999px;
             background: rgba(168, 255, 62, 0.10);
@@ -2705,20 +2627,22 @@
             font-size: 10px;
             font-weight: 900;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .crypto-modal-content h2 {
             margin: 0 0 18px;
             color: #ffffff;
-            font-size: clamp(24px, 3vw, 34px);
+            font-size: clamp(22px, 2.2vw, 28px);
             line-height: 1.2;
             font-weight: 900;
+            letter-spacing: -0.3px;
         }
 
         .crypto-modal-content p {
             margin: 0;
             color: var(--text);
-            font-size: 15px;
+            font-size: 14.5px;
             line-height: 1.75;
             white-space: pre-line;
         }
@@ -2792,32 +2716,176 @@
             transform: rotate(90deg);
         }
 
-        @media (max-width: 700px) {
-            .crypto-modal {
-                padding: 14px;
-            }
-
+        @media (max-width: 900px) {
             .crypto-modal-dialog {
+                flex-direction: column;
+                height: auto;
                 max-height: 92vh;
                 border-radius: 18px;
             }
 
             .crypto-modal-image {
-                height: 220px;
+                flex: 0 0 auto;
+                width: 100%;
+                height: 260px;
+                padding: 14px;
+                border-right: none;
+                border-bottom: 1px solid rgba(168, 255, 62, 0.12);
             }
 
             .crypto-modal-content {
+                flex: 1 1 auto;
                 padding: 22px 20px 24px;
+                height: auto;
+                max-height: 55vh;
             }
 
             .crypto-modal-content p {
                 font-size: 14px;
                 line-height: 1.65;
             }
+        }
+
+        @media (max-width: 700px) {
+            .crypto-modal {
+                padding: 14px;
+            }
+
+            .crypto-modal-image {
+                height: 200px;
+            }
 
             .crypto-modal-telegram {
                 width: 100%;
                 justify-content: center;
+            }
+        }
+
+
+        /* ===== Исправления адаптивности и модального окна «Мой путь» ===== */
+        .mypath-modal-image {
+            flex: 0 0 50%;
+            width: 50%;
+            min-width: 0;
+        }
+
+        .mypath-modal-image img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Сохраняем прокрутку страницы «Мой путь» при открытии/закрытии поста. */
+        .mypath-view {
+            scroll-behavior: auto;
+            overflow-anchor: none;
+        }
+
+        @media (min-width: 901px) {
+            #mypath-modal .crypto-modal-dialog {
+                width: min(1280px, calc(100vw - 64px));
+                height: min(88vh, 820px);
+            }
+            #mypath-modal .crypto-modal-image {
+                flex: 0 0 50%;
+                width: 50%;
+                min-width: 0;
+                padding: 24px;
+            }
+            #mypath-modal .crypto-modal-content {
+                flex: 1 1 50%;
+                width: 50%;
+                min-width: 0;
+            }
+            #mypath-modal .crypto-modal-image img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* На телефоне раздел «Плавающие» недоступен — остаются три нужных раздела. */
+            .view-btn[data-view="bubbles"] {
+                display: none !important;
+            }
+
+            .topbar {
+                gap: 8px;
+                padding: 10px 12px;
+                flex-wrap: wrap;
+            }
+            .brand { gap: 8px; }
+            .brand-logo { width: 38px; height: 38px; }
+            .brand-text h1 { font-size: 18px; }
+            .brand-tagline { font-size: 7px; letter-spacing: 1px; }
+            .view-switch {
+                width: 100%;
+                justify-content: stretch;
+                gap: 3px;
+                order: 3;
+            }
+            .view-btn {
+                flex: 1 1 0;
+                justify-content: center;
+                gap: 5px;
+                padding: 8px 5px;
+                font-size: 11px;
+            }
+            .view-btn svg { width: 14px; height: 14px; }
+
+            /* Карточки списка платформ компактнее на мобильном экране. */
+            .list-view { padding: 18px 14px 30px; }
+            .list-header { margin: 0 auto 18px; }
+            .list-header h2 { font-size: 22px; }
+            .list-header p { font-size: 12px; line-height: 1.45; }
+            .cards { gap: 9px; }
+            .card {
+                gap: 12px;
+                padding: 12px 13px;
+                border-left-width: 3px;
+                border-radius: 11px;
+            }
+            .card-icon { width: 44px; height: 44px; }
+            .card-title { font-size: 14px; }
+            .card-desc { font-size: 11px; line-height: 1.4; }
+            .card-arrow { width: 30px; height: 30px; font-size: 15px; }
+
+            .mypath-view { padding: 16px 12px 32px; }
+            .mypath-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+            .mypath-side-right { display: none !important; }
+        }
+
+        @media (max-width: 900px) {
+            #mypath-modal .crypto-modal-dialog {
+                flex-direction: column;
+                width: min(620px, 100%);
+                height: auto;
+                max-height: 92vh;
+                overflow-y: auto;
+            }
+            #mypath-modal .crypto-modal-image {
+                flex: 0 0 auto;
+                width: 100%;
+                height: min(38vh, 300px);
+                min-height: 150px;
+                padding: 12px;
+            }
+            #mypath-modal .crypto-modal-image img {
+                max-width: 100%;
+                max-height: 100%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+            }
+            #mypath-modal .crypto-modal-content {
+                flex: 0 0 auto;
+                width: 100%;
+                max-height: 48vh;
+                overflow-y: auto;
+                padding: 20px 18px 24px;
             }
         }
 
@@ -2831,8 +2899,11 @@
 
         <div class="brand">
             <div class="brand-logo">
-                <img src="icons/logo.png" alt="Werth69"
-                     onerror="this.style.display='none';this.parentElement.textContent='W69';">
+                <video autoplay loop muted playsinline poster="icons/logo.png">
+                    <source src="icons/spin3d_100px.webm" type="video/webm">
+                    <img src="icons/logo.png" alt="Werth69"
+                         onerror="this.style.display='none';this.parentElement.textContent='W69';">
+                </video>
             </div>
             <div class="brand-text">
                 <h1>Werth<span>69</span></h1>
@@ -2899,6 +2970,84 @@
         <div class="mypath-view" id="mypath-view"></div>
 
         <div class="hint">Наведи — подсветится · Кликни — откроется</div>
+    </div>
+
+    <!-- ======================= МОДАЛЬНЫЕ ОКНА ======================= -->
+
+    <!-- Модалка «Криптоконцепции» -->
+    <div class="crypto-modal" id="crypto-modal" aria-hidden="true">
+        <div class="crypto-modal-backdrop" data-close-crypto-modal></div>
+
+        <div class="crypto-modal-dialog"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="crypto-modal-title">
+
+            <button class="crypto-modal-close"
+                    type="button"
+                    aria-label="Закрыть"
+                    data-close-crypto-modal>
+                <span>×</span>
+            </button>
+
+            <div class="crypto-modal-image" id="crypto-modal-image">
+                <img id="crypto-modal-img" src="" alt="">
+            </div>
+
+            <div class="crypto-modal-content">
+                <div class="crypto-modal-tag">КРИПТОКОНЦЕПЦИЯ</div>
+                <h2 id="crypto-modal-title"></h2>
+                <p id="crypto-modal-text"></p>
+
+                <a id="crypto-modal-telegram"
+                   class="crypto-modal-telegram"
+                   href="#"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+                    <span>Читать полный пост в Telegram</span>
+                    <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка «Мой путь» -->
+    <div class="crypto-modal" id="mypath-modal" aria-hidden="true">
+        <div class="crypto-modal-backdrop" data-close-mypath-modal></div>
+
+        <div class="crypto-modal-dialog"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="mypath-modal-title">
+
+            <button class="crypto-modal-close"
+                    type="button"
+                    aria-label="Закрыть"
+                    data-close-mypath-modal>
+                <span>×</span>
+            </button>
+
+            <div class="crypto-modal-image" id="mypath-modal-image">
+                <img id="mypath-modal-img" src="" alt="">
+            </div>
+
+            <div class="crypto-modal-content">
+                <div class="crypto-modal-tag" id="mypath-modal-tag"></div>
+                <h2 id="mypath-modal-title"></h2>
+                <p id="mypath-modal-text"></p>
+
+                <a id="mypath-modal-telegram"
+                   class="crypto-modal-telegram"
+                   href="#"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+                    <span>Читать полный пост в Telegram</span>
+                    <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -3333,10 +3482,7 @@ Notcoin начинает жёстко откатываться. Прям на с
             comic: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v14H7l-4 4z"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/></svg>`,
             film: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="7" y1="3" x2="7" y2="21"/><line x1="17" y1="3" x2="17" y2="21"/><line x1="2" y1="9" x2="7" y2="9"/><line x1="2" y1="15" x2="7" y2="15"/><line x1="17" y1="9" x2="22" y2="9"/><line x1="17" y1="15" x2="22" y2="15"/></svg>`,
             arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
-            heart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1L12 21l7.7-7.6 1.1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`,
-            comment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>`,
             hourglass: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12M6 22h12M6 2v6a6 6 0 0 0 6 6 6 6 0 0 0 6-6V2M6 22v-6a6 6 0 0 1 6-6 6 6 0 0 1 6 6v6"/></svg>`,
-            chevronDown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
             telegram: `<svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>`,
             arrowSmall: `<svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
             compassBig: `<svg viewBox="0 0 200 200" fill="none" stroke="rgba(168,255,62,0.5)" stroke-width="0.8">
@@ -3602,60 +3748,26 @@ Notcoin начинает жёстко откатываться. Прям на с
                         ${assetsHTML}
                     </div>
                 </div>
-
-                <!-- Криптоконцепция открывается внутри сайта.
-                     Telegram открывается только по отдельной кнопке после текста. -->
-                <div class="crypto-modal" id="crypto-modal" aria-hidden="true">
-                    <div class="crypto-modal-backdrop" data-close-crypto-modal></div>
-
-                    <div class="crypto-modal-dialog"
-                         role="dialog"
-                         aria-modal="true"
-                         aria-labelledby="crypto-modal-title">
-
-                        <button class="crypto-modal-close"
-                                type="button"
-                                aria-label="Закрыть"
-                                data-close-crypto-modal>
-                            <span>×</span>
-                        </button>
-
-                        <div class="crypto-modal-image" id="crypto-modal-image"></div>
-
-                        <div class="crypto-modal-content">
-                            <div class="crypto-modal-tag">КРИПТОКОНЦЕПЦИЯ</div>
-                            <h2 id="crypto-modal-title"></h2>
-                            <p id="crypto-modal-text"></p>
-
-                            <a id="crypto-modal-telegram"
-                               class="crypto-modal-telegram"
-                               href="#"
-                               target="_blank"
-                               rel="noopener noreferrer">
-                                ${MYPATH_ICONS.telegram}
-                                <span>Читать полный пост в Telegram</span>
-                                ${MYPATH_ICONS.arrowSmall}
-                            </a>
-                        </div>
-                    </div>
-                </div>
             `;
 
-            const modal = container.querySelector('#crypto-modal');
-            const modalImage = container.querySelector('#crypto-modal-image');
-            const modalTitle = container.querySelector('#crypto-modal-title');
-            const modalText = container.querySelector('#crypto-modal-text');
-            const modalTelegram = container.querySelector('#crypto-modal-telegram');
+            const modal         = document.getElementById('crypto-modal');
+            const modalImage    = document.getElementById('crypto-modal-image');
+            const modalImg      = document.getElementById('crypto-modal-img');
+            const modalTitle    = document.getElementById('crypto-modal-title');
+            const modalText     = document.getElementById('crypto-modal-text');
+            const modalTelegram = document.getElementById('crypto-modal-telegram');
 
             const openCryptoModal = (index) => {
                 const post = CRYPTO_POSTS[index];
                 if (!post || !modal) return;
 
-                modalImage.style.backgroundImage = `url('${post.image}')`;
+                modalImg.src = post.image;
+                modalImg.alt = post.title;
                 modalImage.style.backgroundColor = post.color;
+
                 modalTitle.textContent = post.title;
-                modalText.textContent = post.fullText;
-                modalTelegram.href = post.url;
+                modalText.textContent  = post.fullText;
+                modalTelegram.href     = post.url;
 
                 modal.classList.add('open');
                 modal.setAttribute('aria-hidden', 'false');
@@ -3683,7 +3795,7 @@ Notcoin начинает жёстко откатываться. Прям на с
                 });
             });
 
-            container.querySelectorAll('[data-close-crypto-modal]').forEach((element) => {
+            modal.querySelectorAll('[data-close-crypto-modal]').forEach((element) => {
                 element.addEventListener('click', closeCryptoModal);
             });
 
@@ -3782,9 +3894,11 @@ Notcoin начинает жёстко откатываться. Прям на с
                 </a>
             `).join('');
 
+            // Превью поста: короткий текст + три точки
             const postsHTML = MYPATH.posts.map((post, i) => {
-                const isLong = post.text.length > 200;
-                const shortText = isLong ? post.text.slice(0, 180).trim() + '...' : post.text;
+                const shortText = post.text.length > 180
+                    ? post.text.slice(0, 160).trim() + '…'
+                    : post.text;
                 return `
                 <div class="mypath-post" data-post-index="${i}">
                     <div class="mypath-post-image" style="background-image: url('${post.image}');"></div>
@@ -3792,20 +3906,10 @@ Notcoin начинает жёстко откатываться. Прям на с
                         <span class="mypath-post-tag">${post.tag}</span>
                         <h3 class="mypath-post-title">${post.title}</h3>
                         <p class="mypath-post-text">${shortText}</p>
-                        ${isLong ? `
-                            <span class="mypath-post-toggle">
-                                Читать полностью
-                                ${MYPATH_ICONS.chevronDown}
-                            </span>
-                        ` : ''}
-                        <a href="${post.url}" target="_blank" rel="noopener" class="mypath-post-tg" onclick="event.stopPropagation();">
-                            ${MYPATH_ICONS.telegram}
-                            <span>Читать в Telegram</span>
-                            ${MYPATH_ICONS.arrowSmall}
-                        </a>
+                        <div class="mypath-post-dots">• • •</div>
                     </div>
                 </div>
-            `;
+                `;
             }).join('');
 
             container.innerHTML = `
@@ -3874,31 +3978,65 @@ Notcoin начинает жёстко откатываться. Прям на с
                 });
             });
 
-            /* Раскрытие/сворачивание постов по клику на карточку */
+            /* ===== Модальное окно для постов "Мой путь" ===== */
+            const mypathModal      = document.getElementById('mypath-modal');
+            const mypathModalImg   = document.getElementById('mypath-modal-img');
+            const mypathModalImage = document.getElementById('mypath-modal-image');
+            const mypathModalTag   = document.getElementById('mypath-modal-tag');
+            const mypathModalTitle = document.getElementById('mypath-modal-title');
+            const mypathModalText  = document.getElementById('mypath-modal-text');
+            const mypathModalTg    = document.getElementById('mypath-modal-telegram');
+
+            const openMypathModal = (index) => {
+                const post = MYPATH.posts[index];
+                if (!post || !mypathModal) return;
+
+                mypathModalImg.src = post.image;
+                mypathModalImg.alt = post.title;
+                mypathModalImage.style.backgroundColor = '#0a1310';
+
+                mypathModalTag.textContent   = post.tag;
+                mypathModalTitle.textContent = post.title;
+                mypathModalText.textContent  = post.text;
+                mypathModalTg.href           = post.url;
+
+                mypathModal.classList.add('open');
+                mypathModal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('crypto-modal-open');
+                mypathModal.querySelector('.crypto-modal-close').focus();
+            };
+
+            const closeMypathModal = () => {
+                if (!mypathModal) return;
+                mypathModal.classList.remove('open');
+                mypathModal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('crypto-modal-open');
+            };
+
             container.querySelectorAll('.mypath-post').forEach(postEl => {
-                const index = parseInt(postEl.dataset.postIndex);
+                const index = parseInt(postEl.dataset.postIndex, 10);
+
                 postEl.addEventListener('click', function(e) {
-                    /* Если клик по ссылке Telegram — не перехватываем */
-                    if (e.target.closest('.mypath-post-tg')) return;
+                    if (e.target.closest('a')) return;
+                    openMypathModal(index);
+                });
 
-                    const post = MYPATH.posts[index];
-                    if (!post) return;
-
-                    const textEl = this.querySelector('.mypath-post-text');
-                    const toggleEl = this.querySelector('.mypath-post-toggle');
-
-                    if (this.classList.contains('expanded')) {
-                        this.classList.remove('expanded');
-                        textEl.textContent = post.text.length > 200
-                            ? post.text.slice(0, 180).trim() + '...'
-                            : post.text;
-                        if (toggleEl) toggleEl.innerHTML = `Читать полностью ${MYPATH_ICONS.chevronDown}`;
-                    } else {
-                        this.classList.add('expanded');
-                        textEl.textContent = post.text;
-                        if (toggleEl) toggleEl.innerHTML = `Свернуть ${MYPATH_ICONS.chevronDown}`;
+                postEl.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openMypathModal(index);
                     }
                 });
+            });
+
+            mypathModal.querySelectorAll('[data-close-mypath-modal]').forEach(el => {
+                el.addEventListener('click', closeMypathModal);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && mypathModal?.classList.contains('open')) {
+                    closeMypathModal();
+                }
             });
         }
 
@@ -3937,8 +4075,22 @@ Notcoin начинает жёстко откатываться. Прям на с
             });
         });
 
-        const initialView = document.documentElement.getAttribute('data-view') || 'bubbles';
+        let initialView = document.documentElement.getAttribute('data-view') || 'bubbles';
+        if (window.matchMedia('(max-width: 768px)').matches && initialView === 'bubbles') {
+            initialView = 'list';
+            document.documentElement.setAttribute('data-view', initialView);
+            localStorage.setItem('werth69-view', initialView);
+        }
         viewBtns.forEach(b => b.classList.toggle('active', b.dataset.view === initialView));
+
+        window.addEventListener('resize', () => {
+            if (window.matchMedia('(max-width: 768px)').matches &&
+                document.documentElement.getAttribute('data-view') === 'bubbles') {
+                document.documentElement.setAttribute('data-view', 'list');
+                localStorage.setItem('werth69-view', 'list');
+                viewBtns.forEach(b => b.classList.toggle('active', b.dataset.view === 'list'));
+            }
+        });
 
         let resizeTimer;
         window.addEventListener('resize', () => {
