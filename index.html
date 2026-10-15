@@ -866,7 +866,7 @@
 
         .crypto-stage .crypto-card,
         .crypto-stage .crypto-rays {
-            transition: opacity 0.55s ease;
+            transition: opacity 1.2s ease;
         }
 
         .crypto-posts-hint {
@@ -3834,7 +3834,7 @@ Notcoin начинает жёстко откатываться. Прям на с
 
             container.innerHTML = `
                 <div class="crypto-stage posts-hidden">
-                    <div class="crypto-posts-hint">Нажмите на монету, чтобы открыть посты</div>
+                    <div class="crypto-posts-hint">Нажмите на Bitcoin, чтобы открыть посты</div>
                     <div class="crypto-rays">
                         <svg viewBox="0 0 1500 1100" preserveAspectRatio="xMidYMid meet">
                             ${raysHTML}
@@ -3905,7 +3905,32 @@ Notcoin начинает жёстко откатываться. Прям на с
 
             const toggleCryptoPosts = () => {
                 if (!cryptoStage) return;
-                cryptoStage.classList.toggle('posts-hidden');
+
+                const willOpen = cryptoStage.classList.contains('posts-hidden');
+                const cards = Array.from(cryptoStage.querySelectorAll('.crypto-card'));
+
+                if (willOpen) {
+                    // Открываем посты медленно и последовательно.
+                    cryptoStage.classList.remove('posts-hidden');
+
+                    requestAnimationFrame(() => {
+                        cards.forEach((card, index) => {
+                            const startDelay = index * 0.65;
+                            const wobbleDelay = startDelay + 1.15;
+
+                            card.style.animation = [
+                                `cryptoCardIn 1.15s cubic-bezier(0.22, 1, 0.36, 1) both ${startDelay}s`,
+                                `cardWobble 6s ease-in-out infinite ${wobbleDelay}s`
+                            ].join(', ');
+                        });
+                    });
+                } else {
+                    // При повторном закрытии возвращаем исходное состояние.
+                    cards.forEach((card) => {
+                        card.style.animation = 'none';
+                    });
+                    cryptoStage.classList.add('posts-hidden');
+                }
             };
 
             if (cryptoCoin) {
