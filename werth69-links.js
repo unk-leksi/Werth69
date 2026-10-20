@@ -859,47 +859,13 @@ function renderCryptoView() {
     const rays1  = container.querySelector('.crypto-rays-1');
     const rays2  = container.querySelector('.crypto-rays-2');
 
-    // Функция для центрирования монеты
-        // Функция для центрирования монеты
-        // Функция для центрирования монеты
-        // Функция для центрирования монеты
-        // Функция для центрирования монеты
-    const centerCoin = (slotEl) => {
-        // Сбрасываем все монеты в исходное состояние
-        slots.forEach(s => {
-            s.style.transform = '';
-            s.classList.remove('is-open', 'is-active');
-        });
-
-        // Получаем координаты контейнера, в котором лежат карточки
-        const stageRect = stage.getBoundingClientRect();
-        const slotRect = slotEl.getBoundingClientRect();
-
-        // Центр карточек — это ровно 50% высоты контейнера .crypto-stage
-        // (в CSS у .crypto-cards-layer прописано top: 50%; left: 50%)
-        const targetX = stageRect.width / 2;
-        const targetY = stageRect.height / 2;
-
-        // Текущий центр монеты относительно страницы
-        const currentX = slotRect.left - stageRect.left + slotRect.width / 2;
-        const currentY = slotRect.top - stageRect.top + slotRect.height / 2;
-
-        // Смещение: тянем текущий центр монеты в центр карточек
-        const moveX = targetX - currentX;
-        const moveY = targetY - currentY;
-
-        // Применяем плавный transform
-        slotEl.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
-        slotEl.classList.add('is-open', 'is-active');
-    };
-
     const resetCoins = () => {
         slots.forEach(s => {
-            s.style.transform = '';
             s.classList.remove('is-open', 'is-active');
         });
         stage.dataset.state = 'idle';
         stage.dataset.active = 'none';
+        stage.classList.remove('has-active');
         rays1.classList.remove('is-visible');
         rays2.classList.remove('is-visible');
         layer1.classList.remove('is-visible');
@@ -909,7 +875,7 @@ function renderCryptoView() {
     // Привязка кликов к монетам
     slots.forEach((slotEl, index) => {
         const coinEl = slotEl.querySelector('.crypto-coin');
-        const which = index === 0 ? '1' : '2'; // Определяем, какая это монета
+        const which = index === 0 ? '1' : '2';
 
         coinEl.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -920,10 +886,12 @@ function renderCryptoView() {
             } else {
                 stage.dataset.state = 'open';
                 stage.dataset.active = which;
+                stage.classList.add('has-active');
 
-                centerCoin(slotEl); // Плавно центрируем монету
+                // Просто переключаем классы. CSS сам сделает центрирование и анимацию!
+                slots.forEach(s => s.classList.remove('is-open', 'is-active'));
+                slotEl.classList.add('is-open', 'is-active');
 
-                // Показываем нужное
                 if (which === '1') {
                     rays1.classList.add('is-visible');
                     layer1.classList.add('is-visible');
