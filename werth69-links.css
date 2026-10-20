@@ -249,7 +249,6 @@ body::after {
     line-height: 1;
 }
 
-/* Строгий оригинальный шрифт для Werth69 */
 .brand-text h1 {
     margin: 0;
     font-family: 'Orbitron', 'Michroma', 'Inter', sans-serif;
@@ -262,7 +261,7 @@ body::after {
         0 0 18px rgba(168, 255, 62, 0.35),
         0 0 36px rgba(168, 255, 62, 0.15),
         1px 2px 0 rgba(0, 0, 0, 0.65);
-    text-transform: none;              /* ВАЖНО: не капс — видно Werth */
+    text-transform: none;
     display: inline-flex;
     align-items: baseline;
     gap: 0;
@@ -704,7 +703,7 @@ html[data-view="finance"] .hint,
 html[data-view="merch"] .hint { display: none; }
 
 /* ============================================================
-   НОВЫЕ РАЗДЕЛЫ «ФИНАНСЫ» и «МЕРЧ» — УСИЛЕННАЯ АНИМАЦИЯ
+   ФИНАНСЫ и МЕРЧ — разделы «Скоро»
    ============================================================ */
 
 .finance-view,
@@ -719,7 +718,6 @@ html[data-view="merch"] .hint { display: none; }
     overflow: hidden;
 }
 
-/* ---- Слой декоративных SVG-элементов ---- */
 .soon-bg-svg {
     position: absolute;
     inset: 0;
@@ -752,7 +750,6 @@ html[data-view="merch"] .hint { display: none; }
     100% { background-position: 60px 60px, 60px 60px; }
 }
 
-/* Вращающиеся большие кольца */
 .soon-ring {
     position: absolute;
     top: 50%;
@@ -796,7 +793,6 @@ html[data-view="merch"] .hint { display: none; }
     to   { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
-/* Плавающие SVG-иконки вокруг карточки */
 .soon-float-icon {
     position: absolute;
     pointer-events: none;
@@ -825,7 +821,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { transform: translateY(-18px) rotate(8deg) scale(1.12); opacity: 0.6; }
 }
 
-/* Частицы, поднимающиеся вверх */
 .soon-particles {
     position: absolute;
     inset: 0;
@@ -851,7 +846,6 @@ html[data-view="merch"] .hint { display: none; }
     100% { transform: translateY(-100vh) scale(0.3); opacity: 0; }
 }
 
-/* Мерцающие звёзды */
 .soon-star {
     position: absolute;
     width: 3px;
@@ -869,7 +863,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { opacity: 0.9;  transform: scale(1.2); }
 }
 
-/* Затемняющий градиент */
 .finance-view::before,
 .merch-view::before {
     content: '';
@@ -882,7 +875,6 @@ html[data-view="merch"] .hint { display: none; }
     z-index: 1;
 }
 
-/* ---- Основная карточка «Скоро» ---- */
 .soon-overlay {
     position: relative;
     z-index: 3;
@@ -916,7 +908,6 @@ html[data-view="merch"] .hint { display: none; }
     animation: soonCardFloat 5s ease-in-out infinite;
 }
 
-/* Световой блик, проходящий по карточке */
 .soon-card::before {
     content: '';
     position: absolute;
@@ -932,7 +923,6 @@ html[data-view="merch"] .hint { display: none; }
     pointer-events: none;
 }
 
-/* Внутреннее свечение */
 .soon-card::after {
     content: '';
     position: absolute;
@@ -959,7 +949,6 @@ html[data-view="merch"] .hint { display: none; }
     100% { background-position: 250% 0; }
 }
 
-/* ---- Иконка с кольцами ---- */
 .soon-icon-wrapper {
     position: relative;
     width: 100px;
@@ -1026,7 +1015,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { transform: scale(1.08) rotate(3deg); opacity: 1; }
 }
 
-/* ---- Заголовок ---- */
 .soon-title {
     position: relative;
     margin: 0;
@@ -1049,7 +1037,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { text-shadow: 0 0 34px rgba(168,255,62,.55), 0 0 80px rgba(168,255,62,.22), 2px 2px 0 rgba(0,0,0,.5); }
 }
 
-/* ---- Подзаголовок ---- */
 .soon-subtitle {
     position: relative;
     margin: 0;
@@ -1066,7 +1053,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { opacity: 1; }
 }
 
-/* ---- Точки-загрузчик ---- */
 .soon-loader {
     position: relative;
     display: flex;
@@ -1092,7 +1078,6 @@ html[data-view="merch"] .hint { display: none; }
     35% { transform: translateY(-6px) scale(1); opacity: 1; }
 }
 
-/* ---- Дополнительно для Мерча: иконка сумки/подарка ---- */
 .merch-view .soon-icon svg {
     animation: merchIconFloat 3s ease-in-out infinite;
 }
@@ -1102,7 +1087,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { transform: translateY(-4px) rotate(-2deg); }
 }
 
-/* ---- Дополнительно для Финансов: графики ---- */
 .finance-view .soon-icon svg {
     animation: financeIconPulse 2.8s ease-in-out infinite;
 }
@@ -1112,700 +1096,9 @@ html[data-view="merch"] .hint { display: none; }
     50%      { transform: scale(1.1) rotate(2deg); }
 }
 
-
-/* ===== «Мой путь» — вкладки и раскрутка ===== */
-.mypath-tabs-bar {
-    display: flex;
-    gap: 10px;
-    margin: 4px 0 14px;
-    flex-wrap: wrap;
-}
-
-.mypath-tab-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 9px 16px;
-    border-radius: 999px;
-    border: 1px solid rgba(168, 255, 62, 0.30);
-    background: rgba(15, 26, 21, 0.7);
-    color: #b8c9a8;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.mypath-tab-btn svg { width: 16px; height: 16px; }
-
-.mypath-tab-btn:hover { color: #fff; border-color: rgba(168, 255, 62, 0.6); }
-
-.mypath-tab-btn.active {
-    background: rgba(168, 255, 62, 0.15);
-    color: var(--accent);
-    border-color: var(--accent);
-    box-shadow: 0 0 18px rgba(168, 255, 62, 0.25);
-}
-
-.mypath-panel {
-    display: none;
-}
-
-.mypath-panel.active {
-    display: block;
-    animation: panelFadeIn 0.45s ease both;
-}
-
-@keyframes panelFadeIn {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
-.mypath-panel .mypath-post {
-    opacity: 0;
-    transform: translateY(24px) scale(0.97);
-}
-
-.mypath-panel.active .mypath-post {
-    animation: postUnroll 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes postUnroll {
-    0%   { opacity: 0; transform: translateY(24px) scale(0.97) rotate(-1.5deg); }
-    60%  { opacity: 1; transform: translateY(-4px) scale(1.01) rotate(0.4deg); }
-    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-}
-
-.mypath-more {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-    margin-top: 18px;
-}
-
-.mypath-more .mypath-card {
-    min-height: 170px;
-    flex-direction: column;
-    opacity: 0;
-    transform: translateY(20px) scale(0.98);
-    animation: moreUnroll 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-.mypath-more .mypath-card:nth-child(1) { animation-delay: 0.10s; }
-.mypath-more .mypath-card:nth-child(2) { animation-delay: 0.28s; }
-
-@keyframes moreUnroll {
-    0%   { opacity: 0; transform: translateY(20px) scale(0.96) rotate(-1deg); }
-    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-}
-
-@media (max-width: 780px) {
-    .mypath-more { grid-template-columns: 1fr; }
-}
-
-/* ===== Крипта ===== */
-.crypto-view {
-    position: absolute;
-    inset: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    z-index: 1;
-    padding: 20px 0 60px;
-}
-
-.crypto-stage {
-    position: relative;
-    max-width: 1500px;
-    margin: 0 auto;
-    width: 100%;
-    height: 1100px;
-}
-
-.crypto-stage::before,
-.crypto-stage::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 1px solid rgba(168, 255, 62, 0.10);
-    pointer-events: none;
-    z-index: 1;
-}
-
-.crypto-stage::before {
-    width: 950px;
-    height: 950px;
-    animation: ringPulse 6s ease-in-out infinite;
-}
-
-.crypto-stage::after {
-    width: 680px;
-    height: 680px;
-    border-color: rgba(168, 255, 62, 0.07);
-    animation: ringPulse 6s ease-in-out infinite;
-    animation-delay: 3s;
-}
-
-@keyframes ringPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.6; }
-    50%      { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
-}
-
-.crypto-rays {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.crypto-rays svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.crypto-rays line {
-    stroke: rgba(168, 255, 62, 0.35);
-    stroke-width: 1.5;
-    fill: none;
-    stroke-dasharray: 6 4;
-    filter: drop-shadow(0 0 4px rgba(168, 255, 62, 0.6));
-    animation: rayDash 20s linear infinite;
-}
-
-@keyframes rayDash {
-    to { stroke-dashoffset: -200; }
-}
-
-.crypto-rays circle {
-    fill: rgba(168, 255, 62, 0.9);
-    filter: drop-shadow(0 0 6px rgba(168, 255, 62, 0.9));
-    animation: dotPulse 2s ease-in-out infinite;
-}
-
-@keyframes dotPulse {
-    0%, 100% { r: 3; opacity: 0.8; }
-    50%      { r: 4.5; opacity: 1; }
-}
-
-.crypto-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 220px;
-    height: 220px;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-}
-
-.crypto-center-glow {
-    position: absolute;
-    inset: -25%;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-        rgba(39, 235, 210, 0.34) 0%,
-        rgba(39, 235, 210, 0.12) 45%,
-        transparent 70%);
-    z-index: 1;
-    animation: turquoiseGlow 3.5s ease-in-out infinite;
-}
-
-@keyframes turquoiseGlow {
-    0%, 100% { transform: scale(0.94); opacity: 0.72; }
-    50%      { transform: scale(1.08); opacity: 1; }
-}
-
-.crypto-rotor {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 380px;
-    height: 380px;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    pointer-events: none;
-    animation: rotorSpin 24s linear infinite;
-}
-
-.crypto-rotor svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    overflow: visible;
-}
-
-@keyframes rotorSpin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-.crypto-coin {
-    position: relative;
-    width: 180px;
-    height: 180px;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    pointer-events: auto;
-    filter:
-        drop-shadow(0 0 24px rgba(39, 235, 210, 0.80))
-        drop-shadow(0 0 60px rgba(39, 235, 210, 0.48));
-    transition: filter 0.35s ease, transform 0.35s ease;
-}
-
-.crypto-coin::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 50%;
-    border: 2px solid rgba(39, 235, 210, 0.72);
-    box-shadow:
-        0 0 14px rgba(39, 235, 210, 0.85),
-        0 0 34px rgba(39, 235, 210, 0.48),
-        inset 0 0 18px rgba(39, 235, 210, 0.20);
-    opacity: 0.9;
-    animation: coinTurquoiseRing 2.8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes coinTurquoiseRing {
-    0%, 100% { transform: scale(0.98); opacity: 0.68; }
-    50%      { transform: scale(1.05); opacity: 1; }
-}
-
-.crypto-coin:hover {
-    filter:
-        drop-shadow(0 0 32px rgba(39, 235, 210, 0.95))
-        drop-shadow(0 0 78px rgba(39, 235, 210, 0.60));
-    transform: scale(1.035);
-}
-
-.crypto-stage.posts-hidden .crypto-card,
-.crypto-stage.posts-hidden .crypto-rays {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.crypto-stage.posts-hidden .crypto-card {
-    animation: none;
-}
-
-@keyframes cryptoRouletteIn {
-    0% {
-        opacity: 0;
-        transform:
-            rotate(calc(var(--angle) - 105deg))
-            translate(0, calc(-1 * var(--radius) - 20px))
-            rotate(calc(-1 * (var(--angle) - 105deg)))
-            scale(.42);
-        filter: blur(5px);
-    }
-    48% {
-        opacity: 1;
-        filter: blur(0);
-    }
-    72% {
-        transform:
-            rotate(calc(var(--angle) + 7deg))
-            translate(0, calc(-1 * var(--radius)))
-            rotate(calc(-1 * (var(--angle) + 7deg)))
-            scale(1.04);
-    }
-    100% {
-        opacity: 1;
-        transform:
-            rotate(var(--angle))
-            translate(0, calc(-1 * var(--radius)))
-            rotate(calc(-1 * var(--angle)))
-            scale(1);
-        filter: blur(0);
-    }
-}
-
-.crypto-stage.roulette-active .crypto-card {
-    animation: none;
-}
-
-.crypto-stage.roulette-active .crypto-card.roulette-in {
-    animation: cryptoRouletteIn 1.35s cubic-bezier(.22,1,.36,1) both;
-}
-
-.crypto-stage.roulette-active .crypto-card:hover {
-    animation-play-state: paused;
-}
-
-.crypto-stage.posts-hidden .crypto-rays {
-    transition: opacity 0.45s ease;
-}
-
-.crypto-stage .crypto-card,
-.crypto-stage .crypto-rays {
-    transition: opacity 1.2s ease;
-}
-
-.crypto-posts-hint {
-    position: absolute;
-    left: 50%;
-    top: calc(50% + 125px);
-    transform: translateX(-50%);
-    z-index: 7;
-    padding: 8px 14px;
-    border: 1px solid rgba(39, 235, 210, 0.25);
-    border-radius: 999px;
-    background: rgba(10, 19, 16, 0.58);
-    color: rgba(184, 255, 247, 0.86);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(8px);
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-}
-
-.crypto-stage:not(.posts-hidden) .crypto-posts-hint {
-    opacity: 0;
-}
-
-.crypto-secondary-coin {
-    width: 120px;
-    height: 120px;
-    margin: 8px auto 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    filter:
-        drop-shadow(0 0 20px rgba(39, 235, 210, 0.42))
-        drop-shadow(0 0 44px rgba(39, 235, 210, 0.20));
-    opacity: 0.92;
-    transition: transform 0.35s ease, filter 0.35s ease;
-}
-
-.crypto-secondary-coin img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-.crypto-secondary-coin:hover {
-    transform: translateY(-5px) scale(1.06);
-    filter:
-        drop-shadow(0 0 26px rgba(39, 235, 210, 0.70))
-        drop-shadow(0 0 58px rgba(39, 235, 210, 0.35));
-}
-
-.crypto-coin img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    animation: coinPulse 4s ease-in-out infinite;
-}
-
-@keyframes coinPulse {
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.04); }
-}
-
-.crypto-coin-fallback {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, #ffd35a 0%, #f7931a 55%, #a75c00 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 92px;
-    font-weight: 900;
-    color: #ffffff;
-    font-family: 'Bungee', sans-serif;
-    box-shadow:
-        inset 0 0 0 6px rgba(255, 255, 255, 0.25),
-        inset 0 0 40px rgba(255, 255, 255, 0.2);
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
-}
-
-.crypto-card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 270px;
-    height: 190px;
-    margin-left: -135px;
-    margin-top: -95px;
-
-    --angle: 0deg;
-    --radius: 380px;
-
-    transform:
-        rotate(var(--angle))
-        translate(0, calc(-1 * var(--radius)))
-        rotate(calc(-1 * var(--angle)));
-
-    transform-origin: 50% 50%;
-
-    background: rgba(15, 26, 21, 0.88);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(168, 255, 62, 0.18);
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow 0.35s ease, border-color 0.35s ease;
-    cursor: pointer;
-    z-index: 3;
-    text-decoration: none;
-    color: var(--text);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
-    opacity: 0;
-    animation:
-        cryptoCardIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both,
-        cardWobble 6s ease-in-out infinite;
-}
-
-@keyframes cryptoCardIn {
-    from {
-        opacity: 0;
-        transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius) - 40px)) rotate(calc(-1 * var(--angle))) scale(0.85);
-    }
-    to {
-        opacity: 1;
-        transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) scale(1);
-    }
-}
-
-@keyframes cardWobble {
-    0%, 100% {
-        transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) translate(0, 0);
-    }
-    50% {
-        transform: rotate(var(--angle)) translate(0, calc(-1 * var(--radius))) rotate(calc(-1 * var(--angle))) translate(0, -5px);
-    }
-}
-
-.crypto-card:hover {
-    border-color: var(--accent);
-    box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.75),
-        0 0 40px var(--accent-glow);
-    z-index: 20;
-    animation-play-state: paused;
-}
-
-.crypto-card-1 { --angle: 0deg;   animation-delay: 0.05s, 0s;   }
-.crypto-card-2 { --angle: 40deg;  animation-delay: 0.10s, 0.5s; }
-.crypto-card-3 { --angle: 80deg;  animation-delay: 0.15s, 1s;   }
-.crypto-card-4 { --angle: 120deg; animation-delay: 0.20s, 1.5s; }
-.crypto-card-5 { --angle: 160deg; animation-delay: 0.25s, 2s;   }
-.crypto-card-6 { --angle: 200deg; animation-delay: 0.30s, 2.5s; }
-.crypto-card-7 { --angle: 240deg; animation-delay: 0.35s, 3s;   }
-.crypto-card-8 { --angle: 280deg; animation-delay: 0.40s, 3.5s; }
-.crypto-card-9 { --angle: 320deg; animation-delay: 0.45s, 4s;   }
-
-.crypto-card-image {
-    height: 110px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.crypto-card-image::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.75) 100%);
-    pointer-events: none;
-}
-
-.crypto-card-glass-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow:
-        inset 0 1px 1px rgba(255, 255, 255, 0.35),
-        inset 0 -1px 1px rgba(0, 0, 0, 0.20),
-        0 8px 24px rgba(0, 0, 0, 0.35);
-    animation: iconPulse 3s ease-in-out infinite;
-}
-
-@keyframes iconPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1);    }
-    50%      { transform: translate(-50%, -50%) scale(1.08); }
-}
-
-.crypto-card-glass-icon::before {
-    content: '';
-    position: absolute;
-    top: 10%;
-    left: 15%;
-    width: 40%;
-    height: 30%;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgba(255,255,255,0.7) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.crypto-card-glass-icon svg {
-    width: 26px;
-    height: 26px;
-    fill: #ffffff;
-    position: relative;
-    z-index: 1;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
-}
-
-.crypto-card-body {
-    padding: 14px 18px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex: 1;
-    overflow: hidden;
-}
-
-.crypto-card-body h3 {
-    margin: 0;
-    font-size: 15px;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.3;
-}
-
-.crypto-card-body p {
-    margin: 0;
-    font-size: 12px;
-    color: #b8c9a8;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.crypto-assets {
-    max-width: 1300px;
-    margin: 20px auto 0;
-    padding: 0 40px;
-}
-
-.crypto-assets h2 {
-    margin: 0 0 20px;
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--text);
-    letter-spacing: -0.4px;
-}
-
-.crypto-assets-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-}
-
-.crypto-asset-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    background: rgba(15, 26, 21, 0.90);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-soft);
-    border-radius: 14px;
-    transition: all 0.25s ease;
-}
-
-.crypto-asset-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 8px 24px var(--accent-glow);
-    transform: translateY(-3px);
-}
-
-.crypto-asset-head {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.crypto-asset-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 800;
-    flex-shrink: 0;
-    border: 1px solid;
-}
-
-.crypto-asset-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-}
-
-.crypto-asset-info strong {
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--text);
-}
-
-.crypto-asset-price {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.crypto-asset-sparkline {
-    width: 100%;
-    height: 36px;
-}
-
-.crypto-asset-sparkline svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.crypto-asset-change {
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.crypto-asset-change.up { color: #16a34a; }
-.crypto-asset-change.down { color: #dc2626; }
+/* ============================================================
+   «МОЙ ПУТЬ»
+   ============================================================ */
 
 .mypath-view {
     position: absolute;
@@ -2305,6 +1598,20 @@ html[data-view="merch"] .hint { display: none; }
         inset 0 0 60px rgba(168, 255, 62, 0.05);
 }
 
+.mypath-card.is-open {
+    border-color: rgba(168, 255, 62, 0.55);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.55),
+        0 0 40px var(--accent-glow);
+}
+
+.mypath-card.is-open .mypath-card-btn {
+    background: var(--accent);
+    color: var(--text-invert);
+    border-color: var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow);
+}
+
 .mypath-card-info {
     flex: 1;
     padding: 32px 36px;
@@ -2562,12 +1869,183 @@ html[data-view="merch"] .hint { display: none; }
 
 .mypath-card:hover .mypath-card-visual { transform: scale(1.06); }
 
-.mypath-posts {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+.mypath-footer {
+    text-align: center;
+    padding: 20px 0 8px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    border-top: 1px solid var(--border-soft);
+    margin-top: 10px;
 }
 
+/* --- Старая сетка постов (скрыта, используется лента) --- */
+.mypath-posts {
+    display: none;
+}
+
+/* ============================================================
+   «МОЙ ПУТЬ» — панели под карточками (Посты / Комикс / Мультик)
+   ============================================================ */
+
+/* Посты — горизонтальная лента */
+.mypath-posts-panel-inline {
+    display: block;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0 24px;
+    border-radius: 20px;
+    background: rgba(15, 26, 21, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid transparent;
+    transition:
+        max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease,
+        padding 0.4s ease,
+        margin 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.mypath-posts-panel-inline.active {
+    max-height: 700px;
+    opacity: 1;
+    margin: 6px 0 14px;
+    padding: 22px 24px 26px;
+    border-color: rgba(168, 255, 62, 0.30);
+    animation: postsPanelReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes postsPanelReveal {
+    0%   { opacity: 0; transform: translateY(-10px) scaleY(0.96); }
+    100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+.mypath-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.mypath-panel-header-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.mypath-panel-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: rgba(168, 255, 62, 0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Bungee', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(168, 255, 62, 0.25);
+}
+
+.mypath-panel-hint {
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    animation: hintSlide 2.4s ease-in-out infinite;
+}
+
+@keyframes hintSlide {
+    0%, 100% { transform: translateX(0);    opacity: 0.6; }
+    50%      { transform: translateX(6px);  opacity: 1; }
+}
+
+.mypath-panel-close {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(168, 255, 62, 0.35);
+    background: rgba(168, 255, 62, 0.08);
+    color: var(--accent);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.mypath-panel-close:hover {
+    background: var(--accent);
+    color: var(--text-invert);
+    border-color: var(--accent);
+    transform: rotate(90deg);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Горизонтальная лента постов */
+.mypath-posts-row {
+    display: flex;
+    flex-direction: row;
+    gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 6px 4px 18px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(168, 255, 62, 0.45) rgba(0, 0, 0, 0.25);
+}
+
+.mypath-posts-row::-webkit-scrollbar {
+    height: 8px;
+}
+.mypath-posts-row::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.30);
+    border-radius: 4px;
+}
+.mypath-posts-row::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, rgba(168, 255, 62, 0.55), rgba(168, 255, 62, 0.25));
+    border-radius: 4px;
+}
+.mypath-posts-row::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+.mypath-posts-row .mypath-post {
+    flex: 0 0 300px;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    scroll-snap-align: start;
+    height: auto;
+}
+
+.mypath-posts-panel-inline.active .mypath-post {
+    animation: postSlideIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.mypath-posts-panel-inline.active .mypath-post:nth-child(1) { animation-delay: 0.05s; }
+.mypath-posts-panel-inline.active .mypath-post:nth-child(2) { animation-delay: 0.10s; }
+.mypath-posts-panel-inline.active .mypath-post:nth-child(3) { animation-delay: 0.15s; }
+.mypath-posts-panel-inline.active .mypath-post:nth-child(4) { animation-delay: 0.20s; }
+.mypath-posts-panel-inline.active .mypath-post:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes postSlideIn {
+    0%   { opacity: 0; transform: translateX(30px) scale(0.96); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* Карточка поста (в ленте и модалке) */
 .mypath-post {
     position: relative;
     display: flex;
@@ -2713,513 +2191,810 @@ html[data-view="merch"] .hint { display: none; }
     user-select: none;
 }
 
-.mypath-footer {
-    text-align: center;
-    padding: 20px 0 8px;
-    font-size: 12.5px;
+/* --- Панели «Скоро» под карточками Комикс / Мультик --- */
+.mypath-soon-panel-inline {
+    display: block;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0 24px;
+    border-radius: 20px;
+    background: rgba(15, 26, 21, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid transparent;
+    transition:
+        max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease,
+        padding 0.4s ease,
+        margin 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.mypath-soon-panel-inline.active {
+    max-height: 360px;
+    opacity: 1;
+    margin: 6px 0 14px;
+    padding: 22px 24px;
+    border-color: rgba(168, 255, 62, 0.30);
+    animation: soonPanelReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes soonPanelReveal {
+    0%   { opacity: 0; transform: translateY(-10px) scaleY(0.96); }
+    100% { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+
+.mypath-soon-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.mypath-soon-icon {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: radial-gradient(circle at 40% 35%, rgba(168,255,62,.18), rgba(10,19,16,.9));
+    border: 1px solid rgba(168, 255, 62, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    box-shadow:
+        0 0 24px rgba(168,255,62,.20),
+        inset 0 0 18px rgba(168,255,62,.08);
+    animation: soonIconFloat 3s ease-in-out infinite;
+}
+
+@keyframes soonIconFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-4px) rotate(-3deg); }
+}
+
+.mypath-soon-icon svg {
+    width: 36px;
+    height: 36px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.mypath-soon-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+}
+
+.mypath-soon-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(168, 255, 62, 0.14);
+    border: 1px solid rgba(168, 255, 62, 0.55);
+    color: var(--accent);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.mypath-soon-title {
+    margin: 0;
+    font-family: 'Bungee', 'Orbitron', sans-serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+    text-shadow:
+        0 0 18px rgba(168, 255, 62, 0.35),
+        0 0 40px rgba(168, 255, 62, 0.15),
+        2px 2px 0 rgba(0, 0, 0, 0.55);
+    animation: soonTitlePulse 3s ease-in-out infinite;
+}
+
+@keyframes soonTitlePulse {
+    0%, 100% { text-shadow: 0 0 18px rgba(168, 255, 62, 0.35), 0 0 40px rgba(168, 255, 62, 0.15), 2px 2px 0 rgba(0, 0, 0, 0.55); }
+    50%      { text-shadow: 0 0 30px rgba(168, 255, 62, 0.60), 0 0 70px rgba(168, 255, 62, 0.28), 2px 2px 0 rgba(0, 0, 0, 0.55); }
+}
+
+.mypath-soon-subtitle {
+    margin: 0;
+    font-size: 13.5px;
     color: var(--text-muted);
-    letter-spacing: 1px;
-    border-top: 1px solid var(--border-soft);
-    margin-top: 10px;
+    line-height: 1.55;
+    max-width: 520px;
 }
 
-@media (max-width: 1500px) {
-    .crypto-card {
-        --radius: 350px;
-        width: 240px;
-        height: 180px;
-        margin-left: -120px;
-        margin-top: -90px;
-    }
-    .mypath-layout { grid-template-columns: 200px 1fr 200px; gap: 30px; }
+.mypath-soon-loader {
+    display: flex;
+    gap: 7px;
+    margin-top: 6px;
 }
 
-@media (max-width: 1300px) {
-    .crypto-card {
-        --radius: 320px;
-        width: 220px;
-        height: 170px;
-        margin-left: -110px;
-        margin-top: -85px;
-    }
-    .crypto-card-body h3 { font-size: 14px; }
-    .crypto-card-body p { font-size: 11px; }
-    .mypath-layout { grid-template-columns: 170px 1fr 170px; gap: 24px; }
-    .side-coin { width: 48px; height: 48px; font-size: 18px; }
+.mypath-soon-loader span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(168, 255, 62, 0.7);
+    animation: soonDotPanel 1.25s ease-in-out infinite;
 }
 
-@media (max-width: 1100px) {
-    .crypto-card {
-        --radius: 280px;
-        width: 200px;
-        height: 160px;
-        margin-left: -100px;
-        margin-top: -80px;
-    }
-    .crypto-center { width: 180px; height: 180px; }
-    .crypto-coin { width: 140px; height: 140px; }
-    .crypto-rotor { width: 300px; height: 300px; }
+.mypath-soon-loader span:nth-child(2) { animation-delay: .16s; }
+.mypath-soon-loader span:nth-child(3) { animation-delay: .32s; }
 
-    .mypath-posts { grid-template-columns: repeat(2, 1fr); }
-    .mypath-hero-title .line1,
-    .mypath-hero-title .line2 { font-size: 44px; letter-spacing: 2px; }
-    .mypath-card-info { padding: 26px 28px; max-width: 60%; }
-    .mypath-card-info h3 { font-size: 26px; }
-
-    .mypath-layout {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        max-width: 1200px;
-    }
-
-    .mypath-side-left {
-        position: relative;
-        top: auto;
-        height: auto;
-        min-height: 0;
-        padding: 22px 0 26px;
-        order: -1;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    .mypath-side-left .side-label {
-        position: static;
-        writing-mode: horizontal-tb;
-        text-orientation: initial;
-        transform: none;
-        left: auto;
-        top: auto;
-        margin-bottom: 14px;
-        font-size: 9px;
-        letter-spacing: 4px;
-        text-align: center;
-        color: rgba(168, 255, 62, 0.55);
-    }
-
-    .mypath-side-left .side-track {
-        flex-direction: row;
-        height: auto;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-    }
-
-    .mypath-side-left .side-track-line {
-        top: 50%;
-        bottom: auto;
-        left: 0;
-        right: 0;
-        width: 100%;
-        height: 2px;
-        transform: translateY(-50%);
-        background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(168, 255, 62, 0.15) 10%,
-            rgba(168, 255, 62, 0.4) 50%,
-            rgba(168, 255, 62, 0.15) 90%,
-            transparent 100%);
-    }
-
-    .mypath-side-left .side-track-line::after {
-        top: 0;
-        left: -80px;
-        width: 80px;
-        height: 100%;
-        background: linear-gradient(90deg,
-            transparent 0%,
-            var(--accent) 50%,
-            transparent 100%);
-        animation: pulseTravelRight 6s ease-in-out infinite;
-    }
-
-    @keyframes pulseTravelRight {
-        0%   { left: -80px; opacity: 0; }
-        10%  { opacity: 1; }
-        90%  { opacity: 1; }
-        100% { left: 100%; opacity: 0; }
-    }
-
-    .mypath-side-left .side-step { width: 30px; height: 30px; }
-    .mypath-side-left .side-step::before { width: 6px; height: 6px; }
-    .mypath-side-left .side-step-active::before { width: 10px; height: 10px; }
-    .mypath-side-left .side-compass { width: 130px; height: 130px; opacity: 0.22; }
-
-    .mypath-side-right {
-        position: relative;
-        top: auto;
-        height: auto;
-        min-height: 0;
-        padding: 0;
-        order: 999;
-    }
-
-    .mypath-side-right .side-floaters {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 90px;
-        padding: 10px 20px;
-        gap: 8px;
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(180deg,
-            rgba(15, 26, 21, 0.4) 0%,
-            rgba(15, 26, 21, 0.7) 100%);
-        border-radius: 16px;
-        border: 1px solid var(--border-soft);
-        margin-top: 20px;
-    }
-
-    .mypath-side-right .side-coin {
-        position: static;
-        width: 44px;
-        height: 44px;
-        font-size: 17px;
-        animation: coinFloatMobile 4s ease-in-out infinite;
-    }
-
-    .mypath-side-right .side-coin-1 { animation-delay: 0s; }
-    .mypath-side-right .side-coin-2 { animation-delay: 0.3s; }
-    .mypath-side-right .side-coin-3 { animation-delay: 0.6s; }
-    .mypath-side-right .side-coin-4 { animation-delay: 0.9s; }
-    .mypath-side-right .side-coin-5 { animation-delay: 1.2s; }
-    .mypath-side-right .side-coin-6 { animation-delay: 1.5s; }
-    .mypath-side-right .side-coin-7 { animation-delay: 1.8s; }
-
-    @keyframes coinFloatMobile {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50%      { transform: translateY(-6px) rotate(4deg); }
-    }
-
-    .mypath-side-right .side-particle {
-        bottom: 0 !important;
-        animation: particleRiseMobile linear infinite !important;
-    }
-
-    @keyframes particleRiseMobile {
-        0% {
-            transform: translateY(0) scale(0);
-            opacity: 0;
-        }
-        20% {
-            opacity: 0.9;
-            transform: translateY(-30px) scale(1);
-        }
-        80% {
-            opacity: 0.9;
-        }
-        100% {
-            transform: translateY(-80px) scale(0.3);
-            opacity: 0;
-        }
-    }
+@keyframes soonDotPanel {
+    0%, 70%, 100% { transform: translateY(0) scale(.72); opacity: .35; }
+    35%           { transform: translateY(-5px) scale(1);  opacity: 1; }
 }
 
-@media (max-width: 1000px) {
-    .crypto-stage {
-        height: auto;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 20px;
-    }
+.mypath-soon-inner .mypath-panel-close {
+    align-self: flex-start;
+    margin-left: auto;
+}
+/* ============================================================
+   КРИПТА — плавное центрирование при клике
+   ============================================================ */
 
-    .crypto-rays,
-    .crypto-stage::before,
-    .crypto-stage::after,
-    .crypto-rotor {
-        display: none;
-    }
+.crypto-view {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1;
+    padding: 20px 0 60px;
+}
 
-    .crypto-center {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        width: 100%;
-        height: 220px;
-        z-index: 5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        pointer-events: none;
-        margin-bottom: 10px;
-        grid-column: 1 / -1;
-    }
+.crypto-stage {
+    position: relative;
+    max-width: 1500px;
+    margin: 0 auto;
+    width: 100%;
+    /* Высота сцены. Чем она больше, тем ниже уедет монета при центрировании. */
+    min-height: 1100px;
+    height: 1100px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 40px;
+}
 
-    .crypto-coin {
-        width: 160px;
-        height: 160px;
-        z-index: 2;
-    }
+.crypto-posts-hint {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    transform: translateX(-50%);
+    z-index: 30;
+    padding: 8px 16px;
+    border: 1px solid rgba(168, 255, 62, 0.28);
+    border-radius: 999px;
+    background: rgba(10, 19, 16, 0.62);
+    color: rgba(184, 255, 247, 0.9);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
 
-    .crypto-coin img,
-    .crypto-coin-fallback {
-        animation: coinPulse 4s ease-in-out infinite;
-    }
+.crypto-stage[data-state="open"] .crypto-posts-hint {
+    opacity: 0;
+}
 
-    .crypto-center-glow {
-        inset: -35%;
-    }
+/* Ряд монет */
+.crypto-coins-row {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 120px;
+    pointer-events: none;
+}
 
-    .crypto-card {
-        position: relative;
-        top: auto !important;
-        left: auto !important;
-        transform: none !important;
-        margin: 0 !important;
-        width: 100%;
-        height: auto;
+/* Слоты монет */
+.crypto-coin-slot {
+    position: relative;
+    width: 220px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* Плавный переход для transform и других свойств */
+    transition: transform 0.9s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, filter 0.5s ease;
+    will-change: transform;
+    pointer-events: auto;
+    z-index: 12;
+}
+
+/* Когда монета открыта — она поверх остальных */
+.crypto-coin-slot.is-open {
+    z-index: 20;
+}
+
+/* Свечение под каждой монетой */
+.crypto-coin-slot .crypto-center-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(39, 235, 210, 0.35) 0%,
+        rgba(39, 235, 210, 0.12) 45%,
+        transparent 70%);
+    z-index: 0;
+    animation: turquoiseGlow 3.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.crypto-coin-slot-2 .crypto-center-glow {
+    background: radial-gradient(circle,
+        rgba(168, 255, 62, 0.34) 0%,
+        rgba(168, 255, 62, 0.12) 45%,
+        transparent 70%);
+    animation-delay: 1.6s;
+}
+
+@keyframes turquoiseGlow {
+    0%, 100% { transform: translate(-50%, -55%) scale(0.94); opacity: 0.72; }
+    50%      { transform: translate(-50%, -55%) scale(1.08); opacity: 1; }
+}
+
+/* Ротор */
+.crypto-coin-slot .crypto-rotor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -55%);
+    animation: rotorSpin 24s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.crypto-coin-slot-2 .crypto-rotor {
+    animation-direction: reverse;
+    animation-duration: 30s;
+}
+
+@keyframes rotorSpin {
+    from { transform: translate(-50%, -55%) rotate(0deg); }
+    to   { transform: translate(-50%, -55%) rotate(360deg); }
+}
+
+.crypto-coin-slot .crypto-rotor svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+}
+
+/* Сама монета */
+.crypto-coin-slot .crypto-coin {
+    position: relative;
+    z-index: 5;
+    width: 160px;
+    height: 160px;
+    cursor: pointer;
+    filter:
+        drop-shadow(0 0 24px rgba(39, 235, 210, 0.80))
+        drop-shadow(0 0 60px rgba(39, 235, 210, 0.48));
+    transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.crypto-coin-slot-2 .crypto-coin {
+    filter:
+        drop-shadow(0 0 24px rgba(168, 255, 62, 0.75))
+        drop-shadow(0 0 60px rgba(168, 255, 62, 0.42));
+}
+
+.crypto-coin-slot .crypto-coin::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(39, 235, 210, 0.72);
+    box-shadow:
+        0 0 14px rgba(39, 235, 210, 0.85),
+        0 0 34px rgba(39, 235, 210, 0.48),
+        inset 0 0 18px rgba(39, 235, 210, 0.20);
+    opacity: 0.9;
+    animation: coinTurquoiseRing 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.crypto-coin-slot-2 .crypto-coin::before {
+    border-color: rgba(168, 255, 62, 0.72);
+    box-shadow:
+        0 0 14px rgba(168, 255, 62, 0.85),
+        0 0 34px rgba(168, 255, 62, 0.48),
+        inset 0 0 18px rgba(168, 255, 62, 0.20);
+}
+
+@keyframes coinTurquoiseRing {
+    0%, 100% { transform: scale(0.98); opacity: 0.68; }
+    50%      { transform: scale(1.05); opacity: 1; }
+}
+
+.crypto-coin-slot .crypto-coin:hover {
+    transform: scale(1.05);
+}
+
+.crypto-coin-slot .crypto-coin img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    animation: coinPulse 4s ease-in-out infinite;
+}
+
+@keyframes coinPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.04); }
+}
+
+.crypto-coin-fallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #ffd35a 0%, #f7931a 55%, #a75c00 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 92px;
+    font-weight: 900;
+    color: #ffffff;
+    font-family: 'Bungee', sans-serif;
+    box-shadow:
+        inset 0 0 0 6px rgba(255, 255, 255, 0.25),
+        inset 0 0 40px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.55);
+}
+
+.crypto-coin-slot .crypto-coin-fallback-2 {
+    background: radial-gradient(circle at 40% 35%, #b8ff6a 0%, #a8ff3e 55%, #5a8c1a 100%);
+    color: #0a1310;
+}
+
+.crypto-coin-label {
+    position: relative;
+    margin-top: 18px;
+    z-index: 5;
+    font-family: 'Bungee', 'Orbitron', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(184, 255, 247, 0.85);
+    text-shadow: 0 0 12px rgba(39, 235, 210, 0.6);
+    white-space: nowrap;
+    transition: opacity 0.4s ease;
+}
+
+.crypto-coin-slot-2 .crypto-coin-label {
+    color: rgba(200, 255, 160, 0.85);
+    text-shadow: 0 0 12px rgba(168, 255, 62, 0.6);
+}
+
+/* Скрываем подписи при открытии (опционально, чтобы не мешали) */
+.crypto-coin-slot.is-open .crypto-coin-label {
+    opacity: 0;
+}
+
+/* ===== Лучи ===== */
+.crypto-rays {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.crypto-rays.is-visible {
+    opacity: 1;
+}
+
+.crypto-rays svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.crypto-rays line {
+    stroke: rgba(39, 235, 210, 0.42);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 6 4;
+    filter: drop-shadow(0 0 4px rgba(39, 235, 210, 0.7));
+    animation: rayDash 20s linear infinite;
+}
+
+.crypto-rays-2 line {
+    stroke: rgba(168, 255, 62, 0.42);
+    filter: drop-shadow(0 0 4px rgba(168, 255, 62, 0.7));
+}
+
+@keyframes rayDash {
+    to { stroke-dashoffset: -200; }
+}
+
+.crypto-rays circle {
+    fill: rgba(39, 235, 210, 0.9);
+    filter: drop-shadow(0 0 6px rgba(39, 235, 210, 0.9));
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+.crypto-rays-2 circle {
+    fill: rgba(168, 255, 62, 0.9);
+    filter: drop-shadow(0 0 6px rgba(168, 255, 62, 0.9));
+}
+
+@keyframes dotPulse {
+    0%, 100% { r: 3; opacity: 0.8; }
+    50%      { r: 4.5; opacity: 1; }
+}
+
+/* ===== Слои карточек ===== */
+.crypto-cards-layer {
+    position: absolute;
+    /* Жестко центрируем круги карточек */
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.crypto-cards-layer.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.crypto-cards-layer .crypto-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 170px;
+    margin-left: -115px;
+    margin-top: -85px;
+
+    --angle: 0deg;
+    --radius: 340px;
+
+    transform:
+        rotate(var(--angle))
+        translate(0, calc(-1 * var(--radius)))
+        rotate(calc(-1 * var(--angle)));
+
+    transform-origin: 50% 50%;
+
+    background: rgba(15, 26, 21, 0.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(168, 255, 62, 0.22);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+    cursor: pointer;
+    z-index: 3;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    pointer-events: auto;
+}
+
+.crypto-cards-layer-2 .crypto-card {
+    border-color: rgba(168, 255, 62, 0.30);
+}
+
+/* Углы для карточек */
+.crypto-cards-layer .crypto-card-1 { --angle: 0deg;   }
+.crypto-cards-layer .crypto-card-2 { --angle: 40deg;  }
+.crypto-cards-layer .crypto-card-3 { --angle: 80deg;  }
+.crypto-cards-layer .crypto-card-4 { --angle: 120deg; }
+.crypto-cards-layer .crypto-card-5 { --angle: 160deg; }
+.crypto-cards-layer .crypto-card-6 { --angle: 200deg; }
+.crypto-cards-layer .crypto-card-7 { --angle: 240deg; }
+.crypto-cards-layer .crypto-card-8 { --angle: 280deg; }
+.crypto-cards-layer .crypto-card-9 { --angle: 320deg; }
+
+/* Раскрутка */
+.crypto-cards-layer .crypto-card.roulette-in {
+    animation: cryptoRouletteIn 1.35s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes cryptoRouletteIn {
+    0% {
+        opacity: 0;
+        transform:
+            rotate(calc(var(--angle) - 105deg))
+            translate(0, calc(-1 * var(--radius) - 20px))
+            rotate(calc(-1 * (var(--angle) - 105deg)))
+            scale(.42);
+        filter: blur(5px);
+    }
+    48% {
         opacity: 1;
-        animation: none;
+        filter: blur(0);
     }
-    .crypto-card:hover {
-        transform: translateY(-5px) scale(1.02) !important;
+    72% {
+        transform:
+            rotate(calc(var(--angle) + 7deg))
+            translate(0, calc(-1 * var(--radius)))
+            rotate(calc(-1 * (var(--angle) + 7deg)))
+            scale(1.04);
     }
-    .crypto-assets-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .mypath-card { flex-direction: column-reverse; }
-    .mypath-card-info { max-width: 100%; }
-    .mypath-card-visual { width: 100%; min-width: 0; height: 220px; }
-    .mypath-card-visual::before {
-        background: linear-gradient(180deg, transparent 0%, rgba(15, 26, 21, 0.6) 50%, rgba(15, 26, 21, 1) 100%);
+    100% {
+        opacity: 1;
+        transform:
+            rotate(var(--angle))
+            translate(0, calc(-1 * var(--radius)))
+            rotate(calc(-1 * var(--angle)))
+            scale(1);
+        filter: blur(0);
     }
 }
 
-@media (max-width: 780px) {
-    .topbar {
-        padding: 10px 12px;
-        gap: 10px;
-        flex-wrap: wrap;
-        overflow: visible;
-    }
-
-    .brand { gap: 10px; }
-    .brand-logo { width: 40px; height: 40px; }
-    .brand-text h1 .brand-w { font-size: 23px; }
-    .brand-text h1 .brand-rest { font-size: 23px; }
-    .brand-tagline { display: none; }
-
-    .view-switch {
-        order: 3;
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding: 3px;
-        flex-shrink: 0;
-    }
-    .view-switch::-webkit-scrollbar { display: none; }
-    .view-btn { padding: 7px 12px; font-size: 11.5px; flex-shrink: 0; }
-    .view-btn svg { width: 14px; height: 14px; }
-    .topbar-actions { display: none; }
-
-    .bubble-label { font-size: 11px; padding: 0 4px; }
-    .bubble-icon { margin-bottom: 4px; }
-
-    .crypto-stage {
-        grid-template-columns: 1fr;
-        padding: 16px;
-        gap: 14px;
-    }
-
-    .crypto-center { height: 200px; margin-bottom: 4px; position: relative; }
-
-    .crypto-center::before,
-    .crypto-center::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border-radius: 50%;
-        border: 1px solid rgba(39, 235, 210, 0.45);
-        pointer-events: none;
-        z-index: 1;
-    }
-    .crypto-center::before {
-        width: 170px; height: 170px;
-        animation: mobileRingPulse 3s ease-in-out infinite;
-    }
-    .crypto-center::after {
-        width: 210px; height: 210px;
-        border-color: rgba(39, 235, 210, 0.24);
-        animation: mobileRingPulse 3s ease-in-out infinite;
-        animation-delay: 1.5s;
-    }
-
-    @keyframes mobileRingPulse {
-        0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.9; }
-        100% { transform: translate(-50%, -50%) scale(1.35); opacity: 0; }
-    }
-
-    .crypto-coin {
-        width: 130px; height: 130px;
-        filter:
-            drop-shadow(0 0 30px rgba(39, 235, 210, 0.85))
-            drop-shadow(0 0 70px rgba(39, 235, 210, 0.55));
-    }
-
-    .crypto-secondary-coin {
-        width: 96px;
-        height: 96px;
-        margin: 4px auto 24px;
-    }
-
-    .crypto-center + .crypto-card::before {
-        content: '';
-        position: absolute;
-        top: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 2px;
-        height: 30px;
-        background: linear-gradient(180deg,
-            rgba(39, 235, 210, 0.7),
-            rgba(168, 255, 62, 0.3),
-            transparent);
-        filter: blur(0.5px);
-        pointer-events: none;
-        z-index: 10;
-    }
-
-    .crypto-assets { padding: 0 16px; margin-top: 30px; }
-    .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
-
-    .mypath-view { padding: 16px; }
-    .mypath-hero { padding: 28px 24px; min-height: 220px; }
-    .mypath-hero-title .line1,
-    .mypath-hero-title .line2 { font-size: 32px; letter-spacing: 1.5px; }
-    .mypath-hero-text p { font-size: 13.5px; }
-    .mypath-posts { grid-template-columns: 1fr; }
-    .mypath-section-title h2 { font-size: 20px; }
-    .mypath-section-subtitle { margin-left: 0; }
-
-    .mypath-card { flex-direction: column; min-height: 0; }
-    .mypath-card-info {
-        padding: 24px 22px 22px;
-        max-width: 100%;
-        gap: 10px;
-        order: 2;
-    }
-    .mypath-card-visual {
-        width: 100%;
-        min-width: 0;
-        height: 180px;
-        flex: 0 0 180px;
-        order: 1;
-        position: relative;
-    }
-    .mypath-card-visual::before {
-        background: linear-gradient(180deg,
-            transparent 0%,
-            transparent 55%,
-            rgba(15, 26, 21, 0.6) 85%,
-            rgba(15, 26, 21, 1) 100%);
-    }
-    .mypath-card-visual::after {
-        background: linear-gradient(180deg, transparent 60%, rgba(10, 19, 16, 0.55) 100%);
-    }
-
-    .mypath-card-icon { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px; }
-    .mypath-card-icon svg { width: 22px; height: 22px; }
-    .mypath-card-info h3 { font-size: 24px; letter-spacing: 1px; }
-    .mypath-card-info p { font-size: 13px; max-width: 100%; }
-    .mypath-card-btn { padding: 9px 16px 9px 13px; font-size: 12px; }
-    .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
-
-    .mypath-side-left { padding: 16px 0 18px; }
-    .mypath-side-left .side-label { font-size: 8px; letter-spacing: 3px; margin-bottom: 10px; }
-    .mypath-side-left .side-track { padding: 0 10px; }
-    .mypath-side-left .side-step { width: 24px; height: 24px; }
-    .mypath-side-left .side-step::before { width: 5px; height: 5px; }
-    .mypath-side-left .side-step-active::before { width: 8px; height: 8px; }
-    .mypath-side-left .side-compass { width: 100px; height: 100px; }
-
-    .mypath-side-right .side-floaters { height: 74px; padding: 8px 12px; gap: 6px; }
-    .mypath-side-right .side-coin { width: 36px; height: 36px; font-size: 14px; }
-
-    .hourglass {
-        width: 100px;
-        height: 170px;
-    }
-    .hg-lid { width: 86px; height: 9px; }
-    .hg-glass { width: 86px; height: 72px; }
-    .hg-glass-top {
-        border-left-width: 43px;
-        border-right-width: 43px;
-        border-bottom-width: 72px;
-    }
-    .hg-glass-bottom {
-        border-left-width: 43px;
-        border-right-width: 43px;
-        border-top-width: 72px;
-    }
-    .hg-sand-top {
-        border-left-width: 38px;
-        border-right-width: 38px;
-        border-bottom-width: 64px;
-    }
-    .hg-sand-bottom {
-        border-left-width: 38px;
-        border-right-width: 38px;
-        border-top-width: 64px;
-    }
-    .hg-stream { height: 72px; }
-    .hg-ring { width: 130px; height: 130px; }
-    .hg-ring-2 { width: 160px; height: 160px; }
+.crypto-cards-layer .crypto-card:hover {
+    border-color: var(--accent);
+    box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.75),
+        0 0 40px var(--accent-glow);
+    z-index: 20;
+    animation-play-state: paused;
 }
 
-@media (max-width: 480px) {
-    .crypto-assets-list { grid-template-columns: 1fr; }
-    .crypto-center { height: 170px; }
-    .crypto-center::before { width: 140px; height: 140px; }
-    .crypto-center::after { width: 175px; height: 175px; }
-    .crypto-coin { width: 110px; height: 110px; }
-
-    .mypath-card-visual { height: 150px; flex: 0 0 150px; }
-    .mypath-card-info { padding: 20px 18px 18px; gap: 8px; }
-    .mypath-card-info h3 { font-size: 22px; letter-spacing: 0.8px; }
-    .mypath-card-info p { font-size: 12.5px; line-height: 1.5; }
-    .mypath-card-icon { width: 40px; height: 40px; }
-    .mypath-card-icon svg { width: 20px; height: 20px; }
-    .mypath-card-btn { padding: 8px 14px 8px 12px; font-size: 11.5px; gap: 8px; }
-
-    .mypath-side-left .side-track { padding: 0 6px; }
-    .mypath-side-left .side-step { width: 20px; height: 20px; }
-    .mypath-side-left .side-step::before { width: 4px; height: 4px; }
-    .mypath-side-left .side-step-active::before { width: 7px; height: 7px; }
-    .mypath-side-left .side-compass { width: 80px; height: 80px; opacity: 0.18; }
-
-    .mypath-side-right .side-floaters {
-        height: 66px;
-        padding: 6px 10px;
-        gap: 4px;
-        overflow: hidden;
-    }
-    .mypath-side-right .side-coin {
-        width: 32px; height: 32px; font-size: 12px; flex-shrink: 0;
-    }
-
-    .soon-card {
-        padding: 28px 24px 26px;
-    }
-    .soon-icon-wrapper { width: 80px; height: 80px; }
-    .soon-icon { width: 70px; height: 70px; border-radius: 20px; }
-    .soon-icon svg { width: 34px; height: 34px; }
-    .soon-title { font-size: 26px; letter-spacing: 2px; }
-    .soon-subtitle { font-size: 9px; letter-spacing: 3px; }
+/* Контент карточки */
+.crypto-card-image {
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-/* =========================================================
-   МОДАЛЬНОЕ ОКНО (для «Крипта» и «Мой путь»)
-   ========================================================= */
+.crypto-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.75) 100%);
+    pointer-events: none;
+}
+
+.crypto-card-glass-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.35),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.20),
+        0 8px 24px rgba(0, 0, 0, 0.35);
+    animation: iconPulse 3s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1);    }
+    50%      { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.crypto-card-glass-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+}
+
+.crypto-card-body {
+    padding: 12px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.crypto-card-body h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.crypto-card-body p {
+    margin: 0;
+    font-size: 11.5px;
+    color: #b8c9a8;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.crypto-empty-layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 260px;
+    padding: 26px 22px;
+    border-radius: 18px;
+    background: rgba(10, 19, 16, 0.85);
+    border: 1px dashed rgba(168, 255, 62, 0.35);
+    text-align: center;
+    color: var(--text-muted);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.crypto-empty-icon {
+    font-size: 28px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    animation: iconPulse 3s ease-in-out infinite;
+}
+
+.crypto-empty-title {
+    font-family: 'Bungee', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.crypto-empty-text {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Активы */
+.crypto-assets {
+    max-width: 1300px;
+    margin: 20px auto 0;
+    padding: 0 40px;
+}
+
+.crypto-assets h2 {
+    margin: 0 0 20px;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: -0.4px;
+}
+
+.crypto-assets-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}
+
+.crypto-asset-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(15, 26, 21, 0.90);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    transition: all 0.25s ease;
+}
+
+.crypto-asset-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px var(--accent-glow);
+    transform: translateY(-3px);
+}
+
+.crypto-asset-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.crypto-asset-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
+    flex-shrink: 0;
+    border: 1px solid;
+}
+
+.crypto-asset-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.crypto-asset-info strong {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.crypto-asset-price {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.crypto-asset-sparkline {
+    width: 100%;
+    height: 36px;
+}
+
+.crypto-asset-sparkline svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.crypto-asset-change {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.crypto-asset-change.up { color: #16a34a; }
+.crypto-asset-change.down { color: #dc2626; }
+    /* ============================================================
+   МОДАЛЬНЫЕ ОКНА (Крипта / Мой путь)
+   ============================================================ */
 
 body.crypto-modal-open {
     overflow: hidden;
@@ -3446,7 +3221,266 @@ body.crypto-modal-open {
     transform: rotate(90deg);
 }
 
+/* ============================================================
+   АДАПТИВ
+   ============================================================ */
+
+@media (max-width: 1500px) {
+    .mypath-layout { grid-template-columns: 200px 1fr 200px; gap: 30px; }
+}
+
+@media (max-width: 1300px) {
+    .mypath-layout { grid-template-columns: 170px 1fr 170px; gap: 24px; }
+    .side-coin { width: 48px; height: 48px; font-size: 18px; }
+}
+
+@media (max-width: 1100px) {
+    .mypath-hero-title .line1,
+    .mypath-hero-title .line2 { font-size: 44px; letter-spacing: 2px; }
+    .mypath-card-info { padding: 26px 28px; max-width: 60%; }
+    .mypath-card-info h3 { font-size: 26px; }
+
+    .mypath-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        max-width: 1200px;
+    }
+
+    .mypath-side-left {
+        position: relative;
+        top: auto;
+        height: auto;
+        min-height: 0;
+        padding: 22px 0 26px;
+        order: -1;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .mypath-side-left .side-label {
+        position: static;
+        writing-mode: horizontal-tb;
+        text-orientation: initial;
+        transform: none;
+        left: auto;
+        top: auto;
+        margin-bottom: 14px;
+        font-size: 9px;
+        letter-spacing: 4px;
+        text-align: center;
+        color: rgba(168, 255, 62, 0.55);
+    }
+
+    .mypath-side-left .side-track {
+        flex-direction: row;
+        height: auto;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+    }
+
+    .mypath-side-left .side-track-line {
+        top: 50%;
+        bottom: auto;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(168, 255, 62, 0.15) 10%,
+            rgba(168, 255, 62, 0.4) 50%,
+            rgba(168, 255, 62, 0.15) 90%,
+            transparent 100%);
+    }
+
+    .mypath-side-left .side-track-line::after {
+        top: 0;
+        left: -80px;
+        width: 80px;
+        height: 100%;
+        background: linear-gradient(90deg,
+            transparent 0%,
+            var(--accent) 50%,
+            transparent 100%);
+        animation: pulseTravelRight 6s ease-in-out infinite;
+    }
+
+    @keyframes pulseTravelRight {
+        0%   { left: -80px; opacity: 0; }
+        10%  { opacity: 1; }
+        90%  { opacity: 1; }
+        100% { left: 100%; opacity: 0; }
+    }
+
+    .mypath-side-left .side-step { width: 30px; height: 30px; }
+    .mypath-side-left .side-step::before { width: 6px; height: 6px; }
+    .mypath-side-left .side-step-active::before { width: 10px; height: 10px; }
+    .mypath-side-left .side-compass { width: 130px; height: 130px; opacity: 0.22; }
+
+    .mypath-side-right {
+        position: relative;
+        top: auto;
+        height: auto;
+        min-height: 0;
+        padding: 0;
+        order: 999;
+    }
+
+    .mypath-side-right .side-floaters {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 90px;
+        padding: 10px 20px;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(180deg,
+            rgba(15, 26, 21, 0.4) 0%,
+            rgba(15, 26, 21, 0.7) 100%);
+        border-radius: 16px;
+        border: 1px solid var(--border-soft);
+        margin-top: 20px;
+    }
+
+    .mypath-side-right .side-coin {
+        position: static;
+        width: 44px;
+        height: 44px;
+        font-size: 17px;
+        animation: coinFloatMobile 4s ease-in-out infinite;
+    }
+
+    .mypath-side-right .side-coin-1 { animation-delay: 0s; }
+    .mypath-side-right .side-coin-2 { animation-delay: 0.3s; }
+    .mypath-side-right .side-coin-3 { animation-delay: 0.6s; }
+    .mypath-side-right .side-coin-4 { animation-delay: 0.9s; }
+    .mypath-side-right .side-coin-5 { animation-delay: 1.2s; }
+    .mypath-side-right .side-coin-6 { animation-delay: 1.5s; }
+    .mypath-side-right .side-coin-7 { animation-delay: 1.8s; }
+
+    @keyframes coinFloatMobile {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50%      { transform: translateY(-6px) rotate(4deg); }
+    }
+
+    .mypath-side-right .side-particle {
+        bottom: 0 !important;
+        animation: particleRiseMobile linear infinite !important;
+    }
+
+    @keyframes particleRiseMobile {
+        0% {
+            transform: translateY(0) scale(0);
+            opacity: 0;
+        }
+        20% {
+            opacity: 0.9;
+            transform: translateY(-30px) scale(1);
+        }
+        80% {
+            opacity: 0.9;
+        }
+        100% {
+            transform: translateY(-80px) scale(0.3);
+            opacity: 0;
+        }
+    }
+
+    /* Крипта на планшетах */
+    .crypto-coins-pair { gap: 60px; }
+    .crypto-cards-layer .crypto-card {
+        --radius: 260px;
+        width: 200px;
+        height: 155px;
+        margin-left: -100px;
+        margin-top: -77px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .mypath-card { flex-direction: column-reverse; }
+    .mypath-card-info { max-width: 100%; }
+    .mypath-card-visual { width: 100%; min-width: 0; height: 220px; }
+    .mypath-card-visual::before {
+        background: linear-gradient(180deg, transparent 0%, rgba(15, 26, 21, 0.6) 50%, rgba(15, 26, 21, 1) 100%);
+    }
+
+    .crypto-assets-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 900px) {
+    /* Крипта на мобильных — монеты столбиком, посты сеткой */
+    .crypto-stage {
+        height: auto;
+        min-height: 0;
+        padding-bottom: 40px;
+    }
+
+    .crypto-coins-pair {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        padding-top: 50px;
+    }
+
+    .crypto-coin-slot {
+        width: 100%;
+        max-width: 380px;
+        height: 220px;
+    }
+
+    .crypto-cards-layer {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        opacity: 1;
+        pointer-events: auto;
+        display: none;
+    }
+
+    .crypto-coin-slot.is-open .crypto-cards-layer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .crypto-cards-layer .crypto-card {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 0;
+        width: 100%;
+        height: auto;
+        min-height: 160px;
+        opacity: 1;
+        animation: none;
+    }
+
+    .crypto-rays {
+        width: 400px;
+        height: 400px;
+    }
+
+    .crypto-empty-layer {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        margin-top: 16px;
+    }
+
+    /* Модалка на планшетах */
     .crypto-modal-dialog {
         flex-direction: column;
         height: auto;
@@ -3474,69 +3508,125 @@ body.crypto-modal-open {
         font-size: 14px;
         line-height: 1.65;
     }
+
+    /* Мой путь — посты лентой остаются горизонтальными */
+    .mypath-posts-row .mypath-post {
+        flex: 0 0 260px;
+        width: 260px;
+        min-width: 260px;
+        max-width: 260px;
+    }
+    .mypath-posts-panel-inline.active {
+        padding: 18px 16px 20px;
+    }
 }
 
-@media (max-width: 700px) {
-    .crypto-modal {
-        padding: 14px;
+@media (max-width: 780px) {
+    .topbar {
+        padding: 10px 12px;
+        gap: 10px;
+        flex-wrap: wrap;
+        overflow: visible;
     }
 
-    .crypto-modal-image {
-        height: 200px;
-    }
+    .brand { gap: 10px; }
+    .brand-logo { width: 40px; height: 40px; }
+    .brand-text h1 .brand-w { font-size: 23px; }
+    .brand-text h1 .brand-rest { font-size: 23px; }
+    .brand-tagline { display: none; }
 
-    .crypto-modal-telegram {
+    .view-switch {
+        order: 3;
         width: 100%;
-        justify-content: center;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 3px;
+        flex-shrink: 0;
     }
-}
+    .view-switch::-webkit-scrollbar { display: none; }
+    .view-btn { padding: 7px 12px; font-size: 11.5px; flex-shrink: 0; }
+    .view-btn svg { width: 14px; height: 14px; }
+    .topbar-actions { display: none; }
 
-.mypath-modal-image {
-    flex: 0 0 50%;
-    width: 50%;
-    min-width: 0;
-}
+    .bubble-label { font-size: 11px; padding: 0 4px; }
+    .bubble-icon { margin-bottom: 4px; }
 
-.mypath-modal-image img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
+    .mypath-view { padding: 16px; }
+    .mypath-hero { padding: 28px 24px; min-height: 220px; }
+    .mypath-hero-title .line1,
+    .mypath-hero-title .line2 { font-size: 32px; letter-spacing: 1.5px; }
+    .mypath-hero-text p { font-size: 13.5px; }
+    .mypath-section-title h2 { font-size: 20px; }
+    .mypath-section-subtitle { margin-left: 0; }
 
-.mypath-view {
-    scroll-behavior: auto;
-    overflow-anchor: none;
-}
-
-@media (min-width: 901px) {
-    #mypath-modal .crypto-modal-dialog {
-        width: min(1280px, calc(100vw - 64px));
-        height: min(88vh, 820px);
-    }
-    #mypath-modal .crypto-modal-image {
-        flex: 0 0 50%;
-        width: 50%;
-        min-width: 0;
-        padding: 24px;
-    }
-    #mypath-modal .crypto-modal-content {
-        flex: 1 1 50%;
-        width: 50%;
-        min-width: 0;
-    }
-    #mypath-modal .crypto-modal-image img {
+    .mypath-card { flex-direction: column; min-height: 0; }
+    .mypath-card-info {
+        padding: 24px 22px 22px;
         max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+        gap: 10px;
+        order: 2;
     }
+    .mypath-card-visual {
+        width: 100%;
+        min-width: 0;
+        height: 180px;
+        flex: 0 0 180px;
+        order: 1;
+        position: relative;
+    }
+    .mypath-card-visual::before {
+        background: linear-gradient(180deg,
+            transparent 0%,
+            transparent 55%,
+            rgba(15, 26, 21, 0.6) 85%,
+            rgba(15, 26, 21, 1) 100%);
+    }
+    .mypath-card-visual::after {
+        background: linear-gradient(180deg, transparent 60%, rgba(10, 19, 16, 0.55) 100%);
+    }
+
+    .mypath-card-icon { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px; }
+    .mypath-card-icon svg { width: 22px; height: 22px; }
+    .mypath-card-info h3 { font-size: 24px; letter-spacing: 1px; }
+    .mypath-card-info p { font-size: 13px; max-width: 100%; }
+    .mypath-card-btn { padding: 9px 16px 9px 13px; font-size: 12px; }
+    .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
+
+    .mypath-side-left { padding: 16px 0 18px; }
+    .mypath-side-left .side-label { font-size: 8px; letter-spacing: 3px; margin-bottom: 10px; }
+    .mypath-side-left .side-track { padding: 0 10px; }
+    .mypath-side-left .side-step { width: 24px; height: 24px; }
+    .mypath-side-left .side-step::before { width: 5px; height: 5px; }
+    .mypath-side-left .side-step-active::before { width: 8px; height: 8px; }
+    .mypath-side-left .side-compass { width: 100px; height: 100px; }
+
+    .mypath-side-right .side-floaters { height: 74px; padding: 8px 12px; gap: 6px; }
+    .mypath-side-right .side-coin { width: 36px; height: 36px; font-size: 14px; }
+
+    .crypto-assets { padding: 0 16px; margin-top: 30px; }
+    .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
+
+    /* Модалка на телефоне */
+    .crypto-modal { padding: 14px; }
+    .crypto-modal-image { height: 200px; }
+    .crypto-modal-telegram { width: 100%; justify-content: center; }
+
+    /* Панели «Скоро» на телефоне */
+    .mypath-soon-panel-inline { padding: 0 14px; border-radius: 16px; }
+    .mypath-soon-panel-inline.active { padding: 16px 14px; }
+    .mypath-soon-inner { gap: 14px; align-items: flex-start; }
+    .mypath-soon-icon { width: 54px; height: 54px; border-radius: 14px; }
+    .mypath-soon-icon svg { width: 26px; height: 26px; }
+    .mypath-soon-title { font-size: 22px; letter-spacing: 2px; }
+    .mypath-soon-subtitle { font-size: 12.5px; }
+    .mypath-soon-inner .mypath-panel-close { width: 32px; height: 32px; font-size: 18px; }
 }
 
 @media (max-width: 768px) {
-    .view-btn[data-view="bubbles"] {
-        display: none !important;
-    }
+    .view-btn[data-view="bubbles"] { display: none !important; }
 
     .topbar {
         gap: 8px;
@@ -3584,6 +3674,125 @@ body.crypto-modal-open {
     .mypath-side-right { display: none !important; }
 }
 
+@media (max-width: 600px) {
+    .mypath-posts-row .mypath-post {
+        flex: 0 0 82%;
+        width: 82%;
+        min-width: 82%;
+        max-width: 82%;
+    }
+    .mypath-posts-panel-inline {
+        padding: 0 14px;
+        border-radius: 16px;
+    }
+    .mypath-posts-panel-inline.active {
+        max-height: 720px;
+        padding: 16px 14px 18px;
+    }
+    .mypath-panel-badge { font-size: 11.5px; padding: 5px 12px; }
+    .mypath-panel-hint { display: none; }
+
+    /* Крипта на телефоне */
+    .crypto-coin-slot { max-width: 100%; }
+    .crypto-coin-slot .crypto-coin { width: 130px; height: 130px; }
+    .crypto-coin-slot .crypto-rotor { width: 240px; height: 240px; }
+    .crypto-coin-slot .crypto-center-glow { width: 260px; height: 260px; }
+    .crypto-coins-pair { gap: 24px; }
+
+    .crypto-cards-layer .crypto-card {
+        min-height: 150px;
+    }
+    .crypto-cards-layer .crypto-card-body h3 { font-size: 13px; }
+    .crypto-cards-layer .crypto-card-body p { font-size: 11px; -webkit-line-clamp: 2; }
+
+    .crypto-coin-slot.is-open .crypto-cards-layer {
+        grid-template-columns: 1fr;
+    }
+
+    .mypath-soon-title { font-size: 22px; letter-spacing: 2px; }
+    .mypath-soon-subtitle { font-size: 12.5px; }
+}
+
+@media (max-width: 480px) {
+    .crypto-assets-list { grid-template-columns: 1fr; }
+
+    .mypath-card-visual { height: 150px; flex: 0 0 150px; }
+    .mypath-card-info { padding: 20px 18px 18px; gap: 8px; }
+    .mypath-card-info h3 { font-size: 22px; letter-spacing: 0.8px; }
+    .mypath-card-info p { font-size: 12.5px; line-height: 1.5; }
+    .mypath-card-icon { width: 40px; height: 40px; }
+    .mypath-card-icon svg { width: 20px; height: 20px; }
+    .mypath-card-btn { padding: 8px 14px 8px 12px; font-size: 11.5px; gap: 8px; }
+
+    .mypath-side-left .side-track { padding: 0 6px; }
+    .mypath-side-left .side-step { width: 20px; height: 20px; }
+    .mypath-side-left .side-step::before { width: 4px; height: 4px; }
+    .mypath-side-left .side-step-active::before { width: 7px; height: 7px; }
+    .mypath-side-left .side-compass { width: 80px; height: 80px; opacity: 0.18; }
+
+    .mypath-side-right .side-floaters {
+        height: 66px;
+        padding: 6px 10px;
+        gap: 4px;
+        overflow: hidden;
+    }
+    .mypath-side-right .side-coin {
+        width: 32px; height: 32px; font-size: 12px; flex-shrink: 0;
+    }
+
+    .soon-card {
+        padding: 28px 24px 26px;
+    }
+    .soon-icon-wrapper { width: 80px; height: 80px; }
+    .soon-icon { width: 70px; height: 70px; border-radius: 20px; }
+    .soon-icon svg { width: 34px; height: 34px; }
+    .soon-title { font-size: 26px; letter-spacing: 2px; }
+    .soon-subtitle { font-size: 9px; letter-spacing: 3px; }
+}
+
+/* Модалка «Мой путь» — соотношение 50/50 на десктопе */
+.mypath-modal-image {
+    flex: 0 0 50%;
+    width: 50%;
+    min-width: 0;
+}
+
+.mypath-modal-image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.mypath-view {
+    scroll-behavior: auto;
+    overflow-anchor: none;
+}
+
+@media (min-width: 901px) {
+    #mypath-modal .crypto-modal-dialog {
+        width: min(1280px, calc(100vw - 64px));
+        height: min(88vh, 820px);
+    }
+    #mypath-modal .crypto-modal-image {
+        flex: 0 0 50%;
+        width: 50%;
+        min-width: 0;
+        padding: 24px;
+    }
+    #mypath-modal .crypto-modal-content {
+        flex: 1 1 50%;
+        width: 50%;
+        min-width: 0;
+    }
+    #mypath-modal .crypto-modal-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
 @media (max-width: 900px) {
     #mypath-modal .crypto-modal-dialog {
         flex-direction: column;
@@ -3612,417 +3821,5 @@ body.crypto-modal-open {
         max-height: 48vh;
         overflow-y: auto;
         padding: 20px 18px 24px;
-    }
-}
-
-/* =========================================================
-   «Мой путь» — посты раскрываются ПОД карточкой «Посты»
-   и идут горизонтальной лентой
-   ========================================================= */
-
-/* Сама панель: по умолчанию скрыта, раскрывается плавно */
-.mypath-posts-panel-inline {
-    display: block;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    margin: 0;
-    padding: 0 24px;
-    border-radius: 20px;
-    background: rgba(15, 26, 21, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid transparent;
-    transition:
-        max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.4s ease,
-        padding 0.4s ease,
-        margin 0.4s ease,
-        border-color 0.4s ease;
-}
-
-.mypath-posts-panel-inline.active {
-    max-height: 700px;
-    opacity: 1;
-    margin: 6px 0 14px;
-    padding: 22px 24px 26px;
-    border-color: rgba(168, 255, 62, 0.30);
-    animation: postsPanelReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes postsPanelReveal {
-    0%   { opacity: 0; transform: translateY(-10px) scaleY(0.96); }
-    100% { opacity: 1; transform: translateY(0) scaleY(1); }
-}
-
-/* Заголовок панели */
-.mypath-panel-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    margin-bottom: 16px;
-}
-
-.mypath-panel-header-title {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.mypath-panel-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 16px;
-    border-radius: 999px;
-    background: rgba(168, 255, 62, 0.15);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-family: 'Bungee', sans-serif;
-    font-size: 13px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    box-shadow: 0 0 18px rgba(168, 255, 62, 0.25);
-}
-
-.mypath-panel-hint {
-    font-size: 11.5px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    animation: hintSlide 2.4s ease-in-out infinite;
-}
-
-@keyframes hintSlide {
-    0%, 100% { transform: translateX(0);    opacity: 0.6; }
-    50%      { transform: translateX(6px);  opacity: 1; }
-}
-
-.mypath-panel-close {
-    flex-shrink: 0;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    border: 1px solid rgba(168, 255, 62, 0.35);
-    background: rgba(168, 255, 62, 0.08);
-    color: var(--accent);
-    font-size: 22px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.mypath-panel-close:hover {
-    background: var(--accent);
-    color: var(--text-invert);
-    border-color: var(--accent);
-    transform: rotate(90deg);
-    box-shadow: 0 0 20px var(--accent-glow);
-}
-
-/* Горизонтальная лента постов */
-.mypath-posts-row {
-    display: flex;
-    flex-direction: row;
-    gap: 18px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 6px 4px 18px;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(168, 255, 62, 0.45) rgba(0, 0, 0, 0.25);
-}
-
-/* Кастомный скроллбар */
-.mypath-posts-row::-webkit-scrollbar {
-    height: 8px;
-}
-.mypath-posts-row::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.30);
-    border-radius: 4px;
-}
-.mypath-posts-row::-webkit-scrollbar-thumb {
-    background: linear-gradient(90deg, rgba(168, 255, 62, 0.55), rgba(168, 255, 62, 0.25));
-    border-radius: 4px;
-}
-.mypath-posts-row::-webkit-scrollbar-thumb:hover {
-    background: var(--accent);
-}
-
-/* Карточка поста в ленте */
-.mypath-posts-row .mypath-post {
-    flex: 0 0 300px;
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
-    scroll-snap-align: start;
-    height: auto;
-}
-
-/* Лёгкая задержка появления каждой карточки при раскрытии */
-.mypath-posts-panel-inline.active .mypath-post {
-    animation: postSlideIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.mypath-posts-panel-inline.active .mypath-post:nth-child(1) { animation-delay: 0.05s; }
-.mypath-posts-panel-inline.active .mypath-post:nth-child(2) { animation-delay: 0.10s; }
-.mypath-posts-panel-inline.active .mypath-post:nth-child(3) { animation-delay: 0.15s; }
-.mypath-posts-panel-inline.active .mypath-post:nth-child(4) { animation-delay: 0.20s; }
-.mypath-posts-panel-inline.active .mypath-post:nth-child(5) { animation-delay: 0.25s; }
-
-@keyframes postSlideIn {
-    0%   { opacity: 0; transform: translateX(30px) scale(0.96); }
-    100% { opacity: 1; transform: translateX(0) scale(1); }
-}
-
-/* Подсветка карточки «Посты», когда панель открыта */
-.mypath-card.is-open {
-    border-color: rgba(168, 255, 62, 0.55);
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.55),
-        0 0 40px var(--accent-glow);
-}
-
-.mypath-card.is-open .mypath-card-btn {
-    background: var(--accent);
-    color: var(--text-invert);
-    border-color: var(--accent);
-    box-shadow: 0 0 30px var(--accent-glow);
-}
-
-/* Адаптив: на планшетах и телефонах лента остаётся горизонтальной */
-@media (max-width: 900px) {
-    .mypath-posts-row .mypath-post {
-        flex: 0 0 260px;
-        width: 260px;
-        min-width: 260px;
-        max-width: 260px;
-    }
-    .mypath-posts-panel-inline.active {
-        padding: 18px 16px 20px;
-    }
-}
-
-@media (max-width: 600px) {
-    .mypath-posts-row .mypath-post {
-        flex: 0 0 82%;
-        width: 82%;
-        min-width: 82%;
-        max-width: 82%;
-    }
-    .mypath-posts-panel-inline {
-        padding: 0 14px;
-        border-radius: 16px;
-    }
-    .mypath-posts-panel-inline.active {
-        max-height: 720px;
-        padding: 16px 14px 18px;
-    }
-    .mypath-panel-badge { font-size: 11.5px; padding: 5px 12px; }
-    .mypath-panel-hint { display: none; }
-}
-
-/* Убираем старую вертикальную сетку постов, которая мешала */
-.mypath-posts {
-    display: none;
-}
-
-/* =========================================================
-   «Мой путь» — панели «Скоро» под карточками Комикс / Мультик
-   ========================================================= */
-
-.mypath-soon-panel-inline {
-    display: block;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    margin: 0;
-    padding: 0 24px;
-    border-radius: 20px;
-    background: rgba(15, 26, 21, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid transparent;
-    transition:
-        max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        opacity 0.4s ease,
-        padding 0.4s ease,
-        margin 0.4s ease,
-        border-color 0.4s ease;
-}
-
-.mypath-soon-panel-inline.active {
-    max-height: 360px;
-    opacity: 1;
-    margin: 6px 0 14px;
-    padding: 22px 24px;
-    border-color: rgba(168, 255, 62, 0.30);
-    animation: soonPanelReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes soonPanelReveal {
-    0%   { opacity: 0; transform: translateY(-10px) scaleY(0.96); }
-    100% { opacity: 1; transform: translateY(0) scaleY(1); }
-}
-
-.mypath-soon-inner {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 22px;
-}
-
-.mypath-soon-icon {
-    flex-shrink: 0;
-    width: 72px;
-    height: 72px;
-    border-radius: 18px;
-    background: radial-gradient(circle at 40% 35%, rgba(168,255,62,.18), rgba(10,19,16,.9));
-    border: 1px solid rgba(168, 255, 62, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    box-shadow:
-        0 0 24px rgba(168,255,62,.20),
-        inset 0 0 18px rgba(168,255,62,.08);
-    animation: soonIconFloat 3s ease-in-out infinite;
-}
-
-@keyframes soonIconFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50%      { transform: translateY(-4px) rotate(-3deg); }
-}
-
-.mypath-soon-icon svg {
-    width: 36px;
-    height: 36px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.mypath-soon-text {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 0;
-    flex: 1;
-}
-
-.mypath-soon-badge {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    padding: 4px 12px;
-    border-radius: 999px;
-    background: rgba(168, 255, 62, 0.14);
-    border: 1px solid rgba(168, 255, 62, 0.55);
-    color: var(--accent);
-    font-size: 10.5px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-}
-
-.mypath-soon-title {
-    margin: 0;
-    font-family: 'Bungee', 'Orbitron', sans-serif;
-    font-size: clamp(22px, 3vw, 32px);
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #fff;
-    line-height: 1;
-    text-shadow:
-        0 0 18px rgba(168, 255, 62, 0.35),
-        0 0 40px rgba(168, 255, 62, 0.15),
-        2px 2px 0 rgba(0, 0, 0, 0.55);
-    animation: soonTitlePulse 3s ease-in-out infinite;
-}
-
-@keyframes soonTitlePulse {
-    0%, 100% { text-shadow: 0 0 18px rgba(168, 255, 62, 0.35), 0 0 40px rgba(168, 255, 62, 0.15), 2px 2px 0 rgba(0, 0, 0, 0.55); }
-    50%      { text-shadow: 0 0 30px rgba(168, 255, 62, 0.60), 0 0 70px rgba(168, 255, 62, 0.28), 2px 2px 0 rgba(0, 0, 0, 0.55); }
-}
-
-.mypath-soon-subtitle {
-    margin: 0;
-    font-size: 13.5px;
-    color: var(--text-muted);
-    line-height: 1.55;
-    max-width: 520px;
-}
-
-.mypath-soon-loader {
-    display: flex;
-    gap: 7px;
-    margin-top: 6px;
-}
-
-.mypath-soon-loader span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px rgba(168, 255, 62, 0.7);
-    animation: soonDotPanel 1.25s ease-in-out infinite;
-}
-
-.mypath-soon-loader span:nth-child(2) { animation-delay: .16s; }
-.mypath-soon-loader span:nth-child(3) { animation-delay: .32s; }
-
-@keyframes soonDotPanel {
-    0%, 70%, 100% { transform: translateY(0) scale(.72); opacity: .35; }
-    35%           { transform: translateY(-5px) scale(1);  opacity: 1; }
-}
-
-/* Кнопка закрытия в панели «Скоро» позиционируется справа */
-.mypath-soon-inner .mypath-panel-close {
-    align-self: flex-start;
-    margin-left: auto;
-}
-
-/* Активная карточка (Скоро) тоже подсвечивается */
-.mypath-card.is-open {
-    border-color: rgba(168, 255, 62, 0.55);
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.55),
-        0 0 40px var(--accent-glow);
-}
-
-/* Адаптив */
-@media (max-width: 600px) {
-    .mypath-soon-panel-inline {
-        padding: 0 14px;
-        border-radius: 16px;
-    }
-    .mypath-soon-panel-inline.active {
-        padding: 16px 14px;
-    }
-    .mypath-soon-inner {
-        gap: 14px;
-        align-items: flex-start;
-    }
-    .mypath-soon-icon {
-        width: 54px;
-        height: 54px;
-        border-radius: 14px;
-    }
-    .mypath-soon-icon svg { width: 26px; height: 26px; }
-    .mypath-soon-title { font-size: 22px; letter-spacing: 2px; }
-    .mypath-soon-subtitle { font-size: 12.5px; }
-    .mypath-soon-inner .mypath-panel-close {
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
     }
 }
