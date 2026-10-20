@@ -168,6 +168,8 @@ DeFi дает доступ к финансовым услугам любому �
     },
 ];
 
+const CRYPTO_POSTS_2 = [];
+
 const ASSETS = [
     { symbol: 'BTC',  name: 'Bitcoin',  price: 67432.12, change:  2.48, icon: '₿', color: '#F7931A' },
     { symbol: 'ETH',  name: 'Ethereum', price: 3245.67,  change:  3.12, icon: 'Ξ', color: '#627EEA' },
@@ -600,24 +602,36 @@ function renderCryptoView() {
     if (!container || container.dataset.rendered === 'true') return;
     container.dataset.rendered = 'true';
 
-    const cardsHTML = CRYPTO_POSTS.map((p, i) => `
-        <div class="crypto-card crypto-card-${i + 1}"
-             data-crypto-index="${i}"
-             role="button"
-             tabindex="0"
-             aria-label="Открыть пост: ${p.title}">
-            <div class="crypto-card-image"
-                 style="background-image: url('${p.image}'); background-color: ${p.color};">
-                <div class="crypto-card-glass-icon">
-                    ${p.icon}
+    const buildCardsHTML = (posts, layerId) => {
+        if (!posts.length) {
+            return `
+                <div class="crypto-empty-layer">
+                    <div class="crypto-empty-icon">✦</div>
+                    <div class="crypto-empty-title">Скоро здесь появятся концепции</div>
+                    <div class="crypto-empty-text">Этот набор постов ещё в разработке. Загляните позже.</div>
+                </div>
+            `;
+        }
+        return posts.map((p, i) => `
+            <div class="crypto-card crypto-card-${i + 1}"
+                 data-crypto-index="${i}"
+                 data-layer="${layerId}"
+                 role="button"
+                 tabindex="0"
+                 aria-label="Открыть пост: ${p.title}">
+                <div class="crypto-card-image"
+                     style="background-image: url('${p.image}'); background-color: ${p.color};">
+                    <div class="crypto-card-glass-icon">
+                        ${p.icon}
+                    </div>
+                </div>
+                <div class="crypto-card-body">
+                    <h3>${p.title}</h3>
+                    <p>${p.excerpt}</p>
                 </div>
             </div>
-            <div class="crypto-card-body">
-                <h3>${p.title}</h3>
-                <p>${p.excerpt}</p>
-            </div>
-        </div>
-    `).join('');
+        `).join('');
+    };
 
     const assetsHTML = ASSETS.map(a => `
         <div class="crypto-asset-card">
@@ -632,16 +646,8 @@ function renderCryptoView() {
             </div>
             <div class="crypto-asset-sparkline">
                 ${a.change >= 0
-                    ? `<svg viewBox="0 0 100 30" preserveAspectRatio="none">
-                        <polyline points="0,22 15,20 30,23 45,17 60,18 75,12 90,13 100,10"
-                                  fill="none" stroke="#16a34a" stroke-width="1.8"
-                                  stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>`
-                    : `<svg viewBox="0 0 100 30" preserveAspectRatio="none">
-                        <polyline points="0,10 15,12 30,9 45,14 60,13 75,17 90,18 100,20"
-                                  fill="none" stroke="#dc2626" stroke-width="1.8"
-                                  stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>`
+                    ? `<svg viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,22 15,20 30,23 45,17 60,18 75,12 90,13 100,10" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+                    : `<svg viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,10 15,12 30,9 45,14 60,13 75,17 90,18 100,20" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
                 }
             </div>
             <span class="crypto-asset-change ${a.change >= 0 ? 'up' : 'down'}">
@@ -650,12 +656,13 @@ function renderCryptoView() {
         </div>
     `).join('');
 
+    // Лучи рисуем от центра
     const cx = 750, cy = 550;
-    const raysHTML = CRYPTO_POSTS.map((p, i) => {
-        const angleDeg = i * 40 - 90;
+    const buildRaysHTML = (posts) => posts.map((p, i) => {
+        const angleDeg = i * (360 / posts.length) - 90;
         const angleRad = angleDeg * Math.PI / 180;
         const startR = 110;
-        const endR = CARD_RADIUS - 20;
+        const endR = 340;
         const x1 = cx + Math.cos(angleRad) * startR;
         const y1 = cy + Math.sin(angleRad) * startR;
         const x2 = cx + Math.cos(angleRad) * endR;
@@ -667,33 +674,54 @@ function renderCryptoView() {
     }).join('');
 
     container.innerHTML = `
-        <div class="crypto-stage posts-hidden">
-            <div class="crypto-posts-hint">Нажмите на криптоконцепции</div>
-            <div class="crypto-rays">
+        <div class="crypto-stage" data-state="idle">
+
+            <div class="crypto-posts-hint">Нажмите на любую монету, чтобы открыть её концепции</div>
+
+            <!-- Лучи -->
+            <div class="crypto-rays crypto-rays-1">
                 <svg viewBox="0 0 1500 1100" preserveAspectRatio="xMidYMid meet">
-                    ${raysHTML}
+                    ${buildRaysHTML(CRYPTO_POSTS)}
+                </svg>
+            </div>
+            <div class="crypto-rays crypto-rays-2">
+                <svg viewBox="0 0 1500 1100" preserveAspectRatio="xMidYMid meet">
+                    ${buildRaysHTML(CRYPTO_POSTS_2)}
                 </svg>
             </div>
 
-            <div class="crypto-center">
-                <div class="crypto-center-glow"></div>
-
-                <div class="crypto-rotor">
-                    ${buildRotorSVG()}
+            <!-- Ряд монет -->
+            <div class="crypto-coins-row">
+                <div class="crypto-coin-slot crypto-coin-slot-1">
+                    <div class="crypto-center-glow"></div>
+                    <div class="crypto-rotor">${buildRotorSVG()}</div>
+                    <div class="crypto-coin crypto-coin-1" role="button" tabindex="0" aria-label="Открыть концепции Bitcoin">
+                        <img src="icons/c_w.png" alt="Bitcoin" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="crypto-coin-fallback" style="display:none;">₿</div>
+                    </div>
+                    <span class="crypto-coin-label">Посты</span>
                 </div>
 
-                <div class="crypto-coin" role="button" tabindex="0" aria-label="Показать посты вокруг Bitcoin">
-                    <img src="icons/c_w.png" alt="Bitcoin"
-                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="crypto-coin-fallback" style="display:none;">₿</div>
+                <div class="crypto-coin-slot crypto-coin-slot-2">
+                    <div class="crypto-center-glow crypto-center-glow-2"></div>
+                    <div class="crypto-rotor crypto-rotor-2">${buildRotorSVG()}</div>
+                    <div class="crypto-coin crypto-coin-2" role="button" tabindex="0" aria-label="Открыть концепции второй монеты">
+                        <img src="icons/b_w.png" alt="Вторая монета" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="crypto-coin-fallback crypto-coin-fallback-2" style="display:none;">Ξ</div>
+                    </div>
+                    <span class="crypto-coin-label">Концепции</span>
                 </div>
             </div>
-            ${cardsHTML}
+
+            <!-- Слои с карточками -->
+            <div class="crypto-cards-layer crypto-cards-layer-1">
+                ${buildCardsHTML(CRYPTO_POSTS, '1')}
+            </div>
+            <div class="crypto-cards-layer crypto-cards-layer-2">
+                ${buildCardsHTML(CRYPTO_POSTS_2, '2')}
+            </div>
         </div>
-        <div class="crypto-secondary-coin" role="button" tabindex="0" aria-label="Будущая монета для новых постов">
-            <img src="icons/b_w.png" alt="Новая монета"
-                 onerror="this.style.display='none';">
-        </div>
+
         <div class="crypto-assets">
             <h2>Актуальные активы</h2>
             <div class="crypto-assets-list">
@@ -702,6 +730,115 @@ function renderCryptoView() {
         </div>
     `;
 
+    const stage  = container.querySelector('.crypto-stage');
+    const slots  = container.querySelectorAll('.crypto-coin-slot');
+    const layer1 = container.querySelector('.crypto-cards-layer-1');
+    const layer2 = container.querySelector('.crypto-cards-layer-2');
+    const rays1  = container.querySelector('.crypto-rays-1');
+    const rays2  = container.querySelector('.crypto-rays-2');
+
+    // Функция для центрирования монеты
+        // Функция для центрирования монеты
+        // Функция для центрирования монеты
+        // Функция для центрирования монеты
+        // Функция для центрирования монеты
+    const centerCoin = (slotEl) => {
+        // Сбрасываем все монеты в исходное состояние
+        slots.forEach(s => {
+            s.style.transform = '';
+            s.classList.remove('is-open', 'is-active');
+        });
+
+        // Получаем координаты контейнера, в котором лежат карточки
+        const stageRect = stage.getBoundingClientRect();
+        const slotRect = slotEl.getBoundingClientRect();
+
+        // Центр карточек — это ровно 50% высоты контейнера .crypto-stage
+        // (в CSS у .crypto-cards-layer прописано top: 50%; left: 50%)
+        const targetX = stageRect.width / 2;
+        const targetY = stageRect.height / 2;
+
+        // Текущий центр монеты относительно страницы
+        const currentX = slotRect.left - stageRect.left + slotRect.width / 2;
+        const currentY = slotRect.top - stageRect.top + slotRect.height / 2;
+
+        // Смещение: тянем текущий центр монеты в центр карточек
+        const moveX = targetX - currentX;
+        const moveY = targetY - currentY;
+
+        // Применяем плавный transform
+        slotEl.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+        slotEl.classList.add('is-open', 'is-active');
+    };
+
+    const resetCoins = () => {
+        slots.forEach(s => {
+            s.style.transform = '';
+            s.classList.remove('is-open', 'is-active');
+        });
+        stage.dataset.state = 'idle';
+        stage.dataset.active = 'none';
+        rays1.classList.remove('is-visible');
+        rays2.classList.remove('is-visible');
+        layer1.classList.remove('is-visible');
+        layer2.classList.remove('is-visible');
+    };
+
+    // Привязка кликов к монетам
+    slots.forEach((slotEl, index) => {
+        const coinEl = slotEl.querySelector('.crypto-coin');
+        const which = index === 0 ? '1' : '2'; // Определяем, какая это монета
+
+        coinEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isCurrentlyOpen = stage.dataset.state === 'open' && stage.dataset.active === which;
+
+            if (isCurrentlyOpen) {
+                resetCoins();
+            } else {
+                stage.dataset.state = 'open';
+                stage.dataset.active = which;
+
+                centerCoin(slotEl); // Плавно центрируем монету
+
+                // Показываем нужное
+                if (which === '1') {
+                    rays1.classList.add('is-visible');
+                    layer1.classList.add('is-visible');
+                    rays2.classList.remove('is-visible');
+                    layer2.classList.remove('is-visible');
+                    replayCards(layer1);
+                } else {
+                    rays2.classList.add('is-visible');
+                    layer2.classList.add('is-visible');
+                    rays1.classList.remove('is-visible');
+                    layer1.classList.remove('is-visible');
+                    replayCards(layer2);
+                }
+            }
+        });
+
+        coinEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); coinEl.click(); }
+        });
+    });
+
+    /* ---------- Перезапуск анимации карточек ---------- */
+    const replayCards = (layer) => {
+        const cards = Array.from(layer.querySelectorAll('.crypto-card'));
+        cards.forEach(card => {
+            card.classList.remove('roulette-in');
+            card.style.animation = '';
+            card.style.animationDelay = '';
+            void card.offsetWidth;
+        });
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.32}s`;
+            card.classList.add('roulette-in');
+        });
+    };
+
+    /* ---------- Модалка ---------- */
     const modal         = document.getElementById('crypto-modal');
     const modalImage    = document.getElementById('crypto-modal-image');
     const modalImg      = document.getElementById('crypto-modal-img');
@@ -710,17 +847,16 @@ function renderCryptoView() {
     const modalTelegram = document.getElementById('crypto-modal-telegram');
 
     const openCryptoModal = (index) => {
-        const post = CRYPTO_POSTS[index];
+        const posts = stage.dataset.active === '1' ? CRYPTO_POSTS : CRYPTO_POSTS_2;
+        const post = posts[index];
         if (!post || !modal) return;
 
         modalImg.src = post.image;
         modalImg.alt = post.title;
         modalImage.style.backgroundColor = post.color;
-
         modalTitle.textContent = post.title;
         modalText.textContent  = post.fullText;
         modalTelegram.href     = post.url;
-
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('crypto-modal-open');
@@ -734,72 +870,17 @@ function renderCryptoView() {
         document.body.classList.remove('crypto-modal-open');
     };
 
-    const cryptoStage = container.querySelector('.crypto-stage');
-    const cryptoCoin = container.querySelector('.crypto-coin');
+    modal.querySelectorAll('[data-close-crypto-modal]').forEach(el => el.addEventListener('click', closeCryptoModal));
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal?.classList.contains('open')) closeCryptoModal();
+    });
 
-    const toggleCryptoPosts = () => {
-        if (!cryptoStage) return;
-
-        const willOpen = cryptoStage.classList.contains('posts-hidden');
-        const cards = Array.from(cryptoStage.querySelectorAll('.crypto-card'));
-
-        if (willOpen) {
-            cryptoStage.classList.remove('posts-hidden');
-
-            cards.forEach((card) => {
-                card.classList.remove('roulette-in');
-                card.style.animation = '';
-                card.style.animationDelay = '';
-                void card.offsetWidth;
-            });
-
-            cryptoStage.classList.add('roulette-active');
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.42}s`;
-                card.classList.add('roulette-in');
-            });
-        } else {
-            cards.forEach((card) => {
-                card.classList.remove('roulette-in');
-                card.style.animation = '';
-                card.style.animationDelay = '';
-            });
-            cryptoStage.classList.remove('roulette-active');
-            cryptoStage.classList.add('posts-hidden');
-        }
-    };
-
-    if (cryptoCoin) {
-        cryptoCoin.addEventListener('click', toggleCryptoPosts);
-        cryptoCoin.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                toggleCryptoPosts();
-            }
-        });
-    }
-
-    container.querySelectorAll('.crypto-card').forEach((card) => {
+    container.querySelectorAll('.crypto-cards-layer .crypto-card').forEach((card) => {
         const index = Number(card.dataset.cryptoIndex);
-
-        card.addEventListener('click', () => openCryptoModal(index));
-
-        card.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                openCryptoModal(index);
-            }
+        card.addEventListener('click', (e) => { e.stopPropagation(); openCryptoModal(index); });
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCryptoModal(index); }
         });
-    });
-
-    modal.querySelectorAll('[data-close-crypto-modal]').forEach((element) => {
-        element.addEventListener('click', closeCryptoModal);
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal?.classList.contains('open')) {
-            closeCryptoModal();
-        }
     });
 }
 
