@@ -183,10 +183,10 @@ const CRYPTO_POSTS_2 = [
 В отличие от традиционных фиатных валют, выпускаемых правительствами (например, доллары или евро), Биткоин децентрализован, и ни одна организация или правительство не контролирует его. Транзакции проводятся в одноранговой сети без необходимости в посредниках, таких как банки или финансовые учреждения. 🏦❌
 
 Привлекательность Биткоина заключается в устойчивости к цензуре, отсутствии риска двойных трат, а также возможности осуществлять транзакции из любой точки мира и в любое время. `,
-        image: 'icons/bitcoin_1.jpg', // Поменяй на путь к своей картинке
-        color: '#16a34a', // Цвет карточки (подставь нужный)
+        image: 'icons/bitcoin_1.jpg',
+        color: '#16a34a',
         icon: `<svg viewBox="0 0 24 24"><path d="M12 2 2 7l10 5 10-5-10-5zm0 9-10 5 10 5 10-5-10-5z"/></svg>`,
-        url: 'https://t.me/werth_69/393' // Ссылка на телеграм (или любую другую)
+        url: 'https://t.me/werth_69/393'
     },
     {
         title: 'Как работает биткоин? ',
@@ -755,29 +755,6 @@ function renderCryptoView() {
         `).join('');
     };
 
-    const assetsHTML = ASSETS.map(a => `
-        <div class="crypto-asset-card">
-            <div class="crypto-asset-head">
-                <div class="crypto-asset-icon" style="background: ${a.color}25; color: ${a.color}; border-color: ${a.color}50;">
-                    ${a.icon}
-                </div>
-                <div class="crypto-asset-info">
-                    <strong>${a.name}</strong>
-                    <span class="crypto-asset-price">$ ${a.price.toFixed(2)}</span>
-                </div>
-            </div>
-            <div class="crypto-asset-sparkline">
-                ${a.change >= 0
-                    ? `<svg viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,22 15,20 30,23 45,17 60,18 75,12 90,13 100,10" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-                    : `<svg viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,10 15,12 30,9 45,14 60,13 75,17 90,18 100,20" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
-                }
-            </div>
-            <span class="crypto-asset-change ${a.change >= 0 ? 'up' : 'down'}">
-                ${a.change >= 0 ? '+' : ''}${a.change.toFixed(2)}%
-            </span>
-        </div>
-    `).join('');
-
     // Лучи рисуем от центра
     const cx = 750, cy = 550;
     const buildRaysHTML = (posts) => posts.map((p, i) => {
@@ -843,13 +820,6 @@ function renderCryptoView() {
                 ${buildCardsHTML(CRYPTO_POSTS_2, '2')}
             </div>
         </div>
-
-        <div class="crypto-assets">
-            <h2>Актуальные активы</h2>
-            <div class="crypto-assets-list">
-                ${assetsHTML}
-            </div>
-        </div>
     `;
 
     const stage  = container.querySelector('.crypto-stage');
@@ -859,9 +829,36 @@ function renderCryptoView() {
     const rays1  = container.querySelector('.crypto-rays-1');
     const rays2  = container.querySelector('.crypto-rays-2');
 
+    // --- Логика центрирования монеты ---
+    let activeSlot = null;
+
+    const centerCoin = (slotEl) => {
+        activeSlot = slotEl;
+        slotEl.style.transform = '';
+
+        const slotRect = slotEl.getBoundingClientRect();
+
+        // Точный центр экрана
+        const viewportCenterX = window.innerWidth / 2;
+        const viewportCenterY = window.innerHeight / 2;
+
+        // Текущий центр монеты
+        const currentX = slotRect.left + slotRect.width / 2;
+        const currentY = slotRect.top + slotRect.height / 2;
+
+        // Вычисляем смещение
+        const moveX = viewportCenterX - currentX;
+        const moveY = viewportCenterY - currentY;
+
+        // Применяем transform (CSS сделает это плавно за счет transition)
+        slotEl.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.15)`;
+    };
+
     const resetCoins = () => {
+        activeSlot = null;
         slots.forEach(s => {
             s.classList.remove('is-open', 'is-active');
+            s.style.transform = ''; // Возвращаем на место
         });
         stage.dataset.state = 'idle';
         stage.dataset.active = 'none';
@@ -872,7 +869,14 @@ function renderCryptoView() {
         layer2.classList.remove('is-visible');
     };
 
-    // Привязка кликов к монетам
+    // Ресайз: если окно меняется, пересчитываем позицию активной монеты
+    window.addEventListener('resize', () => {
+        if (activeSlot && window.innerWidth > 900) {
+            centerCoin(activeSlot);
+        }
+    });
+
+    // --- Привязка кликов ---
     slots.forEach((slotEl, index) => {
         const coinEl = slotEl.querySelector('.crypto-coin');
         const which = index === 0 ? '1' : '2';
@@ -888,9 +892,13 @@ function renderCryptoView() {
                 stage.dataset.active = which;
                 stage.classList.add('has-active');
 
-                // Просто переключаем классы. CSS сам сделает центрирование и анимацию!
                 slots.forEach(s => s.classList.remove('is-open', 'is-active'));
                 slotEl.classList.add('is-open', 'is-active');
+
+                // На мобилках не центрируем (там монеты в колонку)
+                if (window.innerWidth > 900) {
+                    centerCoin(slotEl);
+                }
 
                 if (which === '1') {
                     rays1.classList.add('is-visible');
@@ -1350,6 +1358,9 @@ viewBtns.forEach(btn => {
         if (view === 'mypath') {
             renderMypathView();
         }
+        if (view === 'glossary') {
+            renderGlossaryView();
+        }
         // finance и merch рендерятся статично из HTML
     });
 });
@@ -1384,6 +1395,7 @@ window.addEventListener('resize', () => {
             if (b.y + r > h) b.y = h - r;
         });
     }, 150);
+
 });
 
 requestAnimationFrame(() => {
@@ -1396,7 +1408,347 @@ requestAnimationFrame(() => {
     if (initialView === 'mypath') {
         renderMypathView();
     }
+    if (initialView === 'glossary') {
+        renderGlossaryView();
+    }
     // Частицы для финансов и мерча
     createSoonParticles('finance-particles', 30);
     createSoonParticles('merch-particles', 30);
 });
+
+/* ============================================================
+   ПОИСКОВИК
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('global-search');
+    const searchResults = document.getElementById('search-results');
+
+    if (!searchInput || !searchResults) return;
+
+    // Собираем все возможные страницы/ссылки для поиска
+    const searchData = [
+        ...PLATFORMS.map(p => ({
+            title: p.label,
+            desc: p.description,
+            type: 'Ссылка',
+            url: p.url,
+            action: () => window.open(p.url, '_blank')
+        })),
+        { title: 'Плавающие пузыри', type: 'Раздел', action: () => clickViewBtn('bubbles') },
+        { title: 'Список', type: 'Раздел', action: () => clickViewBtn('list') },
+        { title: 'Крипта', type: 'Раздел', action: () => clickViewBtn('crypto') },
+        { title: 'Мой путь', type: 'Раздел', action: () => clickViewBtn('mypath') },
+        { title: 'Финансы', type: 'Раздел', action: () => clickViewBtn('finance') },
+        { title: 'Мерч', type: 'Раздел', action: () => clickViewBtn('merch') },
+        ...CRYPTO_POSTS.map(p => ({
+            title: p.title,
+            type: 'Крипта',
+            action: () => { clickViewBtn('crypto'); setTimeout(() => openCryptoModal(0), 300); } // Открывает модалку
+        })),
+        ...MYPATH.posts.map(p => ({
+            title: p.title,
+            type: 'Пост',
+            action: () => { clickViewBtn('mypath'); }
+        }))
+    ];
+
+    // Функция для программного клика по кнопке переключения вкладок
+    function clickViewBtn(viewName) {
+        const btn = document.querySelector(`.view-btn[data-view="${viewName}"]`);
+        if (btn) btn.click();
+        searchInput.value = '';
+        searchResults.classList.remove('active');
+    }
+
+    // Отрисовка результатов
+    function renderResults(query) {
+        if (!query) {
+            searchResults.classList.remove('active');
+            return;
+        }
+
+        const lowerQuery = query.toLowerCase();
+        const filtered = searchData.filter(item =>
+            item.title.toLowerCase().includes(lowerQuery) ||
+            (item.desc && item.desc.toLowerCase().includes(lowerQuery))
+        );
+
+        if (filtered.length === 0) {
+            searchResults.innerHTML = `<div class="search-no-results">Ничего не найдено</div>`;
+            searchResults.classList.add('active');
+            return;
+        }
+
+        searchResults.innerHTML = filtered.slice(0, 8).map(item => `
+            <div class="search-result-item" data-action-id="${searchData.indexOf(item)}">
+                <div class="search-result-icon">✦</div>
+                <div class="search-result-title">${item.title}</div>
+                <div class="search-result-type">${item.type}</div>
+            </div>
+        `).join('');
+
+        searchResults.classList.add('active');
+
+        // Привязываем клики к результатам
+        searchResults.querySelectorAll('.search-result-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                const id = parseInt(el.getAttribute('data-action-id'));
+                const item = searchData[id];
+                if (item && item.action) item.action();
+                searchInput.value = '';
+                searchResults.classList.remove('active');
+            });
+        });
+    }
+
+    // Слушатели событий
+    searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+
+    // Закрытие по клику вне поиска
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-box')) {
+            searchResults.classList.remove('active');
+        }
+    });
+
+    // Закрытие по Escape
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            searchResults.classList.remove('active');
+            searchInput.blur();
+        }
+        if (e.key === 'Enter') {
+            const firstResult = searchResults.querySelector('.search-result-item');
+            if (firstResult) firstResult.click();
+        }
+    });
+});
+
+/* ============================================================
+   ГЛОССАРИЙ
+   ============================================================ */
+
+const GLOSSARY_DATA = {
+    categories: [
+        {
+            id: 'crypto',
+            title: 'Криптовалюты',
+            icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/></svg>`,
+            items: ['Blockchain', 'Bitcoin', 'Ethereum', 'Altcoin']
+        },
+        {
+            id: 'invest',
+            title: 'Инвестиции',
+            icon: `<svg viewBox="0 0 24 24"><path d="M3 20h18v-2H5V4H3v16zm4-3h2v-5H7v5zm4 0h2v-8h-2v8zm4 0h2V6h-2v11z"/></svg>`,
+            items: ['Акции', 'Облигации', 'Дивиденды', 'ETF']
+        },
+        {
+            id: 'trade',
+            title: 'Торговля',
+            icon: `<svg viewBox="0 0 24 24"><polyline points="2 17 8 11 13 15 22 6"/><polyline points="16 6 22 6 22 12"/></svg>`,
+            items: ['Ордер', 'Спред', 'Ликвидность', 'Аналитика']
+        },
+        {
+            id: 'security',
+            title: 'Безопасность',
+            icon: `<svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+            items: ['Кошелек', 'Seed Phrase', 'Private Key', '2FA']
+        }
+    ],
+    details: {
+        'Ликвидность': {
+            title: 'Ликвидность',
+            subtitle: 'LIQUIDITY',
+            desc: 'Способность актива быстро продаваться или покупаться без существенного изменения его цены.',
+            tags: ['Биржи', 'DeFi', 'Рынки'],
+            filters: ['Сред.', 'Обычн.', 'Торговля'],
+            level: 'Средний'
+        },
+        'Блокчейн': {
+            title: 'Блокчейн',
+            subtitle: 'BLOCKCHAIN',
+            desc: 'Выстроенная по определённым правилам непрерывная последовательная цепочка блоков, содержащих информацию.',
+            tags: ['Крипта', 'Сеть', 'Данные'],
+            filters: ['Базовый', 'Новичок'],
+            level: 'Базовый'
+        },
+        'Акции': {
+            title: 'Акции',
+            subtitle: 'STOCKS',
+            desc: 'Ценная бумага, свидетельствующая о владении долей в компании и дающая право на часть её прибыли.',
+            tags: ['Фондовый рынок', 'Инвестиции'],
+            filters: ['Обычн.', 'Привил.'],
+            level: 'Начальный'
+        }
+    }
+};
+
+function renderGlossaryView() {
+    const container = document.getElementById('glossary-view');
+    if (!container || container.dataset.rendered === 'true') return;
+    container.dataset.rendered = 'true';
+
+    // Генерируем ветки
+    const branchesHTML = GLOSSARY_DATA.categories.map(cat => `
+        <div class="g-branch">
+            <div class="g-branch-title">
+                ${cat.icon}
+                ${cat.title}
+            </div>
+            <div class="g-branch-list">
+                ${cat.items.map(item => `
+                    <div class="g-branch-item" data-term="${item}">${item}</div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    // Дефолтная карточка (Ликвидность)
+    const defaultTerm = 'Ликвидность';
+    const defaultDetail = GLOSSARY_DATA.details[defaultTerm];
+
+    container.innerHTML = `
+        <div class="glossary-tree-container">
+            <div class="glossary-header">
+                <h2>ПУТЬ ИНВЕСТОРА</h2>
+                <p>От базовых понятий к профессиональным знаниям</p>
+            </div>
+
+            <!-- Декоративные линии (можно оставить пустыми, если не нужно SVG) -->
+            <div class="glossary-lines">
+                <svg>
+                    <path d="M 50% 10% L 50% 30%" />
+                    <path d="M 50% 30% L 20% 50%" />
+                    <path d="M 50% 30% L 40% 50%" />
+                    <path d="M 50% 30% L 60% 50%" />
+                    <path d="M 50% 30% L 80% 50%" />
+                </svg>
+            </div>
+
+            <div class="glossary-nodes">
+                <!-- Центральный узел -->
+                <div class="node-level">
+                    <div class="g-node root">
+                        <div class="g-node-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                        </div>
+                        <div class="g-node-label">ФИНАНСЫ</div>
+                    </div>
+                </div>
+
+                <!-- Ветки -->
+                <div class="node-level">
+                    ${branchesHTML}
+                </div>
+
+                <!-- Нижний узел -->
+                <div class="node-level">
+                    <div class="g-node">
+                        <div class="g-node-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </div>
+                        <div class="g-node-label">Начни с основ</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Боковая панель -->
+        <div class="glossary-sidebar" id="gs-panel">
+            <div class="gs-header">
+                <div class="gs-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke-linecap="round"/></svg>
+                </div>
+                <div class="gs-title">
+                    <h3>${defaultDetail.title}</h3>
+                    <span>${defaultDetail.subtitle}</span>
+                </div>
+            </div>
+
+            <div class="gs-desc">
+                ${defaultDetail.desc}
+            </div>
+
+            <div class="gs-tags">
+                ${defaultDetail.tags.map(t => `<span class="gs-tag dim">${t}</span>`).join('')}
+            </div>
+
+            <div class="gs-tags">
+                ${defaultDetail.filters.map(f => `<span class="gs-tag accent">${f}</span>`).join('')}
+            </div>
+
+            <div class="gs-tags" style="margin-top: auto; padding-top: 20px;">
+                <span class="gs-tag dim" style="border-radius: 8px;">Уровень: ${defaultDetail.level}</span>
+            </div>
+
+            <button class="gs-btn">
+                Читать подробнее
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+        </div>
+    `;
+
+    // Обработка кликов по терминам
+    const panel = document.getElementById('gs-panel');
+
+    function updatePanel(term) {
+        const data = GLOSSARY_DATA.details[term];
+        if (!data) {
+            // Если данных нет, ставим заглушку
+            panel.innerHTML = `
+                <div class="gs-header">
+                    <div class="gs-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg></div>
+                    <div class="gs-title">
+                        <h3>${term}</h3>
+                        <span>В РАЗРАБОТКЕ</span>
+                    </div>
+                </div>
+                <div class="gs-desc">Информация об этом термине скоро появится. Мы работаем над этим!</div>
+            `;
+            return;
+        }
+
+        panel.innerHTML = `
+            <div class="gs-header">
+                <div class="gs-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke-linecap="round"/></svg>
+                </div>
+                <div class="gs-title">
+                    <h3>${data.title}</h3>
+                    <span>${data.subtitle}</span>
+                </div>
+            </div>
+            <div class="gs-desc">${data.desc}</div>
+            <div class="gs-tags">
+                ${data.tags.map(t => `<span class="gs-tag dim">${t}</span>`).join('')}
+            </div>
+            <div class="gs-tags">
+                ${data.filters.map(f => `<span class="gs-tag accent">${f}</span>`).join('')}
+            </div>
+            <div class="gs-tags" style="margin-top: auto; padding-top: 20px;">
+                <span class="gs-tag dim" style="border-radius: 8px;">Уровень: ${data.level}</span>
+            </div>
+            <button class="gs-btn">
+                Читать подробнее
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+        `;
+    }
+
+    // Вешаем события на элементы списка
+    container.querySelectorAll('.g-branch-item').forEach(item => {
+        item.addEventListener('click', () => {
+            // Снимаем выделение со всех
+            container.querySelectorAll('.g-branch-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+
+            const term = item.dataset.term;
+            updatePanel(term);
+        });
+    });
+
+    // Инициализация первого элемента (Ликвидность)
+    const firstActive = container.querySelector('[data-term="Ликвидность"]');
+    if (firstActive) firstActive.classList.add('active');
+}
