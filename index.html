@@ -97,9 +97,26 @@
                 </svg>
                 Мерч
             </button>
+            <!-- Новая вкладка Глоссарий -->
+            <button class="view-btn" data-view="glossary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                Глоссарий
+            </button>
         </div>
 
-        <div class="topbar-actions"></div>
+        <div class="topbar-actions">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="global-search" placeholder="Поиск..." autocomplete="off">
+                <div class="search-results" id="search-results"></div>
+            </div>
+        </div>
     </header>
 
     <div class="arena" id="arena">
@@ -117,6 +134,9 @@
         <div class="crypto-view" id="crypto-view"></div>
 
         <div class="mypath-view" id="mypath-view"></div>
+
+        <!-- ================= ГЛОССАРИЙ ================= -->
+        <div class="glossary-view" id="glossary-view"></div>
 
         <!-- ================= ФИНАНСЫ ================= -->
         <div class="finance-view" id="finance-view">
@@ -324,7 +344,7 @@
                    target="_blank"
                    rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
-                    <span>Читать полный пост в Telegram</span>
+                    <span>Читать пост в Telegram</span>
                     <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </a>
             </div>
@@ -362,7 +382,7 @@
                    target="_blank"
                    rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
-                    <span>Читать полный пост в Telegram</span>
+                    <span>Читать пост в Telegram</span>
                     <svg class="arrow" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </a>
             </div>
