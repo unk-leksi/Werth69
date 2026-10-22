@@ -98,10 +98,10 @@ body::after {
     -webkit-backdrop-filter: blur(14px);
     border: none;
     border-bottom: 1px solid rgba(168, 255, 62, 0.10);
-    z-index: 100;
+    z-index: 100; /* Оставляем высокий z-index */
     flex-shrink: 0;
     box-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
+    overflow: visible; /* БЫЛО HIDDEN — СТАЛО VISIBLE */
     animation: topbarSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
     isolation: isolate;
 }
@@ -2355,26 +2355,26 @@ html[data-view="merch"] .hint { display: none; }
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 1;
-    padding: 20px 0 60px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .crypto-stage {
     position: relative;
-    max-width: 1500px;
-    margin: 0 auto;
     width: 100%;
-    min-height: 1100px;
-    height: 1100px;
+    height: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding-top: 40px;
 }
 
+/* Подсказка */
 .crypto-posts-hint {
     position: absolute;
     left: 50%;
-    top: 10px;
+    top: 110px; /* Опускаем текст ниже */
     transform: translateX(-50%);
     z-index: 30;
     padding: 8px 16px;
@@ -2390,23 +2390,27 @@ html[data-view="merch"] .hint { display: none; }
     transition: opacity 0.4s ease;
 }
 
+/* Скрываем подсказку, когда сцена открыта */
 .crypto-stage[data-state="open"] .crypto-posts-hint {
     opacity: 0;
 }
 
+/* Ряд монет */
 .crypto-coins-row {
     position: absolute;
-    top: 20px;
-    left: 0;
-    width: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 10;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     gap: 120px;
     pointer-events: none;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Слоты монет */
 .crypto-coin-slot {
     position: relative;
     width: 220px;
@@ -2415,42 +2419,37 @@ html[data-view="merch"] .hint { display: none; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, filter 0.5s ease;
-    will-change: transform;
+
+    /* Плавная анимация для ВСЕХ свойств, включая transform */
+    transition:
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.6s ease,
+        filter 0.6s ease;
+
+    will-change: transform, opacity, filter;
     pointer-events: auto;
     z-index: 12;
 }
 
-/* Когда одна монета активна — вторая плавно исчезает */
+/* Плавное исчезновение остальных монет */
 .crypto-stage.has-active .crypto-coin-slot:not(.is-open) {
     opacity: 0;
     filter: blur(10px);
     pointer-events: none;
 }
 
-/* Чтобы у активной монеты не было прозрачности */
-.crypto-stage.has-active .crypto-coin-slot.is-open {
-    opacity: 1;
-    filter: none;
-}
-
-/* --- Монета в центре --- */
-/* --- Монета в центре --- */
+/* Активная монета улетает в центр экрана */
 .crypto-coin-slot.is-open {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    /* Центрируем ровно по перекрестию.
-       Убираем отрицательный margin-top, который тянул её вверх. */
-    margin-top: -80px; /* Оставляем только половину высоты самой монеты (160/2) */
-    margin-left: -110px; /* Половина ширины слота (220/2) */
-
-    /* Слегка опускаем вниз, чтобы компенсировать верхнюю панель навигации */
-    transform: translateY(410px) scale(1.15);
-    z-index: 100;
+    /* Перемещение выполняется через transform из JS, чтобы не было скачка
+       при переключении position:absolute/fixed. */
+    position: relative;
+    top: auto;
+    left: auto;
+    margin-top: 0;
+    z-index: 1000;
 }
 
+/* Свечение под каждой монетой */
 .crypto-coin-slot .crypto-center-glow {
     position: absolute;
     top: 50%;
@@ -2481,6 +2480,7 @@ html[data-view="merch"] .hint { display: none; }
     50%      { transform: translate(-50%, -55%) scale(1.08); opacity: 1; }
 }
 
+/* Ротор */
 .crypto-coin-slot .crypto-rotor {
     position: absolute;
     top: 50%;
@@ -2510,6 +2510,7 @@ html[data-view="merch"] .hint { display: none; }
     overflow: visible;
 }
 
+/* Сама монета */
 .crypto-coin-slot .crypto-coin {
     position: relative;
     z-index: 5;
@@ -2621,7 +2622,7 @@ html[data-view="merch"] .hint { display: none; }
 
 /* ===== Лучи ===== */
 .crypto-rays {
-    position: absolute;
+    position: fixed;
     inset: 0;
     z-index: 2;
     pointer-events: none;
@@ -2675,7 +2676,7 @@ html[data-view="merch"] .hint { display: none; }
 
 /* ===== Слои карточек ===== */
 .crypto-cards-layer {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     width: 0;
@@ -2909,103 +2910,6 @@ html[data-view="merch"] .hint { display: none; }
     font-size: 12px;
     line-height: 1.5;
 }
-
-/* Активы */
-.crypto-assets {
-    max-width: 1300px;
-    margin: 20px auto 0;
-    padding: 0 40px;
-}
-
-.crypto-assets h2 {
-    margin: 0 0 20px;
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--text);
-    letter-spacing: -0.4px;
-}
-
-.crypto-assets-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
-}
-
-.crypto-asset-card {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 16px;
-    background: rgba(15, 26, 21, 0.90);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-soft);
-    border-radius: 14px;
-    transition: all 0.25s ease;
-}
-
-.crypto-asset-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 8px 24px var(--accent-glow);
-    transform: translateY(-3px);
-}
-
-.crypto-asset-head {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.crypto-asset-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 800;
-    flex-shrink: 0;
-    border: 1px solid;
-}
-
-.crypto-asset-info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-}
-
-.crypto-asset-info strong {
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--text);
-}
-
-.crypto-asset-price {
-    font-size: 13px;
-    color: var(--text-muted);
-    font-weight: 600;
-}
-
-.crypto-asset-sparkline {
-    width: 100%;
-    height: 36px;
-}
-
-.crypto-asset-sparkline svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.crypto-asset-change {
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.crypto-asset-change.up { color: #16a34a; }
-.crypto-asset-change.down { color: #dc2626; }
 
 /* ============================================================
    МОДАЛЬНЫЕ ОКНА (Крипта / Мой путь)
@@ -3406,7 +3310,7 @@ body.crypto-modal-open {
     }
 
     /* Крипта на планшетах */
-    .crypto-coins-pair { gap: 60px; }
+    .crypto-coins-row { gap: 60px; }
     .crypto-cards-layer .crypto-card {
         --radius: 260px;
         width: 200px;
@@ -3423,21 +3327,15 @@ body.crypto-modal-open {
     .mypath-card-visual::before {
         background: linear-gradient(180deg, transparent 0%, rgba(15, 26, 21, 0.6) 50%, rgba(15, 26, 21, 1) 100%);
     }
-
-    .crypto-assets-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 @media (max-width: 900px) {
-    /* ============================================================
-       МОБИЛЬНАЯ ВЕРСИЯ КРИПТЫ
-       ============================================================ */
-
+    /* Мобильная версия крипты */
     .crypto-view {
         padding-top: 10px;
         overflow-y: auto;
         overflow-x: hidden;
+        display: block; /* Возвращаем блочный вид */
     }
 
     .crypto-stage {
@@ -3450,22 +3348,15 @@ body.crypto-modal-open {
         padding-bottom: 40px;
     }
 
-    .crypto-posts-hint {
-        top: 15px;
-        font-size: 10px;
-        padding: 6px 12px;
-        width: 90%;
-        text-align: center;
-    }
-
     .crypto-coins-row {
         position: relative;
-        top: 0;
-        left: 0;
+        top: auto;
+        left: auto;
+        transform: none;
         flex-direction: column;
-        align-items: center;
         gap: 30px;
         padding-bottom: 20px;
+        margin-bottom: 20px;
     }
 
     .crypto-coin-slot {
@@ -3474,6 +3365,15 @@ body.crypto-modal-open {
         height: auto;
         min-height: 200px;
         transition: none;
+        /* Отключаем fixed-позиционирование на мобилке */
+    }
+
+    .crypto-coin-slot.is-open {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none !important;
+        margin: 0 !important;
     }
 
     .crypto-coin-slot .crypto-coin {
@@ -3508,6 +3408,7 @@ body.crypto-modal-open {
         pointer-events: none;
         transition: height 0.5s ease, opacity 0.4s ease;
         z-index: 30;
+        transform: none;
     }
 
     .crypto-coin-slot.is-open + .crypto-cards-layer,
@@ -3544,23 +3445,6 @@ body.crypto-modal-open {
         .crypto-cards-layer.is-visible {
             grid-template-columns: repeat(2, 1fr);
         }
-    }
-
-    .crypto-cards-layer .crypto-card-1,
-    .crypto-cards-layer .crypto-card-2,
-    .crypto-cards-layer .crypto-card-3,
-    .crypto-cards-layer .crypto-card-4,
-    .crypto-cards-layer .crypto-card-5,
-    .crypto-cards-layer .crypto-card-6,
-    .crypto-cards-layer .crypto-card-7,
-    .crypto-cards-layer .crypto-card-8,
-    .crypto-cards-layer .crypto-card-9 {
-        --angle: 0deg;
-        --radius: 0px;
-    }
-
-    .crypto-cards-layer .crypto-card.roulette-in {
-        animation: none !important;
     }
 
     .crypto-card-body {
@@ -3713,9 +3597,6 @@ body.crypto-modal-open {
     .mypath-side-right .side-floaters { height: 74px; padding: 8px 12px; gap: 6px; }
     .mypath-side-right .side-coin { width: 36px; height: 36px; font-size: 14px; }
 
-    .crypto-assets { padding: 0 16px; margin-top: 30px; }
-    .crypto-assets-list { grid-template-columns: repeat(2, 1fr); }
-
     .crypto-modal { padding: 14px; }
     .crypto-modal-image { height: 200px; }
     .crypto-modal-telegram { width: 100%; justify-content: center; }
@@ -3801,7 +3682,6 @@ body.crypto-modal-open {
     .crypto-coin-slot .crypto-coin { width: 130px; height: 130px; }
     .crypto-coin-slot .crypto-rotor { width: 240px; height: 240px; }
     .crypto-coin-slot .crypto-center-glow { width: 260px; height: 260px; }
-    .crypto-coins-pair { gap: 24px; }
 
     .crypto-cards-layer .crypto-card {
         min-height: 150px;
@@ -3818,8 +3698,6 @@ body.crypto-modal-open {
 }
 
 @media (max-width: 480px) {
-    .crypto-assets-list { grid-template-columns: 1fr; }
-
     .mypath-card-visual { height: 150px; flex: 0 0 150px; }
     .mypath-card-info { padding: 20px 18px 18px; gap: 8px; }
     .mypath-card-info h3 { font-size: 22px; letter-spacing: 0.8px; }
@@ -3924,5 +3802,471 @@ body.crypto-modal-open {
         max-height: 48vh;
         overflow-y: auto;
         padding: 20px 18px 24px;
+    }
+}
+
+/* Плавное центрирование монет в разделе «Крипта» */
+.crypto-coin-slot {
+    transform-origin: center center;
+    backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .crypto-coin-slot,
+    .crypto-coin,
+    .crypto-rays,
+    .crypto-cards-layer {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   ПОИСКОВИК В ШАПКЕ
+   ============================================================ */
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(168, 255, 62, 0.22);
+    border-radius: 999px;
+    padding: 0 16px;
+    height: 36px;
+    width: 220px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.search-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-glow);
+    width: 260px;
+}
+
+.search-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    width: 100%;
+    padding: 0;
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+/* Выпадающие результаты */
+.search-results {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    background: rgba(15, 26, 21, 0.95);
+    border: 1px solid rgba(168, 255, 62, 0.22);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow: hidden;
+    display: none;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.search-results.active {
+    display: flex;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: rgba(168, 255, 62, 0.1);
+}
+
+.search-result-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(168, 255, 62, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.search-result-title {
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-result-type {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-no-results {
+    padding: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+@media (max-width: 780px) {
+    .search-box {
+        display: none; /* На мобилках скрываем, чтобы не мешал */
+    }
+}
+
+/* ============================================================
+   ГЛОССАРИЙ (Дерево знаний)
+   ============================================================ */
+
+html[data-view="glossary"] .bubbles-view,
+html[data-view="glossary"] .list-view,
+html[data-view="glossary"] .crypto-view,
+html[data-view="glossary"] .mypath-view,
+html[data-view="glossary"] .finance-view,
+html[data-view="glossary"] .merch-view { display: none; }
+
+.glossary-view {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    padding: 30px 40px;
+    overflow-y: auto;
+    display: none;
+    flex-direction: row;
+    gap: 30px;
+    /* Растягиваем на всю доступную ширину */
+    max-width: 1800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+html[data-view="glossary"] .glossary-view {
+    display: flex;
+}
+
+/* --- Левая часть (Дерево) --- */
+.glossary-tree-container {
+    flex: 1;
+    position: relative;
+    background: rgba(10, 19, 16, 0.6);
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 30px;
+    min-height: 600px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.glossary-header h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.glossary-header p {
+    margin: 0 0 30px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* Линии соединения (декоративные) */
+.glossary-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+.glossary-lines svg {
+    width: 100%;
+    height: 100%;
+}
+.glossary-lines path {
+    fill: none;
+    stroke: rgba(168, 255, 62, 0.3);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 4;
+}
+
+/* Узлы */
+.glossary-nodes {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+.node-level {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.g-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 120px;
+}
+
+.g-node:hover {
+    transform: translateY(-5px);
+}
+
+.g-node-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(168, 255, 62, 0.1);
+    border: 1px solid rgba(168, 255, 62, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(168, 255, 62, 0.1);
+}
+
+.g-node-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.g-node.root .g-node-icon svg {
+    width: 32px;
+    height: 32px;
+}
+
+.g-node-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+}
+
+.g-node-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+/* Ветка (Блоки подкатегорий) */
+.g-branch {
+    background: rgba(15, 26, 21, 0.85);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 20px; /* Было 15px */
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Было 10px */
+    width: 220px; /* Было 180px — карточки стали шире */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.g-branch-title {
+    font-size: 14px; /* Было 13px */
+    font-weight: 800;
+    color: var(--accent);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+/* Элементы списка внутри ветки */
+.g-branch-item {
+    font-size: 13px; /* Было 11.5px — шрифт стал крупнее */
+    color: var(--text-muted);
+    padding: 10px 14px; /* Увеличили кликабельную область */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Центральный узел (ФИНАНСЫ) */
+.g-node.root .g-node-icon {
+    width: 90px; /* Было 70px */
+    height: 90px;
+    border-radius: 50%;
+    background: rgba(168, 255, 62, 0.2);
+    box-shadow: 0 0 40px rgba(168, 255, 62, 0.4);
+}
+
+.g-branch-item:hover, .g-branch-item.active {
+    background: rgba(168, 255, 62, 0.15);
+    color: var(--accent);
+    transform: translateX(4px);
+}
+
+/* --- Правая часть (Панель информации) --- */
+.glossary-sidebar {
+    /* Увеличиваем ширину с 340px до 420px */
+    width: 420px;
+    flex-shrink: 0;
+    background: rgba(10, 19, 16, 0.8);
+    border: 1px solid var(--border-soft);
+    border-radius: 24px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gs-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.gs-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: rgba(168, 255, 62, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+}
+
+.gs-title h3 {
+    margin: 0 0 4px;
+    font-size: 24px; /* Было 20px */
+    color: #fff;
+    font-weight: 800;
+}
+
+.gs-title span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.gs-desc {
+    font-size: 15px; /* Было 13.5px */
+    color: var(--text);
+    line-height: 1.7;
+}
+
+.gs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.gs-tag {
+    padding: 8px 16px; /* Увеличили размер тегов */
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.gs-tag.accent {
+    background: rgba(168, 255, 62, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.gs-tag.dim {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--border-soft);
+    color: var(--text-muted);
+}
+
+.gs-tag:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.2);
+}
+
+.gs-btn {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    background: rgba(168, 255, 62, 0.1);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.gs-btn:hover {
+    background: var(--accent);
+    color: var(--text-invert);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Адаптив */
+@media (max-width: 1024px) {
+    .glossary-view {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .glossary-sidebar {
+        width: 100%;
+    }
+    .g-branch {
+        width: 140px;
     }
 }
