@@ -98,6 +98,7 @@
                 Мерч
             </button>
             <!-- Новая вкладка Глоссарий -->
+                        <!-- Новая вкладка Глоссарий -->
             <button class="view-btn" data-view="glossary">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -135,8 +136,36 @@
 
         <div class="mypath-view" id="mypath-view"></div>
 
-        <!-- ================= ГЛОССАРИЙ ================= -->
-        <div class="glossary-view" id="glossary-view"></div>
+                <!-- ================= ГЛОССАРИЙ ================= -->
+        <div class="glossary-view" id="glossary-view">
+            <div class="glossary-container">
+
+                <!-- Заголовок -->
+                <div class="glossary-header">
+                    <h2>Криптовалютные <span>термины</span></h2>
+                </div>
+
+                <!-- Поиск -->
+                <div class="glossary-search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="glossary-search-input" placeholder="Найти термин...">
+                </div>
+
+                <!-- Алфавит -->
+                <div class="glossary-alphabet" id="glossary-alphabet">
+                    <!-- Буквы генерируются через JS -->
+                </div>
+
+                <!-- Список терминов -->
+                <div class="glossary-list" id="glossary-list">
+                    <!-- Карточки терминов генерируются через JS -->
+                </div>
+
+            </div>
+        </div>
 
         <!-- ================= ФИНАНСЫ ================= -->
         <div class="finance-view" id="finance-view">
@@ -351,7 +380,7 @@
         </div>
     </div>
 
-    <!-- Модалка «Мой путь» -->
+
     <div class="crypto-modal" id="mypath-modal" aria-hidden="true">
         <div class="crypto-modal-backdrop" data-close-mypath-modal></div>
 
