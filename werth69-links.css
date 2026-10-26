@@ -2696,11 +2696,12 @@ html[data-view="merch"] .hint { display: none; }
     position: absolute;
     top: 0;
     left: 0;
-    width: 230px;
-    height: 170px;
-    margin-left: -115px;
-    margin-top: -85px;
+    width: 220px;  /* Чуть уменьшили ширину */
+    height: 165px; /* Чуть уменьшили высоту */
+    margin-left: -110px; /* Ровно половина ширины */
+    margin-top: -82px;   /* Ровно половина высоты */
 
+    /* Переменные теперь задаются инлайн из JS */
     --angle: 0deg;
     --radius: 340px;
 
@@ -2711,7 +2712,7 @@ html[data-view="merch"] .hint { display: none; }
 
     transform-origin: 50% 50%;
 
-    background: rgba(15, 26, 21, 0.9);
+    background: rgba(15, 26, 21, 0.95);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(168, 255, 62, 0.22);
@@ -2719,12 +2720,12 @@ html[data-view="merch"] .hint { display: none; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+    transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* Плавный переход при смене радиуса */
     cursor: pointer;
     z-index: 3;
     text-decoration: none;
     color: var(--text);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65); /* Чуть темнее тень для контраста */
     opacity: 0;
     pointer-events: auto;
 }
@@ -3956,7 +3957,7 @@ body.crypto-modal-open {
 }
 
 /* ============================================================
-   ГЛОССАРИЙ (Дерево знаний)
+   ГЛОССАРИЙ (Улучшенная группировка + Анимации)
    ============================================================ */
 
 html[data-view="glossary"] .bubbles-view,
@@ -3964,309 +3965,306 @@ html[data-view="glossary"] .list-view,
 html[data-view="glossary"] .crypto-view,
 html[data-view="glossary"] .mypath-view,
 html[data-view="glossary"] .finance-view,
-html[data-view="glossary"] .merch-view { display: none; }
+html[data-view="glossary"] .merch-view,
+html[data-view="glossary"] .hint {
+    display: none;
+}
 
 .glossary-view {
     position: absolute;
     inset: 0;
     z-index: 1;
-    padding: 30px 40px;
-    overflow-y: auto;
     display: none;
-    flex-direction: row;
-    gap: 30px;
-    /* Растягиваем на всю доступную ширину */
-    max-width: 1800px;
-    margin: 0 auto;
-    width: 100%;
+    background: rgba(10, 19, 16, 0.4);
+    backdrop-filter: blur(6px);
+    overflow-y: auto;
 }
 
 html[data-view="glossary"] .glossary-view {
+    display: block;
+}
+
+.glossary-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
     display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
 
-/* --- Левая часть (Дерево) --- */
-.glossary-tree-container {
-    flex: 1;
-    position: relative;
-    background: rgba(10, 19, 16, 0.6);
-    border: 1px solid var(--border-soft);
-    border-radius: 24px;
-    padding: 30px;
-    min-height: 600px;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-}
-
+/* Заголовок */
 .glossary-header h2 {
-    margin: 0 0 10px;
-    font-size: 24px;
-    color: #fff;
+    margin: 0;
+    font-size: 32px;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #fff;
+    letter-spacing: -0.5px;
 }
 
-.glossary-header p {
-    margin: 0 0 30px;
-    font-size: 13px;
-    color: var(--text-muted);
+.glossary-header h2 span {
+    color: var(--accent);
 }
 
-/* Линии соединения (декоративные) */
-.glossary-lines {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-}
-.glossary-lines svg {
-    width: 100%;
-    height: 100%;
-}
-.glossary-lines path {
-    fill: none;
-    stroke: rgba(168, 255, 62, 0.3);
-    stroke-width: 1.5;
-    stroke-dasharray: 4 4;
-}
-
-/* Узлы */
-.glossary-nodes {
+/* Поиск */
+.glossary-search-box {
     position: relative;
-    z-index: 1;
     display: flex;
-    flex-direction: column;
-    gap: 40px;
     align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(168, 255, 62, 0.2);
+    border-radius: 12px;
+    padding: 0 16px;
+    height: 52px;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 600px;
 }
 
-.node-level {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
+.glossary-search-box:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(168, 255, 62, 0.15);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.glossary-search-box svg {
+    width: 20px;
+    height: 20px;
+    color: var(--text-muted);
+    margin-right: 12px;
+}
+
+.glossary-search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 15px;
     width: 100%;
 }
 
-.g-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    width: 120px;
-}
-
-.g-node:hover {
-    transform: translateY(-5px);
-}
-
-.g-node-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    background: rgba(168, 255, 62, 0.1);
-    border: 1px solid rgba(168, 255, 62, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    box-shadow: 0 0 15px rgba(168, 255, 62, 0.1);
-}
-
-.g-node-icon svg {
-    width: 24px;
-    height: 24px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-}
-
-.g-node.root .g-node-icon svg {
-    width: 32px;
-    height: 32px;
-}
-
-.g-node-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
-}
-
-.g-node-sub {
-    font-size: 10px;
+.glossary-search-box input::placeholder {
     color: var(--text-muted);
 }
 
-/* Ветка (Блоки подкатегорий) */
-.g-branch {
-    background: rgba(15, 26, 21, 0.85);
+/* Алфавит в ряд */
+.glossary-alphabet {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 8px;
+    background: rgba(15, 26, 21, 0.6);
     border: 1px solid var(--border-soft);
-    border-radius: 16px;
-    padding: 20px; /* Было 15px */
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* Было 10px */
-    width: 220px; /* Было 180px — карточки стали шире */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.g-branch-title {
-    font-size: 14px; /* Было 13px */
-    font-weight: 800;
-    color: var(--accent);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 5px;
-}
-
-/* Элементы списка внутри ветки */
-.g-branch-item {
-    font-size: 13px; /* Было 11.5px — шрифт стал крупнее */
-    color: var(--text-muted);
-    padding: 10px 14px; /* Увеличили кликабельную область */
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: rgba(255, 255, 255, 0.03);
-}
-
-/* Центральный узел (ФИНАНСЫ) */
-.g-node.root .g-node-icon {
-    width: 90px; /* Было 70px */
-    height: 90px;
-    border-radius: 50%;
-    background: rgba(168, 255, 62, 0.2);
-    box-shadow: 0 0 40px rgba(168, 255, 62, 0.4);
-}
-
-.g-branch-item:hover, .g-branch-item.active {
-    background: rgba(168, 255, 62, 0.15);
-    color: var(--accent);
-    transform: translateX(4px);
-}
-
-/* --- Правая часть (Панель информации) --- */
-.glossary-sidebar {
-    /* Увеличиваем ширину с 340px до 420px */
-    width: 420px;
-    flex-shrink: 0;
-    background: rgba(10, 19, 16, 0.8);
-    border: 1px solid var(--border-soft);
-    border-radius: 24px;
-    padding: 30px;
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.gs-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.gs-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    background: rgba(168, 255, 62, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-}
-
-.gs-title h3 {
-    margin: 0 0 4px;
-    font-size: 24px; /* Было 20px */
-    color: #fff;
-    font-weight: 800;
-}
-
-.gs-title span {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.gs-desc {
-    font-size: 15px; /* Было 13.5px */
-    color: var(--text);
-    line-height: 1.7;
-}
-
-.gs-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.gs-tag {
-    padding: 8px 16px; /* Увеличили размер тегов */
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    border: 1px solid;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.gs-tag.accent {
-    background: rgba(168, 255, 62, 0.15);
-    border-color: var(--accent);
-    color: var(--accent);
-}
-
-.gs-tag.dim {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--border-soft);
-    color: var(--text-muted);
-}
-
-.gs-tag:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.2);
-}
-
-.gs-btn {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 14px;
-    background: rgba(168, 255, 62, 0.1);
-    border: 1px solid var(--accent);
     border-radius: 12px;
-    color: var(--accent);
-    font-weight: 800;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.3s;
+    overflow-x: auto;
+    scrollbar-width: none;
 }
 
-.gs-btn:hover {
+.glossary-alphabet::-webkit-scrollbar {
+    display: none;
+}
+
+.alpha-letter {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Пружинистая анимация */
+    user-select: none;
+}
+
+.alpha-letter:hover {
+    background: rgba(168, 255, 62, 0.15);
+    color: var(--accent);
+    transform: translateY(-2px) scale(1.1); /* Буква подпрыгивает */
+}
+
+.alpha-letter.active {
     background: var(--accent);
     color: var(--text-invert);
-    box-shadow: 0 0 20px var(--accent-glow);
+    box-shadow: 0 0 15px var(--accent-glow);
+    transform: scale(1.05);
+}
+
+/* =========================================
+   СПИСОК ТЕРМИНОВ И ГРУППИРОВКА
+   ========================================= */
+
+.glossary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Блок одной буквы (обертка) */
+.letter-group {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+
+    /* Стеклянная подложка для отделения групп */
+    background: rgba(15, 26, 21, 0.3);
+    border: 1px solid rgba(168, 255, 62, 0.05);
+    border-radius: 20px;
+    padding: 24px;
+    transition: all 0.4s ease;
+
+    /* Анимация появления */
+    opacity: 0;
+    animation: groupFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Задержка для каскадного появления */
+.letter-group:nth-child(1) { animation-delay: 0.05s; }
+.letter-group:nth-child(2) { animation-delay: 0.1s; }
+.letter-group:nth-child(3) { animation-delay: 0.15s; }
+.letter-group:nth-child(4) { animation-delay: 0.2s; }
+.letter-group:nth-child(5) { animation-delay: 0.25s; }
+.letter-group:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes groupFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* При наведении на группу - подсвечиваем её фон */
+.letter-group:hover {
+    background: rgba(20, 32, 25, 0.6);
+    border-color: rgba(168, 255, 62, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Огромная буква слева */
+.letter-group-header {
+    flex-shrink: 0;
+    width: 100px;
+    font-family: 'Bungee', 'Orbitron', sans-serif;
+    font-size: 72px;
+    line-height: 0.8;
+    font-weight: 900;
+    text-align: center;
+    color: rgba(168, 255, 62, 0.05); /* Едва заметный фон */
+    -webkit-text-stroke: 2px rgba(168, 255, 62, 0.3); /* Обводка */
+    user-select: none;
+    transition: all 0.3s ease;
+    position: sticky;
+    top: 20px; /* Буква прилипает при скролле длинного списка */
+}
+
+.letter-group:hover .letter-group-header {
+    -webkit-text-stroke: 2px var(--accent);
+    color: rgba(168, 255, 62, 0.1);
+    text-shadow: 0 0 30px rgba(168, 255, 62, 0.3);
+    transform: scale(1.05);
+}
+
+/* Контейнер для карточек */
+.letter-group-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+/* Карточка термина */
+.term-card {
+    background: rgba(15, 26, 21, 0.95);
+    border: 1px solid rgba(168, 255, 62, 0.1);
+    border-radius: 16px;
+    padding: 24px 28px;
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+}
+
+/* Неоновая полоска слева */
+.term-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--accent);
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: all 0.3s ease;
+}
+
+/* Анимация карточки при наведении */
+.term-card:hover {
+    transform: translateY(-4px) translateX(4px);
+    background: rgba(20, 32, 25, 0.98);
+    border-color: rgba(168, 255, 62, 0.4);
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.5),
+        -5px 5px 20px rgba(168, 255, 62, 0.1);
+}
+
+.term-card:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.term-title {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.term-card:hover .term-title {
+    color: var(--accent);
+    text-shadow: 0 0 15px rgba(168, 255, 62, 0.4);
+}
+
+.term-desc {
+    margin: 0;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    transition: color 0.3s ease;
+}
+
+.term-card:hover .term-desc {
+    color: #d6e6c8; /* Немного светлее при наведении */
 }
 
 /* Адаптив */
-@media (max-width: 1024px) {
-    .glossary-view {
+@media (max-width: 900px) {
+    .glossary-container { padding: 20px 16px 60px; }
+    .glossary-header h2 { font-size: 26px; }
+
+    .letter-group {
         flex-direction: column;
-        padding: 20px;
+        gap: 10px;
+        padding: 16px;
     }
-    .glossary-sidebar {
-        width: 100%;
+
+    .letter-group-header {
+        position: relative;
+        top: 0;
+        width: auto;
+        text-align: left;
+        font-size: 48px;
+        padding-left: 4px;
+        margin-bottom: -10px;
+        -webkit-text-stroke: 1px var(--accent);
+        color: rgba(168, 255, 62, 0.1);
     }
-    .g-branch {
-        width: 140px;
-    }
+
+    .term-card { padding: 20px; }
 }
