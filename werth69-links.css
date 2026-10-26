@@ -4177,18 +4177,19 @@ html[data-view="glossary"] .glossary-view {
 }
 
 /* Карточка термина */
+/* Карточка термина */
 .term-card {
     background: rgba(15, 26, 21, 0.95);
     border: 1px solid rgba(168, 255, 62, 0.1);
     border-radius: 16px;
-    padding: 24px 28px;
+    padding: 20px 24px;
     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
     overflow: hidden;
-    cursor: default;
+    cursor: pointer; /* Курсор-рука, чтобы было понятно, что можно кликнуть */
 }
 
-/* Неоновая полоска слева */
+/* Неоновая полоска слева (появляется при наведении) */
 .term-card::before {
     content: '';
     position: absolute;
@@ -4205,12 +4206,11 @@ html[data-view="glossary"] .glossary-view {
 
 /* Анимация карточки при наведении */
 .term-card:hover {
-    transform: translateY(-4px) translateX(4px);
     background: rgba(20, 32, 25, 0.98);
     border-color: rgba(168, 255, 62, 0.4);
     box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.5),
-        -5px 5px 20px rgba(168, 255, 62, 0.1);
+        0 10px 25px rgba(0, 0, 0, 0.4),
+        -3px 3px 15px rgba(168, 255, 62, 0.05);
 }
 
 .term-card:hover::before {
@@ -4218,29 +4218,61 @@ html[data-view="glossary"] .glossary-view {
     transform: scaleY(1);
 }
 
+/* Заголовок термина */
 .term-title {
-    margin: 0 0 12px 0;
+    margin: 0;
     font-size: 20px;
     font-weight: 800;
     color: #fff;
     transition: color 0.3s ease;
+    display: flex;
+    justify-content: space-between; /* Чтобы добавить иконку плюса/минуса */
+    align-items: center;
 }
 
-.term-card:hover .term-title {
+.term-title::after {
+    content: '+';
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Когда карточка открыта */
+.term-card.active {
+    border-color: var(--accent);
+    background: rgba(20, 32, 25, 0.98);
+}
+
+.term-card.active .term-title {
     color: var(--accent);
-    text-shadow: 0 0 15px rgba(168, 255, 62, 0.4);
 }
 
+.term-card.active .term-title::after {
+    content: '−';
+    color: var(--accent);
+    transform: rotate(180deg);
+}
+
+/* Описание термина (скрыто по умолчанию) */
 .term-desc {
     margin: 0;
     font-size: 15px;
     color: var(--text-muted);
     line-height: 1.7;
-    transition: color 0.3s ease;
+
+    /* Скрываем текст */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.term-card:hover .term-desc {
-    color: #d6e6c8; /* Немного светлее при наведении */
+/* Когда карточка открыта - показываем текст */
+.term-card.active .term-desc {
+    max-height: 500px; /* Достаточно для любого текста */
+    opacity: 1;
+    margin-top: 16px; /* Отступ от заголовка */
 }
 
 /* Адаптив */
