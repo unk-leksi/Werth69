@@ -1629,6 +1629,7 @@ function renderGlossaryView() {
     ).join('');
 
     // 3. Отрисовка
+        // 3. Функция отрисовки списка с группировкой
     const renderList = (filterLetter = 'ALL', searchQuery = '') => {
         let filtered = sortedTerms;
 
@@ -1677,6 +1678,22 @@ function renderGlossaryView() {
         }
 
         listContainer.innerHTML = html;
+
+        // --- ЛОГИКА АККОРДЕОНА (Клик по карточке) ---
+        const cards = listContainer.querySelectorAll('.term-card');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const isActive = card.classList.contains('active');
+
+                // Сначала закрываем ВСЕ открытые карточки
+                cards.forEach(c => c.classList.remove('active'));
+
+                // Если текущая не была открыта, открываем её
+                if (!isActive) {
+                    card.classList.add('active');
+                }
+            });
+        });
     };
 
     // 4. Инициализация
