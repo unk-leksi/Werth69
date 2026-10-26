@@ -166,6 +166,29 @@ DeFi дает доступ к финансовым услугам любому �
         icon: `<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 4a6 6 0 1 1 0 12 6 6 0 0 1 0-12z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke="#0a1310" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`,
         url: 'https://t.me/werth_69/389'
     },
+    {
+        title: 'Что такое gas fee и кто получает сетевую комиссию?',
+        excerpt: 'За использование ресурсов сети взимается network fee — сетевая комиссия. В некоторых сетях её называют gas fee.',
+        fullText: `Что такое gas fee и кто получает сетевую комиссию? ⭐️
+
+🌐 Когда транзакция отправляется в блокчейн, сеть должна обработать её и включить в блок. За использование ресурсов сети взимается network fee — сетевая комиссия.
+
+В некоторых сетях её называют gas fee.
+
+Размер комиссии обычно зависит от нескольких факторов:
+➡️ нагрузки на сеть;
+➡️ сложности операции;
+➡️ спроса на место в блоке;
+➡️ правил конкретного блокчейна.
+
+⚠️ Сетевая комиссия — не то же самое, что сервисная комиссия кошелька или платформы. Network fee связана с работой самой сети и может быть частью экономики валидаторов или майнеров.
+
+💸 Поэтому отправка одной и той же суммы в разных блокчейнах может стоить по-разному.`,
+        image: 'icons/picture_10.jpg',
+        color: '#0A66C2',
+        icon: `<svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 4v16M16 4v16"/></svg>`,
+        url: 'https://t.me/werth_69/361'
+    }
 ];
 
 const CRYPTO_POSTS_2 = [
@@ -282,14 +305,18 @@ const CRYPTO_POSTS_2 = [
         url: 'https://t.me/werth_69/409'
     },
     {
-        title: 'Название поста 9',
-        excerpt: 'Короткое описание поста 9.',
-        fullText: `Полный текст девятого поста.`,
-        image: 'icons/picture_18.jpg',
-        color: '#F0B90B',
-        icon: `<svg viewBox="0 0 24 24"><path d="M12 2 8 6l4 4 4-4-4-4zM2 12l4 4 4-4-4-4-4 4z"/></svg>`,
-        url: '#'
-    },
+        title: 'Безопасен ли биткоин?',
+        excerpt: 'Один из основных рисков, связанных с биткоином, — возможность взлома и кражи. Узнайте, как защитить свои средства.',
+        fullText: `Безопасен ли биткоин?
+Один из основных рисков, связанных с биткоином, — возможность взлома и кражи. Например, при фишинге хакеры используют методы социальной инженерии, чтобы обманом заставить пользователей раскрыть свои учетные данные или приватные ключи. Получив доступ к аккаунту пользователя или криптокошельку, хакер может перевести биткоины жертвы на свой кошелек. 🔓
+Еще один способ, с помощью которого хакеры могут украсть биткоины, — это использование вредоносного ПО или программ-вымогателей. Хакеры могут заразить компьютер или мобильное устройство пользователя вредоносным ПО, которое позволит им получить доступ к биткоин-кошельку пользователя. В некоторых случаях хакеры могут использовать программы-вымогатели, чтобы зашифровать файлы пользователя и потребовать оплату в биткоинах за их расшифровку. 🦠
+Поскольку транзакции с биткоинами необратимы и не застрахованы ни одним государственным органом, пользователи должны принимать меры предосторожности для защиты своих биткоинов. Это включает в себя использование надежных паролей, двухфакторной аутентификации и «холодных хранилищ» или аппаратных кошельков (устройств, которые хранят ключи в автономном режиме), чтобы обезопасить средства от онлайн-хакеров. Также важно скачивать программное обеспечение, связанное с биткоином, только из надежных источников. 🔐
+Еще один риск, связанный с биткоином, — это волатильность. Стоимость биткоина может сильно колебаться в течение коротких промежутков времени, что делает его рискованным вложением для тех, кто не готов к колебаниям цен и потенциальным убыткам. Однако исторически волатильность снижалась по мере развития актива и повышения ликвидности рынка. 📉📈`,
+        image: 'icons/bitcoin_9.jpg',
+        color: '#dc2626',
+        icon: `<svg viewBox="0 0 24 24"><path d="M12 2 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/><path d="M12 8v4m0 4h.01" stroke-linecap="round"/></svg>`,
+        url: 'https://t.me/werth_69/411'
+    }
 ];
 
 const ASSETS = [
@@ -724,6 +751,15 @@ function renderCryptoView() {
     if (!container || container.dataset.rendered === 'true') return;
     container.dataset.rendered = 'true';
 
+    // 1. Динамический расчет радиуса в зависимости от количества карточек (УМЕНЬШЕН)
+    const getRadius = (count) => {
+        if (count <= 6) return 290; // Было 340
+        if (count <= 8) return 340; // Было 400
+        if (count <= 10) return 390; // Было 480 - теперь карточки ближе к центру
+        return 440;
+    };
+
+    // 2. Генерация HTML для карточек
     const buildCardsHTML = (posts, layerId) => {
         if (!posts.length) {
             return `
@@ -734,8 +770,17 @@ function renderCryptoView() {
                 </div>
             `;
         }
-        return posts.map((p, i) => `
+
+        const count = posts.length;
+        const radius = getRadius(count);
+
+        return posts.map((p, i) => {
+            // Равномерно распределяем угол от 0 до 360 градусов
+            const angle = (360 / count) * i;
+
+            return `
             <div class="crypto-card crypto-card-${i + 1}"
+                 style="--angle: ${angle}deg; --radius: ${radius}px;"
                  data-crypto-index="${i}"
                  data-layer="${layerId}"
                  role="button"
@@ -752,26 +797,39 @@ function renderCryptoView() {
                     <p>${p.excerpt}</p>
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     };
 
-    // Лучи рисуем от центра
+    // 3. Генерация лучей от центра к карточкам
     const cx = 750, cy = 550;
-    const buildRaysHTML = (posts) => posts.map((p, i) => {
-        const angleDeg = i * (360 / posts.length) - 90;
-        const angleRad = angleDeg * Math.PI / 180;
-        const startR = 110;
-        const endR = 340;
-        const x1 = cx + Math.cos(angleRad) * startR;
-        const y1 = cy + Math.sin(angleRad) * startR;
-        const x2 = cx + Math.cos(angleRad) * endR;
-        const y2 = cy + Math.sin(angleRad) * endR;
-        return `
-            <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />
-            <circle cx="${x2}" cy="${y2}" r="3" />
-        `;
-    }).join('');
+    const buildRaysHTML = (posts) => {
+        const count = posts.length;
+        if (count === 0) return '';
 
+        const radius = getRadius(count);
+
+        return posts.map((p, i) => {
+            const angleDeg = (360 / count) * i - 90; // -90, чтобы первая карточка была сверху
+            const angleRad = angleDeg * Math.PI / 180;
+
+            // Точка старта (ближе к центру)
+            const startR = 110;
+            const x1 = cx + Math.cos(angleRad) * startR;
+            const y1 = cy + Math.sin(angleRad) * startR;
+
+            // Точка конца (у самой карточки). Уменьшили отступ до 65px, чтобы луч не заходил на текст
+            const endR = radius - 65;
+            const x2 = cx + Math.cos(angleRad) * endR;
+            const y2 = cy + Math.sin(angleRad) * endR;
+
+            return `
+                <line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />
+                <circle cx="${x2}" cy="${y2}" r="3" />
+            `;
+        }).join('');
+    };
+
+    // 4. Сборка общего HTML
     container.innerHTML = `
         <div class="crypto-stage" data-state="idle">
 
@@ -931,7 +989,8 @@ function renderCryptoView() {
             void card.offsetWidth;
         });
         cards.forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.32}s`;
+            // Задержка зависит от общего количества, чтобы анимация была плавной
+            card.style.animationDelay = `${index * (1.35 / cards.length)}s`;
             card.classList.add('roulette-in');
         });
     };
@@ -1526,229 +1585,128 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ============================================================
-   ГЛОССАРИЙ
+   ГЛОССАРИЙ — ЛОГИКА (Группировка по буквам + Анимации)
    ============================================================ */
 
-const GLOSSARY_DATA = {
-    categories: [
-        {
-            id: 'crypto',
-            title: 'Криптовалюты',
-            icon: `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 10h4.5a1.5 1.5 0 0 1 0 3H9"/></svg>`,
-            items: ['Blockchain', 'Bitcoin', 'Ethereum', 'Altcoin']
-        },
-        {
-            id: 'invest',
-            title: 'Инвестиции',
-            icon: `<svg viewBox="0 0 24 24"><path d="M3 20h18v-2H5V4H3v16zm4-3h2v-5H7v5zm4 0h2v-8h-2v8zm4 0h2V6h-2v11z"/></svg>`,
-            items: ['Акции', 'Облигации', 'Дивиденды', 'ETF']
-        },
-        {
-            id: 'trade',
-            title: 'Торговля',
-            icon: `<svg viewBox="0 0 24 24"><polyline points="2 17 8 11 13 15 22 6"/><polyline points="16 6 22 6 22 12"/></svg>`,
-            items: ['Ордер', 'Спред', 'Ликвидность', 'Аналитика']
-        },
-        {
-            id: 'security',
-            title: 'Безопасность',
-            icon: `<svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-            items: ['Кошелек', 'Seed Phrase', 'Private Key', '2FA']
-        }
-    ],
-    details: {
-        'Ликвидность': {
-            title: 'Ликвидность',
-            subtitle: 'LIQUIDITY',
-            desc: 'Способность актива быстро продаваться или покупаться без существенного изменения его цены.',
-            tags: ['Биржи', 'DeFi', 'Рынки'],
-            filters: ['Сред.', 'Обычн.', 'Торговля'],
-            level: 'Средний'
-        },
-        'Блокчейн': {
-            title: 'Блокчейн',
-            subtitle: 'BLOCKCHAIN',
-            desc: 'Выстроенная по определённым правилам непрерывная последовательная цепочка блоков, содержащих информацию.',
-            tags: ['Крипта', 'Сеть', 'Данные'],
-            filters: ['Базовый', 'Новичок'],
-            level: 'Базовый'
-        },
-        'Акции': {
-            title: 'Акции',
-            subtitle: 'STOCKS',
-            desc: 'Ценная бумага, свидетельствующая о владении долей в компании и дающая право на часть её прибыли.',
-            tags: ['Фондовый рынок', 'Инвестиции'],
-            filters: ['Обычн.', 'Привил.'],
-            level: 'Начальный'
-        }
-    }
-};
+const GLOSSARY_TERMS = [
+    { term: 'Блокчейн', letter: 'Б', title: 'Блокчейн (Blockchain)', desc: 'Цифровая база данных (реестр), которая хранится не на одном сервере, а сразу на тысячах компьютеров по всему миру. Информацию в ней невозможно подделать или удалить. Простыми словами: это огромная публичная бухгалтерская книга, которую нельзя тайно переписать.' },
+    { term: 'Биткоин', letter: 'Б', title: 'Биткоин (Bitcoin)', desc: 'Первая в мире криптовалюта, созданная в 2009 году. Это не просто «цифровые деньги», а целая децентрализованная система. Простыми словами: это цифровое золото, которое не контролируется ни одним банком или правительством.' },
+    { term: 'Альткоин', letter: 'А', title: 'Альткоин (Altcoin)', desc: 'Любая криптовалюта, кроме Биткоина. Простыми словами: если Биткоин — это король, то все остальные монеты (Ethereum, TRX, Solana) — это его свита или альтернативы.' },
+    { term: 'Кошелек', letter: 'К', title: 'Кошелек (Wallet)', desc: 'Программа или устройство для хранения ваших криптовалют. Важно понимать: монеты хранятся не в кошельке, а в блокчейне, а кошелек — это просто ключ к ним.' },
+    { term: 'Приватный ключ и Сид-фраза', letter: 'П', title: 'Приватный ключ и Сид-фраза', desc: 'Секретный набор слов (обычно 12 или 24), который дает доступ к вашему кошельку. Это самое важное, что у вас есть. Простыми словами: это пароль от вашего сейфа. Если вы его потеряете — вы потеряете все деньги. Если его украдут — украдут все деньги. Никому не показывайте.' },
+    { term: 'Транзакция', letter: 'Т', title: 'Транзакция (Transaction)', desc: 'Перевод криптовалюты с одного кошелька на другой. Запись об этом навсегда остается в блокчейне.' },
+    { term: 'Gas Fee', letter: 'G', title: 'Gas Fee (Комиссия сети)', desc: 'Плата за обработку транзакции. Простыми словами: это «бензин» для сети. Чем больше машин (транзакций) на дороге, тем дороже бензин.' },
+    { term: 'Стейкинг', letter: 'С', title: 'Стейкинг (Staking)', desc: 'Блокировка ваших монет в сети на определенное время для поддержки работы блокчейна. Простыми словами: вы «замораживаете» свои монеты, а сеть за это начисляет вам проценты (пассивный доход).' },
+    { term: 'Смарт-контракт', letter: 'С', title: 'Смарт-контракт (Smart Contract)', desc: 'Цифровой код, который автоматически выполняет условия сделки. Простыми словами: это робот-нотариус. Если условия выполнены — деньги переводятся, если нет — возвращаются обратно. Без участия человека и обмана.' },
+    { term: 'Стейблкоин', letter: 'С', title: 'Стейблкоин (Stablecoin)', desc: 'Криптовалюта, цена которой привязана к реальным деньгам (обычно к доллару США 1:1). Самые популярные: USDT, USDC. Простыми словами: это крипта, которая не скачет в цене. Удобно хранить сбережения, чтобы переждать падение рынка.' },
+    { term: 'DeFi', letter: 'D', title: 'DeFi (Децентрализованные финансы)', desc: 'Экосистема финансовых приложений на блокчейне, работающая без центрального управления.' },
+    { term: 'NFT', letter: 'N', title: 'NFT (Невзаимозаменяемый токен)', desc: 'Уникальный цифровой актив, подтверждающий право собственности на конкретный объект в блокчейне.' },
+    { term: 'Халвинг', letter: 'Х', title: 'Халвинг (Halving)', desc: 'Сокращение вознаграждения за майнинг биткоина вдвое, происходит примерно каждые 4 года.' }
+];
 
 function renderGlossaryView() {
     const container = document.getElementById('glossary-view');
     if (!container || container.dataset.rendered === 'true') return;
     container.dataset.rendered = 'true';
 
-    // Генерируем ветки
-    const branchesHTML = GLOSSARY_DATA.categories.map(cat => `
-        <div class="g-branch">
-            <div class="g-branch-title">
-                ${cat.icon}
-                ${cat.title}
-            </div>
-            <div class="g-branch-list">
-                ${cat.items.map(item => `
-                    <div class="g-branch-item" data-term="${item}">${item}</div>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
+    const alphabetContainer = document.getElementById('glossary-alphabet');
+    const listContainer = document.getElementById('glossary-list');
+    const searchInput = document.getElementById('glossary-search-input');
 
-    // Дефолтная карточка (Ликвидность)
-    const defaultTerm = 'Ликвидность';
-    const defaultDetail = GLOSSARY_DATA.details[defaultTerm];
+    // 1. Сортировка
+    const sortedTerms = [...GLOSSARY_TERMS].sort((a, b) => {
+        if (a.letter !== b.letter) return a.letter.localeCompare(b.letter, 'ru');
+        return a.title.localeCompare(b.title, 'ru');
+    });
 
-    container.innerHTML = `
-        <div class="glossary-tree-container">
-            <div class="glossary-header">
-                <h2>ПУТЬ ИНВЕСТОРА</h2>
-                <p>От базовых понятий к профессиональным знаниям</p>
-            </div>
+    // 2. Генерация алфавита
+    const cyrillicAlphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
+    const latinAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const allLetters = [...new Set([...cyrillicAlphabet, ...latinAlphabet, '#'])];
 
-            <!-- Декоративные линии (можно оставить пустыми, если не нужно SVG) -->
-            <div class="glossary-lines">
-                <svg>
-                    <path d="M 50% 10% L 50% 30%" />
-                    <path d="M 50% 30% L 20% 50%" />
-                    <path d="M 50% 30% L 40% 50%" />
-                    <path d="M 50% 30% L 60% 50%" />
-                    <path d="M 50% 30% L 80% 50%" />
-                </svg>
-            </div>
+    alphabetContainer.innerHTML = allLetters.map(letter =>
+        `<div class="alpha-letter" data-letter="${letter}">${letter}</div>`
+    ).join('');
 
-            <div class="glossary-nodes">
-                <!-- Центральный узел -->
-                <div class="node-level">
-                    <div class="g-node root">
-                        <div class="g-node-icon">
-                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-                        </div>
-                        <div class="g-node-label">ФИНАНСЫ</div>
-                    </div>
-                </div>
+    // 3. Отрисовка
+    const renderList = (filterLetter = 'ALL', searchQuery = '') => {
+        let filtered = sortedTerms;
 
-                <!-- Ветки -->
-                <div class="node-level">
-                    ${branchesHTML}
-                </div>
+        if (filterLetter !== 'ALL') {
+            filtered = filtered.filter(t => t.letter === filterLetter);
+        }
 
-                <!-- Нижний узел -->
-                <div class="node-level">
-                    <div class="g-node">
-                        <div class="g-node-icon">
-                            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        </div>
-                        <div class="g-node-label">Начни с основ</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            filtered = filtered.filter(t =>
+                t.title.toLowerCase().includes(q) ||
+                t.desc.toLowerCase().includes(q)
+            );
+        }
 
-        <!-- Боковая панель -->
-        <div class="glossary-sidebar" id="gs-panel">
-            <div class="gs-header">
-                <div class="gs-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke-linecap="round"/></svg>
-                </div>
-                <div class="gs-title">
-                    <h3>${defaultDetail.title}</h3>
-                    <span>${defaultDetail.subtitle}</span>
-                </div>
-            </div>
-
-            <div class="gs-desc">
-                ${defaultDetail.desc}
-            </div>
-
-            <div class="gs-tags">
-                ${defaultDetail.tags.map(t => `<span class="gs-tag dim">${t}</span>`).join('')}
-            </div>
-
-            <div class="gs-tags">
-                ${defaultDetail.filters.map(f => `<span class="gs-tag accent">${f}</span>`).join('')}
-            </div>
-
-            <div class="gs-tags" style="margin-top: auto; padding-top: 20px;">
-                <span class="gs-tag dim" style="border-radius: 8px;">Уровень: ${defaultDetail.level}</span>
-            </div>
-
-            <button class="gs-btn">
-                Читать подробнее
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-        </div>
-    `;
-
-    // Обработка кликов по терминам
-    const panel = document.getElementById('gs-panel');
-
-    function updatePanel(term) {
-        const data = GLOSSARY_DATA.details[term];
-        if (!data) {
-            // Если данных нет, ставим заглушку
-            panel.innerHTML = `
-                <div class="gs-header">
-                    <div class="gs-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg></div>
-                    <div class="gs-title">
-                        <h3>${term}</h3>
-                        <span>В РАЗРАБОТКЕ</span>
-                    </div>
-                </div>
-                <div class="gs-desc">Информация об этом термине скоро появится. Мы работаем над этим!</div>
-            `;
+        if (filtered.length === 0) {
+            listContainer.innerHTML = `<div class="search-no-results" style="padding: 40px; text-align: center; color: var(--text-muted); font-size: 18px;">Ничего не найдено :(</div>`;
             return;
         }
 
-        panel.innerHTML = `
-            <div class="gs-header">
-                <div class="gs-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v8m-3-5h6m-6 3h6" stroke-linecap="round"/></svg>
-                </div>
-                <div class="gs-title">
-                    <h3>${data.title}</h3>
-                    <span>${data.subtitle}</span>
-                </div>
-            </div>
-            <div class="gs-desc">${data.desc}</div>
-            <div class="gs-tags">
-                ${data.tags.map(t => `<span class="gs-tag dim">${t}</span>`).join('')}
-            </div>
-            <div class="gs-tags">
-                ${data.filters.map(f => `<span class="gs-tag accent">${f}</span>`).join('')}
-            </div>
-            <div class="gs-tags" style="margin-top: auto; padding-top: 20px;">
-                <span class="gs-tag dim" style="border-radius: 8px;">Уровень: ${data.level}</span>
-            </div>
-            <button class="gs-btn">
-                Читать подробнее
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-        `;
-    }
-
-    // Вешаем события на элементы списка
-    container.querySelectorAll('.g-branch-item').forEach(item => {
-        item.addEventListener('click', () => {
-            // Снимаем выделение со всех
-            container.querySelectorAll('.g-branch-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-
-            const term = item.dataset.term;
-            updatePanel(term);
+        // Группировка
+        const grouped = {};
+        filtered.forEach(term => {
+            if (!grouped[term.letter]) grouped[term.letter] = [];
+            grouped[term.letter].push(term);
         });
+
+        // Формирование HTML
+        let html = '';
+        for (const letter in grouped) {
+            const termsInGroup = grouped[letter];
+
+            html += `
+                <div class="letter-group">
+                    <div class="letter-group-header">${letter}</div>
+                    <div class="letter-group-content">
+                        ${termsInGroup.map(term => `
+                            <div class="term-card">
+                                <h3 class="term-title">${term.title}</h3>
+                                <p class="term-desc">${term.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        listContainer.innerHTML = html;
+    };
+
+    // 4. Инициализация
+    renderList();
+
+    // 5. Клики по алфавиту
+    alphabetContainer.addEventListener('click', (e) => {
+        const letterEl = e.target.closest('.alpha-letter');
+        if (!letterEl) return;
+
+        alphabetContainer.querySelectorAll('.alpha-letter').forEach(el => el.classList.remove('active'));
+        letterEl.classList.add('active');
+
+        const letter = letterEl.dataset.letter;
+        renderList(letter, searchInput.value);
+
+        // Прокрутка вверх при смене буквы
+        listContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    // Инициализация первого элемента (Ликвидность)
-    const firstActive = container.querySelector('[data-term="Ликвидность"]');
-    if (firstActive) firstActive.classList.add('active');
+    // 6. Поиск
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value;
+
+        if (query.length > 0) {
+            alphabetContainer.querySelectorAll('.alpha-letter').forEach(el => el.classList.remove('active'));
+            renderList('ALL', query);
+        } else {
+            const activeLetter = alphabetContainer.querySelector('.alpha-letter.active');
+            renderList(activeLetter ? activeLetter.dataset.letter : 'ALL', '');
+        }
+    });
 }
