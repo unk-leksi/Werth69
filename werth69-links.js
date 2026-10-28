@@ -751,15 +751,13 @@ function renderCryptoView() {
     if (!container || container.dataset.rendered === 'true') return;
     container.dataset.rendered = 'true';
 
-    // 1. Динамический расчет радиуса в зависимости от количества карточек (УМЕНЬШЕН)
     const getRadius = (count) => {
-        if (count <= 6) return 290; // Было 340
-        if (count <= 8) return 340; // Было 400
-        if (count <= 10) return 390; // Было 480 - теперь карточки ближе к центру
+        if (count <= 6) return 290;
+        if (count <= 8) return 340;
+        if (count <= 10) return 390;
         return 440;
     };
 
-    // 2. Генерация HTML для карточек
     const buildCardsHTML = (posts, layerId) => {
         if (!posts.length) {
             return `
@@ -775,9 +773,7 @@ function renderCryptoView() {
         const radius = getRadius(count);
 
         return posts.map((p, i) => {
-            // Равномерно распределяем угол от 0 до 360 градусов
             const angle = (360 / count) * i;
-
             return `
             <div class="crypto-card crypto-card-${i + 1}"
                  style="--angle: ${angle}deg; --radius: ${radius}px;"
@@ -800,24 +796,18 @@ function renderCryptoView() {
         `}).join('');
     };
 
-    // 3. Генерация лучей от центра к карточкам
     const cx = 750, cy = 550;
     const buildRaysHTML = (posts) => {
         const count = posts.length;
         if (count === 0) return '';
-
         const radius = getRadius(count);
 
         return posts.map((p, i) => {
-            const angleDeg = (360 / count) * i - 90; // -90, чтобы первая карточка была сверху
+            const angleDeg = (360 / count) * i - 90;
             const angleRad = angleDeg * Math.PI / 180;
-
-            // Точка старта (ближе к центру)
             const startR = 110;
             const x1 = cx + Math.cos(angleRad) * startR;
             const y1 = cy + Math.sin(angleRad) * startR;
-
-            // Точка конца (у самой карточки). Уменьшили отступ до 65px, чтобы луч не заходил на текст
             const endR = radius - 65;
             const x2 = cx + Math.cos(angleRad) * endR;
             const y2 = cy + Math.sin(angleRad) * endR;
@@ -829,13 +819,9 @@ function renderCryptoView() {
         }).join('');
     };
 
-    // 4. Сборка общего HTML
     container.innerHTML = `
         <div class="crypto-stage" data-state="idle">
-
             <div class="crypto-posts-hint">Нажмите на любую монету, чтобы открыть её концепции</div>
-
-            <!-- Лучи -->
             <div class="crypto-rays crypto-rays-1">
                 <svg viewBox="0 0 1500 1100" preserveAspectRatio="xMidYMid meet">
                     ${buildRaysHTML(CRYPTO_POSTS)}
@@ -846,8 +832,6 @@ function renderCryptoView() {
                     ${buildRaysHTML(CRYPTO_POSTS_2)}
                 </svg>
             </div>
-
-            <!-- Ряд монет -->
             <div class="crypto-coins-row">
                 <div class="crypto-coin-slot crypto-coin-slot-1">
                     <div class="crypto-center-glow"></div>
@@ -858,7 +842,6 @@ function renderCryptoView() {
                     </div>
                     <span class="crypto-coin-label">Посты</span>
                 </div>
-
                 <div class="crypto-coin-slot crypto-coin-slot-2">
                     <div class="crypto-center-glow crypto-center-glow-2"></div>
                     <div class="crypto-rotor crypto-rotor-2">${buildRotorSVG()}</div>
@@ -869,8 +852,6 @@ function renderCryptoView() {
                     <span class="crypto-coin-label">Концепции</span>
                 </div>
             </div>
-
-            <!-- Слои с карточками -->
             <div class="crypto-cards-layer crypto-cards-layer-1">
                 ${buildCardsHTML(CRYPTO_POSTS, '1')}
             </div>
@@ -887,36 +868,11 @@ function renderCryptoView() {
     const rays1  = container.querySelector('.crypto-rays-1');
     const rays2  = container.querySelector('.crypto-rays-2');
 
-    // --- Логика центрирования монеты ---
-    let activeSlot = null;
-
-    const centerCoin = (slotEl) => {
-        activeSlot = slotEl;
-        slotEl.style.transform = '';
-
-        const slotRect = slotEl.getBoundingClientRect();
-
-        // Точный центр экрана
-        const viewportCenterX = window.innerWidth / 2;
-        const viewportCenterY = window.innerHeight / 2;
-
-        // Текущий центр монеты
-        const currentX = slotRect.left + slotRect.width / 2;
-        const currentY = slotRect.top + slotRect.height / 2;
-
-        // Вычисляем смещение
-        const moveX = viewportCenterX - currentX;
-        const moveY = viewportCenterY - currentY;
-
-        // Применяем transform (CSS сделает это плавно за счет transition)
-        slotEl.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.15)`;
-    };
-
     const resetCoins = () => {
-        activeSlot = null;
         slots.forEach(s => {
             s.classList.remove('is-open', 'is-active');
-            s.style.transform = ''; // Возвращаем на место
+            s.style.transform = '';
+            s.style.transition = '';
         });
         stage.dataset.state = 'idle';
         stage.dataset.active = 'none';
@@ -927,15 +883,7 @@ function renderCryptoView() {
         layer2.classList.remove('is-visible');
     };
 
-    // Ресайз: если окно меняется, пересчитываем позицию активной монеты
-    window.addEventListener('resize', () => {
-        if (activeSlot && window.innerWidth > 900) {
-            centerCoin(activeSlot);
-        }
-    });
-
-    // --- Привязка кликов ---
-    slots.forEach((slotEl, index) => {
+        slots.forEach((slotEl, index) => {
         const coinEl = slotEl.querySelector('.crypto-coin');
         const which = index === 0 ? '1' : '2';
 
@@ -946,40 +894,71 @@ function renderCryptoView() {
             if (isCurrentlyOpen) {
                 resetCoins();
             } else {
+                // Блокируем повторные клики во время анимации
+                if (stage.dataset.animating === 'true') return;
+                stage.dataset.animating = 'true';
+
                 stage.dataset.state = 'open';
                 stage.dataset.active = which;
                 stage.classList.add('has-active');
 
-                slots.forEach(s => s.classList.remove('is-open', 'is-active'));
-                slotEl.classList.add('is-open', 'is-active');
+                // 1. Плавно скрываем монету на её старом месте
+                slotEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                slotEl.style.opacity = '0';
+                slotEl.style.transform = 'scale(0.8)';
 
-                // На мобилках не центрируем (там монеты в колонку)
-                if (window.innerWidth > 900) {
-                    centerCoin(slotEl);
-                }
+                // 2. Ждем, пока она исчезнет (300мс)
+                setTimeout(() => {
+                    // Убираем старые инлайн-стили
+                    slotEl.style.transition = '';
+                    slotEl.style.opacity = '';
+                    slotEl.style.transform = '';
 
-                if (which === '1') {
-                    rays1.classList.add('is-visible');
-                    layer1.classList.add('is-visible');
-                    rays2.classList.remove('is-visible');
-                    layer2.classList.remove('is-visible');
-                    replayCards(layer1);
-                } else {
-                    rays2.classList.add('is-visible');
-                    layer2.classList.add('is-visible');
-                    rays1.classList.remove('is-visible');
-                    layer1.classList.remove('is-visible');
-                    replayCards(layer2);
-                }
+                    // Убираем классы у всех слотов и добавляем нужные текущему
+                    slots.forEach(s => {
+                        s.classList.remove('is-open', 'is-active', 'is-visible-coin');
+                    });
+                    slotEl.classList.add('is-open', 'is-active');
+
+                    // 3. Ждем два кадра (requestAnimationFrame), чтобы браузер точно отрисовал монету в центре, но невидимой
+                    requestAnimationFrame(() => {
+                        requestAnimationFrame(() => {
+                            // 4. Включаем плавное появление (анимация в CSS)
+                            slotEl.classList.add('is-visible-coin');
+
+                            // 5. Показываем карточки и лучи с небольшой задержкой
+                            if (which === '1') {
+                                rays1.classList.add('is-visible');
+                                layer1.classList.add('is-visible');
+                                rays2.classList.remove('is-visible');
+                                layer2.classList.remove('is-visible');
+                                replayCards(layer1);
+                            } else {
+                                rays2.classList.add('is-visible');
+                                layer2.classList.add('is-visible');
+                                rays1.classList.remove('is-visible');
+                                layer1.classList.remove('is-visible');
+                                replayCards(layer2);
+                            }
+
+                            // Разрешаем клики снова после завершения анимации (примерно 500мс)
+                            setTimeout(() => {
+                                stage.dataset.animating = 'false';
+                            }, 500);
+                        });
+                    });
+                }, 300); // Время на исчезновение (300мс)
             }
         });
 
         coinEl.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); coinEl.click(); }
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                coinEl.click();
+            }
         });
     });
 
-    /* ---------- Перезапуск анимации карточек ---------- */
     const replayCards = (layer) => {
         const cards = Array.from(layer.querySelectorAll('.crypto-card'));
         cards.forEach(card => {
@@ -989,7 +968,6 @@ function renderCryptoView() {
             void card.offsetWidth;
         });
         cards.forEach((card, index) => {
-            // Задержка зависит от общего количества, чтобы анимация была плавной
             card.style.animationDelay = `${index * (1.35 / cards.length)}s`;
             card.classList.add('roulette-in');
         });
@@ -1003,8 +981,8 @@ function renderCryptoView() {
     const modalText     = document.getElementById('crypto-modal-text');
     const modalTelegram = document.getElementById('crypto-modal-telegram');
 
-    const openCryptoModal = (index) => {
-        const posts = stage.dataset.active === '1' ? CRYPTO_POSTS : CRYPTO_POSTS_2;
+    const openCryptoModal = (index, layerId) => {
+        const posts = layerId === '1' ? CRYPTO_POSTS : CRYPTO_POSTS_2;
         const post = posts[index];
         if (!post || !modal) return;
 
@@ -1014,10 +992,11 @@ function renderCryptoView() {
         modalTitle.textContent = post.title;
         modalText.textContent  = post.fullText;
         modalTelegram.href     = post.url;
+
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('crypto-modal-open');
-        modal.querySelector('.crypto-modal-close').focus();
+        modal.querySelector('.crypto-modal-close')?.focus();
     };
 
     const closeCryptoModal = () => {
@@ -1032,11 +1011,25 @@ function renderCryptoView() {
         if (e.key === 'Escape' && modal?.classList.contains('open')) closeCryptoModal();
     });
 
-    container.querySelectorAll('.crypto-cards-layer .crypto-card').forEach((card) => {
+    layer1.querySelectorAll('.crypto-card').forEach((card) => {
         const index = Number(card.dataset.cryptoIndex);
-        card.addEventListener('click', (e) => { e.stopPropagation(); openCryptoModal(index); });
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openCryptoModal(index, '1');
+        });
         card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCryptoModal(index); }
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCryptoModal(index, '1'); }
+        });
+    });
+
+    layer2.querySelectorAll('.crypto-card').forEach((card) => {
+        const index = Number(card.dataset.cryptoIndex);
+        card.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openCryptoModal(index, '2');
+        });
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCryptoModal(index, '2'); }
         });
     });
 }
@@ -1727,3 +1720,50 @@ function renderGlossaryView() {
         }
     });
 }
+
+/* ============================================================
+   МОБИЛЬНОЕ МЕНЮ (Бургер)
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const menuClose = document.getElementById('mobile-nav-close');
+    const menuNav = document.getElementById('mobile-nav');
+    const menuOverlay = document.getElementById('mobile-nav-overlay');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    if (!menuBtn || !menuNav) return;
+
+    const openMenu = () => {
+        menuNav.classList.add('active');
+        menuOverlay.classList.add('active');
+        menuBtn.classList.add('active'); // Для изменения стиля кнопки
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+        menuNav.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        menuBtn.classList.remove('active');
+        document.body.style.overflow = '';
+    };
+
+    menuBtn.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuOverlay.addEventListener('click', closeMenu);
+
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const view = link.dataset.view;
+            const desktopBtn = document.querySelector(`.view-btn[data-view="${view}"]`);
+            if (desktopBtn) desktopBtn.click();
+
+            mobileLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            closeMenu();
+        });
+    });
+
+    const currentView = document.documentElement.getAttribute('data-view');
+    const activeLink = document.querySelector(`.mobile-nav-link[data-view="${currentView}"]`);
+    if (activeLink) activeLink.classList.add('active');
+});
