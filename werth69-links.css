@@ -98,10 +98,10 @@ body::after {
     -webkit-backdrop-filter: blur(14px);
     border: none;
     border-bottom: 1px solid rgba(168, 255, 62, 0.10);
-    z-index: 100; /* Оставляем высокий z-index */
+    z-index: 100;
     flex-shrink: 0;
     box-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
-    overflow: visible; /* БЫЛО HIDDEN — СТАЛО VISIBLE */
+    overflow: visible;
     animation: topbarSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
     isolation: isolate;
 }
@@ -379,39 +379,52 @@ html[data-view="bubbles"] .list-view,
 html[data-view="bubbles"] .crypto-view,
 html[data-view="bubbles"] .mypath-view,
 html[data-view="bubbles"] .finance-view,
-html[data-view="bubbles"] .merch-view { display: none; }
+html[data-view="bubbles"] .merch-view,
+html[data-view="bubbles"] .glossary-view { display: none; }
 
 html[data-view="list"] .bubbles-view,
 html[data-view="list"] .crypto-view,
 html[data-view="list"] .mypath-view,
 html[data-view="list"] .finance-view,
-html[data-view="list"] .merch-view { display: none; }
+html[data-view="list"] .merch-view,
+html[data-view="list"] .glossary-view { display: none; }
 
 html[data-view="crypto"] .bubbles-view,
 html[data-view="crypto"] .list-view,
 html[data-view="crypto"] .mypath-view,
 html[data-view="crypto"] .finance-view,
-html[data-view="crypto"] .merch-view { display: none; }
+html[data-view="crypto"] .merch-view,
+html[data-view="crypto"] .glossary-view { display: none; }
 
 html[data-view="mypath"] .bubbles-view,
 html[data-view="mypath"] .list-view,
 html[data-view="mypath"] .crypto-view,
 html[data-view="mypath"] .finance-view,
-html[data-view="mypath"] .merch-view { display: none; }
+html[data-view="mypath"] .merch-view,
+html[data-view="mypath"] .glossary-view { display: none; }
 
 html[data-view="finance"] .bubbles-view,
 html[data-view="finance"] .list-view,
 html[data-view="finance"] .crypto-view,
 html[data-view="finance"] .mypath-view,
-html[data-view="finance"] .merch-view { display: none; }
+html[data-view="finance"] .merch-view,
+html[data-view="finance"] .glossary-view { display: none; }
 
 html[data-view="merch"] .bubbles-view,
 html[data-view="merch"] .list-view,
 html[data-view="merch"] .crypto-view,
 html[data-view="merch"] .mypath-view,
-html[data-view="merch"] .finance-view { display: none; }
+html[data-view="merch"] .finance-view,
+html[data-view="merch"] .glossary-view { display: none; }
 
-.bubbles-view, .list-view, .crypto-view, .mypath-view, .finance-view, .merch-view {
+html[data-view="glossary"] .bubbles-view,
+html[data-view="glossary"] .list-view,
+html[data-view="glossary"] .crypto-view,
+html[data-view="glossary"] .mypath-view,
+html[data-view="glossary"] .finance-view,
+html[data-view="glossary"] .merch-view { display: none; }
+
+.bubbles-view, .list-view, .crypto-view, .mypath-view, .finance-view, .merch-view, .glossary-view {
     animation: viewFadeIn 0.5s ease both;
 }
 
@@ -520,6 +533,36 @@ html[data-view="merch"] .finance-view { display: none; }
         0 0 28px var(--bubble-glow),
         0 10px 30px rgba(0, 0, 0, 0.5);
     z-index: 10;
+}
+
+/* ============================================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ ПУЗЫРЬКОВ
+   ============================================================ */
+@media (max-width: 780px) {
+    /* Уменьшаем сами пузырьки */
+    .bubble {
+        width: 110px !important;  /* Было 180px */
+        height: 110px !important;
+        box-shadow:
+            inset 0 0 0 2px rgba(255, 255, 255, 0.25),
+            inset 0 0 15px rgba(255, 255, 255, 0.20),
+            0 0 20px var(--bubble-glow),
+            0 6px 16px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Уменьшаем иконки внутри пузырьков */
+    .bubble-icon {
+        width: 45%;
+        height: 45%;
+        margin-bottom: 2px;
+    }
+
+    /* Уменьшаем текст внутри пузырьков */
+    .bubble-label {
+        font-size: 10px;
+        padding: 0 2px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
 }
 
 .list-view {
@@ -700,7 +743,8 @@ html[data-view="list"] .hint,
 html[data-view="crypto"] .hint,
 html[data-view="mypath"] .hint,
 html[data-view="finance"] .hint,
-html[data-view="merch"] .hint { display: none; }
+html[data-view="merch"] .hint,
+html[data-view="glossary"] .hint { display: none; }
 
 /* ============================================================
    ФИНАНСЫ и МЕРЧ — разделы «Скоро»
@@ -1879,7 +1923,6 @@ html[data-view="merch"] .hint { display: none; }
     margin-top: 10px;
 }
 
-/* --- Старая сетка постов (скрыта, используется лента) --- */
 .mypath-posts {
     display: none;
 }
@@ -1888,7 +1931,6 @@ html[data-view="merch"] .hint { display: none; }
    «МОЙ ПУТЬ» — панели под карточками (Посты / Комикс / Мультик)
    ============================================================ */
 
-/* Посты — горизонтальная лента */
 .mypath-posts-panel-inline {
     display: block;
     max-height: 0;
@@ -1992,7 +2034,6 @@ html[data-view="merch"] .hint { display: none; }
     box-shadow: 0 0 20px var(--accent-glow);
 }
 
-/* Горизонтальная лента постов */
 .mypath-posts-row {
     display: flex;
     flex-direction: row;
@@ -2045,7 +2086,6 @@ html[data-view="merch"] .hint { display: none; }
     100% { opacity: 1; transform: translateX(0) scale(1); }
 }
 
-/* Карточка поста (в ленте и модалке) */
 .mypath-post {
     position: relative;
     display: flex;
@@ -2191,7 +2231,6 @@ html[data-view="merch"] .hint { display: none; }
     user-select: none;
 }
 
-/* --- Панели «Скоро» под карточками Комикс / Мультик --- */
 .mypath-soon-panel-inline {
     display: block;
     max-height: 0;
@@ -2370,11 +2409,10 @@ html[data-view="merch"] .hint { display: none; }
     justify-content: center;
 }
 
-/* Подсказка */
 .crypto-posts-hint {
     position: absolute;
     left: 50%;
-    top: 110px; /* Опускаем текст ниже */
+    top: 110px;
     transform: translateX(-50%);
     z-index: 30;
     padding: 8px 16px;
@@ -2390,12 +2428,10 @@ html[data-view="merch"] .hint { display: none; }
     transition: opacity 0.4s ease;
 }
 
-/* Скрываем подсказку, когда сцена открыта */
 .crypto-stage[data-state="open"] .crypto-posts-hint {
     opacity: 0;
 }
 
-/* Ряд монет */
 .crypto-coins-row {
     position: absolute;
     top: 50%;
@@ -2410,7 +2446,6 @@ html[data-view="merch"] .hint { display: none; }
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Слоты монет */
 .crypto-coin-slot {
     position: relative;
     width: 220px;
@@ -2419,29 +2454,22 @@ html[data-view="merch"] .hint { display: none; }
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-
-    /* Плавная анимация для ВСЕХ свойств, включая transform */
     transition:
         transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
         opacity 0.6s ease,
         filter 0.6s ease;
-
     will-change: transform, opacity, filter;
     pointer-events: auto;
     z-index: 12;
 }
 
-/* Плавное исчезновение остальных монет */
 .crypto-stage.has-active .crypto-coin-slot:not(.is-open) {
     opacity: 0;
     filter: blur(10px);
     pointer-events: none;
 }
 
-/* Активная монета улетает в центр экрана */
 .crypto-coin-slot.is-open {
-    /* Перемещение выполняется через transform из JS, чтобы не было скачка
-       при переключении position:absolute/fixed. */
     position: relative;
     top: auto;
     left: auto;
@@ -2449,7 +2477,6 @@ html[data-view="merch"] .hint { display: none; }
     z-index: 1000;
 }
 
-/* Свечение под каждой монетой */
 .crypto-coin-slot .crypto-center-glow {
     position: absolute;
     top: 50%;
@@ -2480,7 +2507,6 @@ html[data-view="merch"] .hint { display: none; }
     50%      { transform: translate(-50%, -55%) scale(1.08); opacity: 1; }
 }
 
-/* Ротор */
 .crypto-coin-slot .crypto-rotor {
     position: absolute;
     top: 50%;
@@ -2510,7 +2536,6 @@ html[data-view="merch"] .hint { display: none; }
     overflow: visible;
 }
 
-/* Сама монета */
 .crypto-coin-slot .crypto-coin {
     position: relative;
     z-index: 5;
@@ -2620,7 +2645,6 @@ html[data-view="merch"] .hint { display: none; }
     opacity: 0;
 }
 
-/* ===== Лучи ===== */
 .crypto-rays {
     position: fixed;
     inset: 0;
@@ -2685,6 +2709,8 @@ html[data-view="merch"] .hint { display: none; }
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.5s ease;
+    /* Обязательно убираем любые трансформации у родителя */
+    transform: none;
 }
 
 .crypto-cards-layer.is-visible {
@@ -2696,21 +2722,20 @@ html[data-view="merch"] .hint { display: none; }
     position: absolute;
     top: 0;
     left: 0;
-    width: 220px;  /* Чуть уменьшили ширину */
-    height: 165px; /* Чуть уменьшили высоту */
-    margin-left: -110px; /* Ровно половина ширины */
-    margin-top: -82px;   /* Ровно половина высоты */
+    width: 220px;
+    height: 165px;
 
-    /* Переменные теперь задаются инлайн из JS */
     --angle: 0deg;
     --radius: 340px;
 
+    /* Идеальное центрирование вокруг точки (0,0) */
     transform:
+        translate(-50%, -50%)
         rotate(var(--angle))
         translate(0, calc(-1 * var(--radius)))
         rotate(calc(-1 * var(--angle)));
 
-    transform-origin: 50% 50%;
+    transform-origin: center center;
 
     background: rgba(15, 26, 21, 0.95);
     backdrop-filter: blur(14px);
@@ -2720,14 +2745,25 @@ html[data-view="merch"] .hint { display: none; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* Плавный переход при смене радиуса */
+    transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
     z-index: 3;
     text-decoration: none;
     color: var(--text);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65); /* Чуть темнее тень для контраста */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.65);
     opacity: 0;
     pointer-events: auto;
+}
+
+/* ЖЕСТКАЯ ИЗОЛЯЦИЯ СЛОЕВ */
+.crypto-cards-layer:not(.is-visible) .crypto-card {
+    pointer-events: none !important;
+    visibility: hidden; /* Невидимый слой вообще не существует для мыши */
+}
+
+.crypto-cards-layer.is-visible .crypto-card {
+    pointer-events: auto !important;
+    visibility: visible;
 }
 
 .crypto-cards-layer-2 .crypto-card {
@@ -2752,6 +2788,7 @@ html[data-view="merch"] .hint { display: none; }
     0% {
         opacity: 0;
         transform:
+            translate(-50%, -50%)
             rotate(calc(var(--angle) - 105deg))
             translate(0, calc(-1 * var(--radius) - 20px))
             rotate(calc(-1 * (var(--angle) - 105deg)))
@@ -2764,6 +2801,7 @@ html[data-view="merch"] .hint { display: none; }
     }
     72% {
         transform:
+            translate(-50%, -50%)
             rotate(calc(var(--angle) + 7deg))
             translate(0, calc(-1 * var(--radius)))
             rotate(calc(-1 * (var(--angle) + 7deg)))
@@ -2772,6 +2810,7 @@ html[data-view="merch"] .hint { display: none; }
     100% {
         opacity: 1;
         transform:
+            translate(-50%, -50%)
             rotate(var(--angle))
             translate(0, calc(-1 * var(--radius)))
             rotate(calc(-1 * var(--angle)))
@@ -3310,14 +3349,11 @@ body.crypto-modal-open {
         }
     }
 
-    /* Крипта на планшетах */
     .crypto-coins-row { gap: 60px; }
     .crypto-cards-layer .crypto-card {
         --radius: 260px;
         width: 200px;
         height: 155px;
-        margin-left: -100px;
-        margin-top: -77px;
     }
 }
 
@@ -3331,12 +3367,12 @@ body.crypto-modal-open {
 }
 
 @media (max-width: 900px) {
-    /* Мобильная версия крипты */
+    /* --- ОБЩИЙ КОНТЕЙНЕР --- */
     .crypto-view {
-        padding-top: 10px;
+        padding-top: 0; /* Убрали отступ сверху */
         overflow-y: auto;
         overflow-x: hidden;
-        display: block; /* Возвращаем блочный вид */
+        display: block;
     }
 
     .crypto-stage {
@@ -3345,59 +3381,75 @@ body.crypto-modal-open {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 60px;
-        padding-bottom: 40px;
+        padding-top: 0; /* Убрали отступ сверху */
+        padding-bottom: 20px;
     }
 
+    /* --- РЯД МОНЕТ (на мобилке в колонку) --- */
     .crypto-coins-row {
         position: relative;
         top: auto;
         left: auto;
         transform: none;
         flex-direction: column;
-        gap: 30px;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
+        gap: 20px; /* Уменьшили расстояние между монетами */
+        padding-bottom: 0; /* Убрали отступ */
+        margin-bottom: 0; /* Убрали отступ */
     }
 
     .crypto-coin-slot {
         width: 100%;
         max-width: 340px;
         height: auto;
-        min-height: 200px;
+        min-height: 160px; /* Уменьшили минимальную высоту */
         transition: none;
-        /* Отключаем fixed-позиционирование на мобилке */
     }
 
     .crypto-coin-slot.is-open {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none !important;
-        margin: 0 !important;
+        position: fixed !important;
+        top: 80px !important; /* Отступ от верхнего края (под шапку сайта) */
+        left: 50% !important;
+        transform: translateX(-50%) !important; /* Центрируем по горизонтали */
+
+        width: 100% !important;
+        height: 140px !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        z-index: 1000 !important; /* Поверх всего */
+        pointer-events: none; /* Клики сквозь пустое пространство */
     }
 
-    .crypto-coin-slot .crypto-coin {
-        width: 130px;
-        height: 130px;
-    }
-
-    .crypto-coin-slot .crypto-rotor {
-        width: 240px;
-        height: 240px;
-        top: 40%;
-    }
-
-    .crypto-coin-slot .crypto-center-glow {
-        width: 260px;
-        height: 260px;
-        top: 40%;
-    }
-
-    .crypto-rays {
+    /* Скрываем все декоративные элементы у активной монеты */
+    .crypto-coin-slot.is-open .crypto-coin-label,
+    .crypto-coin-slot.is-open .crypto-rotor,
+    .crypto-coin-slot.is-open .crypto-center-glow {
         display: none !important;
     }
 
+    /* Сама монета */
+    .crypto-coin-slot.is-open .crypto-coin {
+        width: 120px !important;
+        height: 120px !important;
+        transform: none !important;
+        animation: none !important;
+        z-index: 1001 !important;
+        pointer-events: auto; /* Монету можно нажать, чтобы закрыть */
+    }
+
+    /* Обычные (неактивные) монеты */
+    .crypto-coin-slot .crypto-coin {
+        width: 120px;
+        height: 120px;
+    }
+    .crypto-coin-slot .crypto-rotor { width: 220px; height: 220px; top: 40%; }
+    .crypto-coin-slot .crypto-center-glow { width: 240px; height: 240px; top: 40%; }
+
+    .crypto-rays { display: none !important; }
+
+    /* --- СЛОЙ КАРТОЧЕК (в виде сетки) --- */
     .crypto-cards-layer {
         position: relative;
         top: auto;
@@ -3412,33 +3464,17 @@ body.crypto-modal-open {
         transform: none;
     }
 
+    /* Когда слой активен - показываем как Grid */
     .crypto-coin-slot.is-open + .crypto-cards-layer,
     .crypto-cards-layer.is-visible {
         height: auto;
         opacity: 1;
         pointer-events: auto;
-        margin-top: 10px;
-    }
-
-    .crypto-cards-layer .crypto-card {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none !important;
-        margin: 0;
-        width: 100%;
-        height: auto;
-        min-height: 170px;
-        opacity: 1;
-        animation: none !important;
-        display: flex;
-    }
-
-    .crypto-cards-layer.is-visible {
-        display: grid;
+        margin-top: 5px; /* Минимальный отступ от монеты до карточек */
+        display: grid !important;
         grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 0 16px;
+        gap: 10px; /* Уменьшили расстояние между карточками */
+        padding: 0 10px;
         box-sizing: border-box;
     }
 
@@ -3448,18 +3484,28 @@ body.crypto-modal-open {
         }
     }
 
-    .crypto-card-body {
-        padding: 12px 14px 14px;
+    /* --- САМИ КАРТОЧКИ --- */
+    .crypto-cards-layer .crypto-card {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none !important;
+        margin: 0;
+        width: 100%;
+        height: auto;
+        min-height: 100px;
+        opacity: 1;
+        animation: none !important;
+        display: flex;
+        visibility: visible;
     }
 
-    .crypto-card-body h3 {
-        font-size: 14px;
-    }
-
-    .crypto-card-body p {
-        font-size: 11.5px;
-        -webkit-line-clamp: 2;
-    }
+    .crypto-card-image { height: 65px; }
+    .crypto-card-glass-icon { width: 32px; height: 32px; border-radius: 8px; }
+    .crypto-card-glass-icon svg { width: 14px; height: 14px; }
+    .crypto-card-body { padding: 8px 10px 10px; gap: 4px; }
+    .crypto-card-body h3 { font-size: 12px; }
+    .crypto-card-body p { font-size: 10px; -webkit-line-clamp: 2; line-height: 1.35; }
 
     .crypto-empty-layer {
         position: relative;
@@ -3470,10 +3516,7 @@ body.crypto-modal-open {
         margin: 16px;
     }
 
-    .crypto-coin-slot.is-open .crypto-coin-label {
-        opacity: 1;
-    }
-
+    /* --- МОДАЛЬНОЕ ОКНО ПОСТА --- */
     .crypto-modal-dialog {
         flex-direction: column;
         height: auto;
@@ -3484,132 +3527,170 @@ body.crypto-modal-open {
     .crypto-modal-image {
         flex: 0 0 auto;
         width: 100%;
-        height: 220px;
-        padding: 14px;
+        height: 160px;
+        padding: 10px;
         border-right: none;
         border-bottom: 1px solid rgba(168, 255, 62, 0.12);
     }
 
     .crypto-modal-content {
         flex: 1 1 auto;
-        padding: 22px 20px 24px;
-        height: auto;
-        max-height: 55vh;
-    }
-
-    .crypto-modal-content p {
-        font-size: 14px;
-        line-height: 1.65;
-    }
-
-    .mypath-posts-row .mypath-post {
-        flex: 0 0 260px;
-        width: 260px;
-        min-width: 260px;
-        max-width: 260px;
-    }
-    .mypath-posts-panel-inline.active {
         padding: 18px 16px 20px;
+        height: auto;
+        max-height: 60vh;
     }
+
+    .crypto-modal-content h2 { font-size: 16px; }
+    .crypto-modal-content p { font-size: 12px; line-height: 1.6; }
+
+    /* --- ПОСТЫ В «МОЙ ПУТЬ» --- */
+    .mypath-posts-row .mypath-post {
+        flex: 0 0 70%;
+        width: 70%;
+        min-width: 70%;
+        max-width: 70%;
+    }
+    .mypath-posts-panel-inner { padding: 16px 12px; }
 }
 
 @media (max-width: 780px) {
-    .topbar {
-        padding: 10px 12px;
-        gap: 10px;
-        flex-wrap: wrap;
-        overflow: visible;
+    /* --- ОБЩИЙ КОНТЕЙНЕР --- */
+    .mypath-view { padding: 8px 8px 24px; }
+    .mypath-layout { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .mypath-side-right { display: none !important; }
+
+    /* --- ГЛАВНЫЙ БАННЕР (HERO) --- */
+    .mypath-hero {
+        padding: 12px 14px;
+        min-height: auto;
+        border-radius: 10px;
+        background-position: center right;
     }
-
-    .brand { gap: 10px; }
-    .brand-logo { width: 40px; height: 40px; }
-    .brand-text h1 .brand-w { font-size: 23px; }
-    .brand-text h1 .brand-rest { font-size: 23px; }
-    .brand-tagline { display: none; }
-
-    .view-switch {
-        order: 3;
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-        padding: 3px;
-        flex-shrink: 0;
-    }
-    .view-switch::-webkit-scrollbar { display: none; }
-    .view-btn { padding: 7px 12px; font-size: 11.5px; flex-shrink: 0; }
-    .view-btn svg { width: 14px; height: 14px; }
-    .topbar-actions { display: none; }
-
-    .bubble-label { font-size: 11px; padding: 0 4px; }
-    .bubble-icon { margin-bottom: 4px; }
-
-    .mypath-view { padding: 16px; }
-    .mypath-hero { padding: 28px 24px; min-height: 220px; }
+    .mypath-hero-title { margin-bottom: 8px; gap: 2px; }
     .mypath-hero-title .line1,
-    .mypath-hero-title .line2 { font-size: 32px; letter-spacing: 1.5px; }
-    .mypath-hero-text p { font-size: 13.5px; }
-    .mypath-section-title h2 { font-size: 20px; }
-    .mypath-section-subtitle { margin-left: 0; }
+    .mypath-hero-title .line2 {
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        line-height: 1.1;
+    }
+    .mypath-hero-title .line2::after { width: 30px; bottom: -3px; height: 1.5px; }
+    .mypath-hero-text p {
+        font-size: 10.5px;
+        line-height: 1.4;
+        margin-top: 6px;
+        max-width: 95%;
+    }
 
-    .mypath-card { flex-direction: column; min-height: 0; }
+    /* --- ЗАГОЛОВКИ СЕКЦИЙ --- */
+    .mypath-section { gap: 8px; }
+    .mypath-section-title { gap: 6px; }
+    .mypath-section-icon { width: 22px; height: 22px; }
+    .mypath-section-icon svg { width: 12px; height: 12px; }
+    .mypath-section-title h2 { font-size: 14px; }
+    .mypath-section-subtitle {
+        margin: -2px 0 4px 28px;
+        font-size: 10px;
+    }
+
+    /* --- КАРТОЧКИ РАЗДЕЛОВ (Наложение текста на картинку) --- */
+    .mypath-cards { gap: 8px; }
+    .mypath-card {
+        flex-direction: row;
+        position: relative; /* Обязательно для абсолютного позиционирования картинки */
+        min-height: 100px; /* Компактная высота */
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    /* Текстовая часть карточки */
     .mypath-card-info {
-        padding: 24px 22px 22px;
-        max-width: 100%;
-        gap: 10px;
-        order: 2;
+        padding: 12px 14px;
+        max-width: 65%; /* Текст занимает 65% ширины */
+        gap: 4px;
+        z-index: 2; /* Текст поверх картинки */
     }
+    .mypath-card-icon {
+        width: 24px; height: 24px;
+        border-radius: 6px;
+        margin-bottom: 0;
+    }
+    .mypath-card-icon svg { width: 12px; height: 12px; }
+    .mypath-card-info h3 { font-size: 16px; margin-top: 2px; }
+    .mypath-card-info p { font-size: 10px; line-height: 1.3; }
+
+    .mypath-card-btn {
+        padding: 5px 10px;
+        font-size: 10px;
+        gap: 4px;
+        margin-top: 4px;
+    }
+    .mypath-card-btn .btn-icon { width: 12px; height: 12px; }
+    .mypath-card-btn .btn-arrow { width: 12px; height: 12px; }
+
+    /* Картинка карточки (на заднем плане) */
     .mypath-card-visual {
-        width: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60%; /* Картинка занимает правые 60% */
+        height: 100%; /* Растягиваем на всю высоту карточки */
         min-width: 0;
-        height: 180px;
-        flex: 0 0 180px;
-        order: 1;
-        position: relative;
     }
+
+    /* Градиент, чтобы текст накладывался на картинку красиво */
     .mypath-card-visual::before {
-        background: linear-gradient(180deg,
-            transparent 0%,
-            transparent 55%,
-            rgba(15, 26, 21, 0.6) 85%,
-            rgba(15, 26, 21, 1) 100%);
-    }
-    .mypath-card-visual::after {
-        background: linear-gradient(180deg, transparent 60%, rgba(10, 19, 16, 0.55) 100%);
+        background: linear-gradient(90deg,
+            rgba(15, 26, 21, 1) 0%,
+            rgba(15, 26, 21, 0.85) 35%,
+            rgba(15, 26, 21, 0.1) 100%);
     }
 
-    .mypath-card-icon { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 2px; }
-    .mypath-card-icon svg { width: 22px; height: 22px; }
-    .mypath-card-info h3 { font-size: 24px; letter-spacing: 1px; }
-    .mypath-card-info p { font-size: 13px; max-width: 100%; }
-    .mypath-card-btn { padding: 9px 16px 9px 13px; font-size: 12px; }
-    .mypath-post-title { font-size: 16px; letter-spacing: 0.5px; }
+    /* --- ВЫЕЗЖАЮЩАЯ ПАНЕЛЬ С ПОСТАМИ --- */
+    .mypath-posts-panel-inline { padding: 0 8px; border-radius: 10px; }
+    .mypath-posts-panel-inline.active {
+        padding: 10px 8px;
+        max-height: 400px;
+    }
 
-    .mypath-side-left { padding: 16px 0 18px; }
-    .mypath-side-left .side-label { font-size: 8px; letter-spacing: 3px; margin-bottom: 10px; }
-    .mypath-side-left .side-track { padding: 0 10px; }
-    .mypath-side-left .side-step { width: 24px; height: 24px; }
-    .mypath-side-left .side-step::before { width: 5px; height: 5px; }
-    .mypath-side-left .side-step-active::before { width: 8px; height: 8px; }
-    .mypath-side-left .side-compass { width: 100px; height: 100px; }
+    .mypath-panel-header { margin-bottom: 8px; }
+    .mypath-panel-badge { font-size: 9px; padding: 2px 6px; }
+    .mypath-panel-close { width: 22px; height: 22px; font-size: 14px; }
 
-    .mypath-side-right .side-floaters { height: 74px; padding: 8px 12px; gap: 6px; }
-    .mypath-side-right .side-coin { width: 36px; height: 36px; font-size: 14px; }
+    /* Лента постов */
+    .mypath-posts-row { gap: 8px; padding-bottom: 8px; }
+    .mypath-posts-row .mypath-post {
+        flex: 0 0 75%;
+        width: 75%;
+        min-width: 75%;
+        max-width: 75%;
+        border-radius: 8px;
+    }
+    .mypath-post-image { height: 80px; }
+    .mypath-post-body { padding: 8px 10px 10px; gap: 4px; }
+    .mypath-post-title { font-size: 11.5px; line-height: 1.2; }
+    .mypath-post-text { font-size: 9.5px; -webkit-line-clamp: 3; line-height: 1.35; }
+    .mypath-post-tag { font-size: 8px; padding: 2px 5px; }
+    .mypath-post-dots { display: none; }
 
-    .crypto-modal { padding: 14px; }
-    .crypto-modal-image { height: 200px; }
-    .crypto-modal-telegram { width: 100%; justify-content: center; }
+    /* --- ПАНЕЛИ «СКОРО» --- */
+    .mypath-soon-panel-inline { padding: 0 8px; border-radius: 10px; }
+    .mypath-soon-panel-inline.active { padding: 10px; }
+    .mypath-soon-inner { gap: 8px; }
+    .mypath-soon-icon { width: 28px; height: 28px; border-radius: 6px; }
+    .mypath-soon-icon svg { width: 14px; height: 14px; }
+    .mypath-soon-title { font-size: 14px; }
+    .mypath-soon-subtitle { font-size: 9.5px; line-height: 1.3; }
+    .mypath-soon-badge { font-size: 8px; padding: 2px 6px; }
+    .mypath-soon-loader span { width: 3px; height: 3px; }
 
-    .mypath-soon-panel-inline { padding: 0 14px; border-radius: 16px; }
-    .mypath-soon-panel-inline.active { padding: 16px 14px; }
-    .mypath-soon-inner { gap: 14px; align-items: flex-start; }
-    .mypath-soon-icon { width: 54px; height: 54px; border-radius: 14px; }
-    .mypath-soon-icon svg { width: 26px; height: 26px; }
-    .mypath-soon-title { font-size: 22px; letter-spacing: 2px; }
-    .mypath-soon-subtitle { font-size: 12.5px; }
-    .mypath-soon-inner .mypath-panel-close { width: 32px; height: 32px; font-size: 18px; }
+    /* --- ПРОГРЕСС-БАР СВЕРХУ --- */
+    .mypath-side-left { padding: 8px 0 12px; }
+    .mypath-side-left .side-label { font-size: 6px; letter-spacing: 1px; margin-bottom: 4px; }
+    .mypath-side-left .side-track { padding: 0 2px; }
+    .mypath-side-left .side-step { width: 14px; height: 14px; }
+    .mypath-side-left .side-step::before { width: 3px; height: 3px; }
+    .mypath-side-left .side-step-active::before { width: 5px; height: 5px; }
+    .mypath-side-left .side-compass { width: 50px; height: 50px; opacity: 0.15; }
 }
 
 @media (max-width: 768px) {
@@ -3662,21 +3743,17 @@ body.crypto-modal-open {
 }
 
 @media (max-width: 600px) {
+    /* Делаем посты в ленте уже (70%) */
     .mypath-posts-row .mypath-post {
-        flex: 0 0 82%;
-        width: 82%;
-        min-width: 82%;
-        max-width: 82%;
+        flex: 0 0 70%;
+        width: 70%;
+        min-width: 70%;
+        max-width: 70%;
     }
-    .mypath-posts-panel-inline {
-        padding: 0 14px;
-        border-radius: 16px;
-    }
-    .mypath-posts-panel-inline.active {
-        max-height: 720px;
-        padding: 16px 14px 18px;
-    }
-    .mypath-panel-badge { font-size: 11.5px; padding: 5px 12px; }
+
+    .mypath-posts-panel-inline { padding: 0 10px; border-radius: 12px; }
+    .mypath-posts-panel-inline.active { max-height: 500px; padding: 12px 10px; }
+    .mypath-panel-badge { font-size: 10px; padding: 3px 8px; }
     .mypath-panel-hint { display: none; }
 
     .crypto-coin-slot { max-width: 100%; }
@@ -3684,28 +3761,17 @@ body.crypto-modal-open {
     .crypto-coin-slot .crypto-rotor { width: 240px; height: 240px; }
     .crypto-coin-slot .crypto-center-glow { width: 260px; height: 260px; }
 
-    .crypto-cards-layer .crypto-card {
-        min-height: 150px;
-    }
+    .crypto-cards-layer .crypto-card { min-height: 150px; }
     .crypto-cards-layer .crypto-card-body h3 { font-size: 13px; }
     .crypto-cards-layer .crypto-card-body p { font-size: 11px; -webkit-line-clamp: 2; }
-
-    .crypto-coin-slot.is-open .crypto-cards-layer {
-        grid-template-columns: 1fr;
-    }
+    .crypto-coin-slot.is-open .crypto-cards-layer { grid-template-columns: 1fr; }
 
     .mypath-soon-title { font-size: 22px; letter-spacing: 2px; }
     .mypath-soon-subtitle { font-size: 12.5px; }
 }
 
 @media (max-width: 480px) {
-    .mypath-card-visual { height: 150px; flex: 0 0 150px; }
-    .mypath-card-info { padding: 20px 18px 18px; gap: 8px; }
-    .mypath-card-info h3 { font-size: 22px; letter-spacing: 0.8px; }
-    .mypath-card-info p { font-size: 12.5px; line-height: 1.5; }
-    .mypath-card-icon { width: 40px; height: 40px; }
-    .mypath-card-icon svg { width: 20px; height: 20px; }
-    .mypath-card-btn { padding: 8px 14px 8px 12px; font-size: 11.5px; gap: 8px; }
+    /* Убраны конфликтующие стили .mypath-card-visual и .mypath-card-info */
 
     .mypath-side-left .side-track { padding: 0 6px; }
     .mypath-side-left .side-step { width: 20px; height: 20px; }
@@ -3806,7 +3872,6 @@ body.crypto-modal-open {
     }
 }
 
-/* Плавное центрирование монет в разделе «Крипта» */
 .crypto-coin-slot {
     transform-origin: center center;
     backface-visibility: hidden;
@@ -3872,7 +3937,6 @@ body.crypto-modal-open {
     opacity: 0.7;
 }
 
-/* Выпадающие результаты */
 .search-results {
     position: absolute;
     top: calc(100% + 10px);
@@ -3952,36 +4016,21 @@ body.crypto-modal-open {
 
 @media (max-width: 780px) {
     .search-box {
-        display: none; /* На мобилках скрываем, чтобы не мешал */
+        display: none;
     }
 }
 
 /* ============================================================
-   ГЛОССАРИЙ (Улучшенная группировка + Анимации)
+   ГЛОССАРИЙ
    ============================================================ */
-
-html[data-view="glossary"] .bubbles-view,
-html[data-view="glossary"] .list-view,
-html[data-view="glossary"] .crypto-view,
-html[data-view="glossary"] .mypath-view,
-html[data-view="glossary"] .finance-view,
-html[data-view="glossary"] .merch-view,
-html[data-view="glossary"] .hint {
-    display: none;
-}
 
 .glossary-view {
     position: absolute;
     inset: 0;
     z-index: 1;
-    display: none;
     background: rgba(10, 19, 16, 0.4);
     backdrop-filter: blur(6px);
     overflow-y: auto;
-}
-
-html[data-view="glossary"] .glossary-view {
-    display: block;
 }
 
 .glossary-container {
@@ -3993,7 +4042,6 @@ html[data-view="glossary"] .glossary-view {
     gap: 24px;
 }
 
-/* Заголовок */
 .glossary-header h2 {
     margin: 0;
     font-size: 32px;
@@ -4006,7 +4054,6 @@ html[data-view="glossary"] .glossary-view {
     color: var(--accent);
 }
 
-/* Поиск */
 .glossary-search-box {
     position: relative;
     display: flex;
@@ -4048,7 +4095,6 @@ html[data-view="glossary"] .glossary-view {
     color: var(--text-muted);
 }
 
-/* Алфавит в ряд */
 .glossary-alphabet {
     display: flex;
     flex-wrap: nowrap;
@@ -4077,14 +4123,14 @@ html[data-view="glossary"] .glossary-view {
     font-weight: 700;
     color: var(--text-muted);
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Пружинистая анимация */
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     user-select: none;
 }
 
 .alpha-letter:hover {
     background: rgba(168, 255, 62, 0.15);
     color: var(--accent);
-    transform: translateY(-2px) scale(1.1); /* Буква подпрыгивает */
+    transform: translateY(-2px) scale(1.1);
 }
 
 .alpha-letter.active {
@@ -4094,10 +4140,6 @@ html[data-view="glossary"] .glossary-view {
     transform: scale(1.05);
 }
 
-/* =========================================
-   СПИСОК ТЕРМИНОВ И ГРУППИРОВКА
-   ========================================= */
-
 .glossary-list {
     display: flex;
     flex-direction: column;
@@ -4105,25 +4147,19 @@ html[data-view="glossary"] .glossary-view {
     margin-top: 20px;
 }
 
-/* Блок одной буквы (обертка) */
 .letter-group {
     display: flex;
     gap: 30px;
     align-items: flex-start;
-
-    /* Стеклянная подложка для отделения групп */
     background: rgba(15, 26, 21, 0.3);
     border: 1px solid rgba(168, 255, 62, 0.05);
     border-radius: 20px;
     padding: 24px;
     transition: all 0.4s ease;
-
-    /* Анимация появления */
     opacity: 0;
     animation: groupFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Задержка для каскадного появления */
 .letter-group:nth-child(1) { animation-delay: 0.05s; }
 .letter-group:nth-child(2) { animation-delay: 0.1s; }
 .letter-group:nth-child(3) { animation-delay: 0.15s; }
@@ -4136,14 +4172,12 @@ html[data-view="glossary"] .glossary-view {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* При наведении на группу - подсвечиваем её фон */
 .letter-group:hover {
     background: rgba(20, 32, 25, 0.6);
     border-color: rgba(168, 255, 62, 0.15);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Огромная буква слева */
 .letter-group-header {
     flex-shrink: 0;
     width: 100px;
@@ -4152,12 +4186,12 @@ html[data-view="glossary"] .glossary-view {
     line-height: 0.8;
     font-weight: 900;
     text-align: center;
-    color: rgba(168, 255, 62, 0.05); /* Едва заметный фон */
-    -webkit-text-stroke: 2px rgba(168, 255, 62, 0.3); /* Обводка */
+    color: rgba(168, 255, 62, 0.05);
+    -webkit-text-stroke: 2px rgba(168, 255, 62, 0.3);
     user-select: none;
     transition: all 0.3s ease;
     position: sticky;
-    top: 20px; /* Буква прилипает при скролле длинного списка */
+    top: 20px;
 }
 
 .letter-group:hover .letter-group-header {
@@ -4167,7 +4201,6 @@ html[data-view="glossary"] .glossary-view {
     transform: scale(1.05);
 }
 
-/* Контейнер для карточек */
 .letter-group-content {
     flex: 1;
     display: flex;
@@ -4176,8 +4209,6 @@ html[data-view="glossary"] .glossary-view {
     min-width: 0;
 }
 
-/* Карточка термина */
-/* Карточка термина */
 .term-card {
     background: rgba(15, 26, 21, 0.95);
     border: 1px solid rgba(168, 255, 62, 0.1);
@@ -4186,10 +4217,9 @@ html[data-view="glossary"] .glossary-view {
     transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
     overflow: hidden;
-    cursor: pointer; /* Курсор-рука, чтобы было понятно, что можно кликнуть */
+    cursor: pointer;
 }
 
-/* Неоновая полоска слева (появляется при наведении) */
 .term-card::before {
     content: '';
     position: absolute;
@@ -4204,7 +4234,6 @@ html[data-view="glossary"] .glossary-view {
     transition: all 0.3s ease;
 }
 
-/* Анимация карточки при наведении */
 .term-card:hover {
     background: rgba(20, 32, 25, 0.98);
     border-color: rgba(168, 255, 62, 0.4);
@@ -4218,7 +4247,6 @@ html[data-view="glossary"] .glossary-view {
     transform: scaleY(1);
 }
 
-/* Заголовок термина */
 .term-title {
     margin: 0;
     font-size: 20px;
@@ -4226,7 +4254,7 @@ html[data-view="glossary"] .glossary-view {
     color: #fff;
     transition: color 0.3s ease;
     display: flex;
-    justify-content: space-between; /* Чтобы добавить иконку плюса/минуса */
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -4238,7 +4266,6 @@ html[data-view="glossary"] .glossary-view {
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-/* Когда карточка открыта */
 .term-card.active {
     border-color: var(--accent);
     background: rgba(20, 32, 25, 0.98);
@@ -4254,49 +4281,496 @@ html[data-view="glossary"] .glossary-view {
     transform: rotate(180deg);
 }
 
-/* Описание термина (скрыто по умолчанию) */
 .term-desc {
     margin: 0;
     font-size: 15px;
     color: var(--text-muted);
     line-height: 1.7;
-
-    /* Скрываем текст */
     max-height: 0;
     opacity: 0;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Когда карточка открыта - показываем текст */
 .term-card.active .term-desc {
-    max-height: 500px; /* Достаточно для любого текста */
+    max-height: 500px;
     opacity: 1;
-    margin-top: 16px; /* Отступ от заголовка */
+    margin-top: 16px;
 }
 
-/* Адаптив */
 @media (max-width: 900px) {
-    .glossary-container { padding: 20px 16px 60px; }
-    .glossary-header h2 { font-size: 26px; }
+    /* --- ОБЩИЙ КОНТЕЙНЕР --- */
+    .glossary-container {
+        padding: 12px 10px 40px;
+        gap: 12px;
+    }
+
+    .glossary-header h2 {
+        font-size: 18px; /* Уменьшили заголовок */
+        line-height: 1.2;
+    }
+
+    /* --- ПОИСК --- */
+    .glossary-search-box {
+        height: 36px; /* Уменьшили высоту */
+        padding: 0 10px;
+        border-radius: 8px;
+    }
+    .glossary-search-box svg {
+        width: 14px;
+        height: 14px;
+        margin-right: 8px;
+    }
+    .glossary-search-box input {
+        font-size: 12px;
+    }
+
+    /* --- АЛФАВИТ --- */
+    .glossary-alphabet {
+        padding: 4px;
+        gap: 2px;
+        border-radius: 8px;
+    }
+    .alpha-letter {
+        width: 26px; /* Уменьшили кнопки букв */
+        height: 26px;
+        font-size: 11px;
+        border-radius: 6px;
+    }
+
+    /* --- СПИСОК ТЕРМИНОВ --- */
+    .glossary-list {
+        gap: 16px;
+        margin-top: 8px;
+    }
 
     .letter-group {
         flex-direction: column;
-        gap: 10px;
-        padding: 16px;
+        gap: 4px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
     }
 
+    /* Заголовок буквы (А, Б, В...) */
     .letter-group-header {
         position: relative;
         top: 0;
         width: auto;
         text-align: left;
-        font-size: 48px;
-        padding-left: 4px;
-        margin-bottom: -10px;
+        font-size: 20px; /* Уменьшили с 28px */
+        padding-left: 2px;
+        margin-bottom: 2px;
         -webkit-text-stroke: 1px var(--accent);
-        color: rgba(168, 255, 62, 0.1);
+        color: var(--accent);
+        text-shadow: 0 0 10px rgba(168, 255, 62, 0.3);
+        transform: none !important;
     }
 
-    .term-card { padding: 20px; }
+    .letter-group-content {
+        gap: 6px; /* Уменьшили расстояние между карточками */
+    }
+
+    /* --- КАРТОЧКА ТЕРМИНА --- */
+    .term-card {
+        padding: 10px 12px; /* Сделали карточку компактнее */
+        border-radius: 8px;
+    }
+
+    .term-title {
+        font-size: 13px; /* Уменьшили текст заголовка */
+        font-weight: 700;
+    }
+
+    .term-title::after {
+        font-size: 16px; /* Уменьшили плюсик */
+    }
+
+    .term-desc {
+        font-size: 11px; /* Уменьшили описание */
+        line-height: 1.4;
+        margin-top: 6px;
+    }
+
+    .term-card.active .term-desc {
+        margin-top: 8px;
+    }
+}
+
+/* 1. Сбрасываем все трансформации у активного слота */
+.crypto-coin-slot.is-open {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 1000 !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    /* Начальное состояние: невидимое и уменьшенное */
+    opacity: 0;
+    scale: 0.8;
+    filter: blur(15px);
+
+    /* Плавный переход */
+    transition: opacity 0.4s ease, scale 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+.crypto-coin-slot.is-open.is-visible-coin {
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
+}
+
+@keyframes fadeInCenter {
+    0% {
+        opacity: 0;
+        filter: blur(15px);
+        transform: translate(-50%, -50%) scale(0.7);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 2. Саму монету центрируем внутри этого блока и увеличиваем */
+.crypto-coin-slot.is-open .crypto-coin {
+    transform: scale(1.2) !important;
+    pointer-events: auto;
+    cursor: pointer;
+    position: relative !important;
+    z-index: 2;
+}
+
+/* 3. Прячем все лишние элементы (ротор, свечение, подписи) */
+.crypto-coin-slot.is-open .crypto-coin-label,
+.crypto-coin-slot.is-open .crypto-rotor,
+.crypto-coin-slot.is-open .crypto-center-glow {
+    display: none !important;
+}
+
+/* ============================================================
+   МОБИЛЬНОЕ МЕНЮ (Бургер)
+   ============================================================ */
+
+/* Сама кнопка бургера (скрыта на десктопе) */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.mobile-menu-btn:hover,
+.mobile-menu-btn.active {
+    background: rgba(168, 255, 62, 0.1);
+    color: var(--accent);
+    box-shadow: 0 0 15px rgba(168, 255, 62, 0.2);
+}
+
+.mobile-menu-btn svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Оверлей (затемнение фона) */
+.mobile-nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 8, 5, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.mobile-nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Сама панель меню (выезжает СПРАВА) */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: 0; /* Прижимаем к правому краю */
+    left: auto;
+    width: 300px;
+    height: 100vh;
+    height: 100dvh;
+    background: linear-gradient(180deg, rgba(10, 19, 16, 0.98) 0%, rgba(6, 12, 9, 0.98) 100%);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-left: 1px solid rgba(168, 255, 62, 0.3); /* Светящаяся граница слева */
+    z-index: 9999;
+    transform: translateX(100%); /* Прячем за правый край */
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px 40px;
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.8), inset 1px 0 0 rgba(168, 255, 62, 0.1);
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.mobile-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-nav.active {
+    transform: translateX(0);
+}
+
+/* Шапка меню */
+.mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(168, 255, 62, 0.15);
+    position: relative;
+}
+
+/* Светящаяся линия под шапкой */
+.mobile-nav-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-glow);
+    border-radius: 2px;
+}
+
+.mobile-nav-header span {
+    font-family: 'Bungee', 'Orbitron', sans-serif;
+    color: #ffffff;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(168, 255, 62, 0.4);
+}
+
+.mobile-nav-close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 32px;
+    cursor: pointer;
+    line-height: 1;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.mobile-nav-close:hover {
+    color: var(--accent);
+    background: rgba(168, 255, 62, 0.1);
+    transform: rotate(90deg);
+}
+
+/* Ссылки */
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mobile-nav-link {
+    position: relative;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(168, 255, 62, 0.1);
+    color: var(--text);
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+/* Маленький неоновый маркер слева у каждой кнопки */
+.mobile-nav-link::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    margin-right: 12px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+/* Блик при наведении */
+.mobile-nav-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(168, 255, 62, 0.15), transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+    background: rgba(168, 255, 62, 0.08);
+    border-color: rgba(168, 255, 62, 0.5);
+    color: var(--accent);
+    transform: translateX(-5px); /* Сдвиг влево (так как меню справа) */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(168, 255, 62, 0.05);
+}
+
+.mobile-nav-link:hover::before,
+.mobile-nav-link.active::before {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-glow);
+    transform: scale(1.3);
+}
+
+.mobile-nav-link:hover::after {
+    left: 150%;
+}
+
+/* ============================================================
+   УМЕНЬШЕНИЕ ПОСТОВ (МОДАЛКА И ЛЕНТА) ДЛЯ МОБИЛЬНЫХ
+   ============================================================ */
+@media (max-width: 780px) {
+    /* --- МОДАЛЬНОЕ ОКНО ПОСТА --- */
+    .crypto-modal {
+        padding: 10px; /* Уменьшаем внешние отступы */
+    }
+
+    .crypto-modal-dialog {
+        border-radius: 14px;
+    }
+
+    /* Картинка в модалке (уменьшаем высоту) */
+    .crypto-modal-image {
+        height: 160px; /* Было 220px */
+        padding: 10px;
+    }
+
+    /* Контентная часть (текст) */
+    .crypto-modal-content {
+        padding: 16px 14px 20px;
+        max-height: 60vh; /* Ограничиваем высоту, чтобы было видно кнопку */
+    }
+
+    /* Заголовок поста */
+    .crypto-modal-content h2 {
+        font-size: 16px; /* Было 22-28px */
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+
+    /* Текст поста */
+    .crypto-modal-content p {
+        font-size: 12px; /* Было 14.5px */
+        line-height: 1.55;
+        white-space: pre-line;
+        letter-spacing: 0.1px;
+    }
+
+    /* Кнопка Telegram */
+    .crypto-modal-telegram {
+        margin-top: 16px;
+        padding: 10px 14px;
+        font-size: 11px;
+    }
+    .crypto-modal-telegram svg { width: 14px; height: 14px; }
+    .crypto-modal-telegram .arrow { width: 12px; height: 12px; }
+
+    /* Кнопка закрытия (крестик) */
+    .crypto-modal-close {
+        width: 32px;
+        height: 32px;
+        font-size: 22px;
+        top: 8px;
+        right: 8px;
+    }
+
+    /* --- ЛЕНТА ПОСТОВ (если модалка используется и для неё) --- */
+    .mypath-posts-row .mypath-post {
+        flex: 0 0 65%; /* Еще уже (было 70-75%) */
+        width: 65%;
+        min-width: 65%;
+        max-width: 65%;
+    }
+
+    .mypath-post-image {
+        height: 70px; /* Уменьшили картинку */
+    }
+
+    .mypath-post-body {
+        padding: 8px 10px 10px;
+        gap: 4px;
+    }
+
+    .mypath-post-title {
+        font-size: 11px;
+        line-height: 1.2;
+    }
+
+    .mypath-post-text {
+        font-size: 9px;
+        line-height: 1.35;
+        -webkit-line-clamp: 3;
+    }
+
+    .mypath-post-tag {
+        font-size: 7.5px;
+        padding: 2px 5px;
+    }
+}
+/* ============================================================
+   АДАПТИВ ДЛЯ МОБИЛЬНОГО МЕНЮ
+   ============================================================ */
+@media (max-width: 780px) {
+    /* Скрываем старую горизонтальную панель на мобилках */
+    .view-switch {
+        display: none !important;
+    }
+
+    /* Показываем бургер */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 3;
+    }
+
+    /* Немного поправим шапку, чтобы бургер встал на место */
+    .topbar {
+        justify-content: space-between;
+    }
 }
