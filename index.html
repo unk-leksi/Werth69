@@ -97,8 +97,6 @@
                 </svg>
                 Мерч
             </button>
-            <!-- Новая вкладка Глоссарий -->
-                        <!-- Новая вкладка Глоссарий -->
             <button class="view-btn" data-view="glossary">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
@@ -107,6 +105,15 @@
                 Глоссарий
             </button>
         </div>
+
+        <!-- Кнопка мобильного меню (Бургер) -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Открыть меню">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+        </button>
 
         <div class="topbar-actions">
             <div class="search-box">
@@ -119,6 +126,24 @@
             </div>
         </div>
     </header>
+
+    <!-- Мобильное выезжающее меню -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+    <nav class="mobile-nav" id="mobile-nav">
+        <div class="mobile-nav-header">
+            <span>Меню</span>
+            <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Закрыть меню">×</button>
+        </div>
+        <div class="mobile-nav-links">
+            <button class="mobile-nav-link" data-view="bubbles">Плавающие</button>
+            <button class="mobile-nav-link" data-view="list">Список</button>
+            <button class="mobile-nav-link" data-view="crypto">Крипта</button>
+            <button class="mobile-nav-link" data-view="mypath">Мой путь</button>
+            <button class="mobile-nav-link" data-view="finance">Финансы</button>
+            <button class="mobile-nav-link" data-view="merch">Мерч</button>
+            <button class="mobile-nav-link" data-view="glossary">Глоссарий</button>
+        </div>
+    </nav>
 
     <div class="arena" id="arena">
 
@@ -136,7 +161,7 @@
 
         <div class="mypath-view" id="mypath-view"></div>
 
-                <!-- ================= ГЛОССАРИЙ ================= -->
+        <!-- ================= ГЛОССАРИЙ ================= -->
         <div class="glossary-view" id="glossary-view">
             <div class="glossary-container">
 
