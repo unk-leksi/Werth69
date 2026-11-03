@@ -677,33 +677,79 @@ function buildPatternDataUrl(svg, color) {
 }
 
 function renderCards() {
+    // Рендерим в стандартный контейнер (для вкладки "Список")
     const container = document.getElementById('cards');
-    container.innerHTML = '';
-    PLATFORMS.forEach(data => {
-        const card = document.createElement('a');
-        card.className = 'card';
-        card.href = data.url;
-        card.target = '_blank';
-        card.rel = 'noopener';
-        card.style.setProperty('--card-color', data.color);
-        card.style.setProperty('--card-light', data.light);
-        card.style.setProperty('--card-dark',  data.dark);
-        card.innerHTML = `
-            <div class="card-pattern" style="background-image: ${buildPatternDataUrl(data.pattern, data.color)};"></div>
-            <div class="card-icon">
-                <div class="card-icon-inner">
-                    ${data.icon}
-                    ${data.fallback}
+    if (container) {
+        container.innerHTML = '';
+        PLATFORMS.forEach(data => {
+            const card = document.createElement('a');
+            card.className = 'card';
+            card.href = data.url;
+            card.target = '_blank';
+            card.rel = 'noopener';
+            card.style.setProperty('--card-color', data.color);
+            card.style.setProperty('--card-light', data.light);
+            card.style.setProperty('--card-dark',  data.dark);
+            card.innerHTML = `
+                <div class="card-pattern" style="background-image: ${buildPatternDataUrl(data.pattern, data.color)};"></div>
+                <div class="card-icon">
+                    <div class="card-icon-inner">
+                        ${data.icon}
+                        ${data.fallback}
+                    </div>
                 </div>
-            </div>
-            <div class="card-body">
-                <h3 class="card-title">${data.label}</h3>
-                <p class="card-desc">${data.description}</p>
-            </div>
-            <div class="card-arrow">→</div>
-        `;
-        container.appendChild(card);
-    });
+                <div class="card-body">
+                    <h3 class="card-title">${data.label}</h3>
+                    <p class="card-desc">${data.description}</p>
+                </div>
+                <div class="card-arrow">→</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    const homeContainer = document.getElementById('home-cards-container');
+    if (homeContainer) {
+        homeContainer.innerHTML = '';
+
+        // Словарь с путями к картинкам для каждой платформы
+        const platformImages = {
+            'Binance': 'binance.png',
+            'GoInvest': 'goinvest.png',
+            'TradingView': 'icons/tradingview.png',
+            // Сюда можно добавить другие, если нужно
+        };
+
+        PLATFORMS.forEach(data => {
+            const item = document.createElement('a');
+            item.className = 'platform-card';
+            item.href = data.url;
+            item.target = '_blank';
+            item.rel = 'noopener';
+
+            // Формируем HTML для картинки
+            let iconHtml = '';
+            if (platformImages[data.label]) {
+                // Если есть готовая картинка, используем её
+                iconHtml = `<img src="${platformImages[data.label]}" alt="${data.label}" class="platform-real-img">`;
+            } else {
+                // Для остальных (LinkedIn, Telegram) используем старые SVG-иконки
+                iconHtml = `<div class="platform-icon-inner">${data.icon}${data.fallback}</div>`;
+            }
+
+            item.innerHTML = `
+                <div class="platform-header">
+                    <div class="platform-icon-wrapper" style="background-color: ${data.color}15; border-color: ${data.color}40;">
+                        ${iconHtml}
+                    </div>
+                    <div class="platform-arrow-circle">→</div>
+                </div>
+                <h4 class="platform-name">${data.label}</h4>
+                <p class="platform-desc">${data.description}</p>
+            `;
+            homeContainer.appendChild(item);
+        });
+    }
 }
 
 function buildRotorSVG() {
@@ -883,7 +929,7 @@ function renderCryptoView() {
         layer2.classList.remove('is-visible');
     };
 
-        slots.forEach((slotEl, index) => {
+    slots.forEach((slotEl, index) => {
         const coinEl = slotEl.querySelector('.crypto-coin');
         const which = index === 0 ? '1' : '2';
 
@@ -894,7 +940,6 @@ function renderCryptoView() {
             if (isCurrentlyOpen) {
                 resetCoins();
             } else {
-                // Блокируем повторные клики во время анимации
                 if (stage.dataset.animating === 'true') return;
                 stage.dataset.animating = 'true';
 
@@ -902,31 +947,24 @@ function renderCryptoView() {
                 stage.dataset.active = which;
                 stage.classList.add('has-active');
 
-                // 1. Плавно скрываем монету на её старом месте
                 slotEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
                 slotEl.style.opacity = '0';
                 slotEl.style.transform = 'scale(0.8)';
 
-                // 2. Ждем, пока она исчезнет (300мс)
                 setTimeout(() => {
-                    // Убираем старые инлайн-стили
                     slotEl.style.transition = '';
                     slotEl.style.opacity = '';
                     slotEl.style.transform = '';
 
-                    // Убираем классы у всех слотов и добавляем нужные текущему
                     slots.forEach(s => {
                         s.classList.remove('is-open', 'is-active', 'is-visible-coin');
                     });
                     slotEl.classList.add('is-open', 'is-active');
 
-                    // 3. Ждем два кадра (requestAnimationFrame), чтобы браузер точно отрисовал монету в центре, но невидимой
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
-                            // 4. Включаем плавное появление (анимация в CSS)
                             slotEl.classList.add('is-visible-coin');
 
-                            // 5. Показываем карточки и лучи с небольшой задержкой
                             if (which === '1') {
                                 rays1.classList.add('is-visible');
                                 layer1.classList.add('is-visible');
@@ -941,13 +979,12 @@ function renderCryptoView() {
                                 replayCards(layer2);
                             }
 
-                            // Разрешаем клики снова после завершения анимации (примерно 500мс)
                             setTimeout(() => {
                                 stage.dataset.animating = 'false';
                             }, 500);
                         });
                     });
-                }, 300); // Время на исчезновение (300мс)
+                }, 300);
             }
         });
 
@@ -1102,7 +1139,6 @@ function renderMypathView() {
     const comicCard = MYPATH.cards.find(c => c.icon === 'comic');
     const filmCard  = MYPATH.cards.find(c => c.icon === 'film');
 
-    // Горизонтальная лента постов
     const postsHTML = MYPATH.posts.map((post, i) => {
         const shortText = post.text.length > 180
             ? post.text.slice(0, 160).trim() + '…'
@@ -1120,7 +1156,6 @@ function renderMypathView() {
         `;
     }).join('');
 
-    // Панель постов
     const postsPanelHTML = `
         <section class="mypath-panel mypath-posts-panel-inline" id="mypath-posts-panel">
             <div class="mypath-panel-header">
@@ -1136,7 +1171,6 @@ function renderMypathView() {
         </section>
     `;
 
-    // Универсальная панель «Скоро» для Комикса / Мультика
     const buildSoonPanelHTML = (id, title, subtitle, iconKey) => `
         <section class="mypath-panel mypath-soon-panel-inline" id="${id}">
             <div class="mypath-soon-inner">
@@ -1197,7 +1231,6 @@ function renderMypathView() {
 
                     <div class="mypath-cards">
 
-                        <!-- 1. Посты + панель под ними -->
                         <a href="posts" class="mypath-card" data-card-link="posts" data-panel="mypath-posts-panel" onclick="event.preventDefault();">
                             <div class="mypath-card-info">
                                 <div class="mypath-card-icon">${MYPATH_ICONS.doc}</div>
@@ -1212,7 +1245,6 @@ function renderMypathView() {
                         </a>
                         ${postsPanelHTML}
 
-                        <!-- 2. Комикс + панель под ним -->
                         <a href="#" class="mypath-card" data-card-link="comic" data-panel="mypath-comic-panel" onclick="event.preventDefault();">
                             <div class="mypath-card-info">
                                 <div class="mypath-card-icon">${MYPATH_ICONS.comic}</div>
@@ -1228,7 +1260,6 @@ function renderMypathView() {
                         </a>
                         ${comicPanelHTML}
 
-                        <!-- 3. Мультик / Фильм + панель под ним -->
                         <a href="#" class="mypath-card" data-card-link="film" data-panel="mypath-film-panel" onclick="event.preventDefault();">
                             <div class="mypath-card-info">
                                 <div class="mypath-card-icon">${MYPATH_ICONS.film}</div>
@@ -1256,7 +1287,6 @@ function renderMypathView() {
         </div>
     `;
 
-    /* ---------- Управление панелями под карточками ---------- */
     const cards = container.querySelectorAll('.mypath-card[data-panel]');
 
     const closeAllPanels = (exceptCard = null) => {
@@ -1299,7 +1329,6 @@ function renderMypathView() {
         });
     });
 
-    /* ---------- Модалка поста ---------- */
     const mypathModal      = document.getElementById('mypath-modal');
     const mypathModalImg   = document.getElementById('mypath-modal-img');
     const mypathModalImage = document.getElementById('mypath-modal-image');
@@ -1361,7 +1390,6 @@ function renderMypathView() {
     });
 }
 
-/* --- Генерация частиц для разделов Финансы и Мерч --- */
 function createSoonParticles(containerId, count) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -1401,6 +1429,8 @@ viewBtns.forEach(btn => {
         document.documentElement.setAttribute('data-view', view);
         localStorage.setItem('werth69-view', view);
         viewBtns.forEach(b => b.classList.toggle('active', b.dataset.view === view));
+
+        // Обработка рендеринга для разных разделов
         if (view === 'bubbles') {
             requestAnimationFrame(() => createBubbles());
         }
@@ -1413,11 +1443,13 @@ viewBtns.forEach(btn => {
         if (view === 'glossary') {
             renderGlossaryView();
         }
-        // finance и merch рендерятся статично из HTML
+        // home, finance и merch рендерятся статично из HTML
     });
 });
 
-let initialView = document.documentElement.getAttribute('data-view') || 'bubbles';
+// По умолчанию открываем 'home', если ничего не сохранено
+let initialView = document.documentElement.getAttribute('data-view') || 'home';
+
 if (window.matchMedia('(max-width: 768px)').matches && initialView === 'bubbles') {
     initialView = 'list';
     document.documentElement.setAttribute('data-view', initialView);
@@ -1447,13 +1479,14 @@ window.addEventListener('resize', () => {
             if (b.y + r > h) b.y = h - r;
         });
     }, 150);
-
 });
 
 requestAnimationFrame(() => {
     createBubbles();
     animate();
     renderCards();
+
+    // Рендеринг в зависимости от initialView
     if (initialView === 'crypto') {
         renderCryptoView();
     }
@@ -1463,6 +1496,7 @@ requestAnimationFrame(() => {
     if (initialView === 'glossary') {
         renderGlossaryView();
     }
+
     // Частицы для финансов и мерча
     createSoonParticles('finance-particles', 30);
     createSoonParticles('merch-particles', 30);
@@ -1479,6 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Собираем все возможные страницы/ссылки для поиска
     const searchData = [
+        { title: 'Главная', type: 'Раздел', action: () => clickViewBtn('home') },
         ...PLATFORMS.map(p => ({
             title: p.label,
             desc: p.description,
@@ -1492,10 +1527,11 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Мой путь', type: 'Раздел', action: () => clickViewBtn('mypath') },
         { title: 'Финансы', type: 'Раздел', action: () => clickViewBtn('finance') },
         { title: 'Мерч', type: 'Раздел', action: () => clickViewBtn('merch') },
+        { title: 'Глоссарий', type: 'Раздел', action: () => clickViewBtn('glossary') },
         ...CRYPTO_POSTS.map(p => ({
             title: p.title,
             type: 'Крипта',
-            action: () => { clickViewBtn('crypto'); setTimeout(() => openCryptoModal(0), 300); } // Открывает модалку
+            action: () => { clickViewBtn('crypto'); setTimeout(() => openCryptoModal(0), 300); }
         })),
         ...MYPATH.posts.map(p => ({
             title: p.title,
@@ -1504,7 +1540,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }))
     ];
 
-    // Функция для программного клика по кнопке переключения вкладок
     function clickViewBtn(viewName) {
         const btn = document.querySelector(`.view-btn[data-view="${viewName}"]`);
         if (btn) btn.click();
@@ -1512,7 +1547,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchResults.classList.remove('active');
     }
 
-    // Отрисовка результатов
     function renderResults(query) {
         if (!query) {
             searchResults.classList.remove('active');
@@ -1541,7 +1575,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         searchResults.classList.add('active');
 
-        // Привязываем клики к результатам
         searchResults.querySelectorAll('.search-result-item').forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1554,17 +1587,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Слушатели событий
     searchInput.addEventListener('input', (e) => renderResults(e.target.value));
 
-    // Закрытие по клику вне поиска
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.search-box')) {
             searchResults.classList.remove('active');
         }
     });
 
-    // Закрытие по Escape
     searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             searchResults.classList.remove('active');
@@ -1575,10 +1605,68 @@ document.addEventListener('DOMContentLoaded', () => {
             if (firstResult) firstResult.click();
         }
     });
+
+        // Обработка кликов по карточкам на главной странице
+    document.querySelectorAll('.home-view [data-view]').forEach(el => {
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const view = el.dataset.view;
+            const desktopBtn = document.querySelector(`.view-btn[data-view="${view}"]`);
+            if (desktopBtn) desktopBtn.click();
+        });
+    });
 });
 
 /* ============================================================
-   ГЛОССАРИЙ — ЛОГИКА (Группировка по буквам + Анимации)
+   ЛОГИКА ВЫПАДАЮЩЕГО МЕНЮ И СТРАНИЦЫ "СКОРО"
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Обработка кликов по ссылкам меню
+    document.querySelectorAll('.dropdown-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const view = link.dataset.view;
+
+            if (view === 'soon') {
+                // Если это раздел в разработке
+                const title = link.dataset.title || 'Скоро';
+                document.getElementById('soon-title-dynamic').textContent = title;
+                document.documentElement.setAttribute('data-view', 'soon');
+            } else {
+                // Если это существующий раздел (Крипта, Мой путь, Глоссарий)
+                const desktopBtn = document.querySelector(`.view-btn[data-view="${view}"]`);
+                if (desktopBtn) desktopBtn.click();
+            }
+
+            // Синхронизируем мобильное меню (если нужно)
+            localStorage.setItem('werth69-view', view);
+        });
+    });
+
+    // 2. Переключение страниц через старые кнопки (скрытые)
+    // (Этот код уже есть, но на всякий случай убедимся, что он работает)
+    const viewBtns = document.querySelectorAll('.view-btn');
+    viewBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const view = btn.dataset.view;
+            document.documentElement.setAttribute('data-view', view);
+            localStorage.setItem('werth69-view', view);
+
+            if (view === 'bubbles') requestAnimationFrame(() => createBubbles());
+            if (view === 'crypto') renderCryptoView();
+            if (view === 'mypath') renderMypathView();
+            if (view === 'glossary') renderGlossaryView();
+        });
+    });
+
+    // 3. Добавляем частицы для страницы "Скоро"
+    if (document.getElementById('soon-particles')) {
+        createSoonParticles('soon-particles', 30);
+    }
+});
+
+/* ============================================================
+   ГЛОССАРИЙ
    ============================================================ */
 
 const GLOSSARY_TERMS = [
@@ -1606,13 +1694,11 @@ function renderGlossaryView() {
     const listContainer = document.getElementById('glossary-list');
     const searchInput = document.getElementById('glossary-search-input');
 
-    // 1. Сортировка
     const sortedTerms = [...GLOSSARY_TERMS].sort((a, b) => {
         if (a.letter !== b.letter) return a.letter.localeCompare(b.letter, 'ru');
         return a.title.localeCompare(b.title, 'ru');
     });
 
-    // 2. Генерация алфавита
     const cyrillicAlphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
     const latinAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const allLetters = [...new Set([...cyrillicAlphabet, ...latinAlphabet, '#'])];
@@ -1621,8 +1707,6 @@ function renderGlossaryView() {
         `<div class="alpha-letter" data-letter="${letter}">${letter}</div>`
     ).join('');
 
-    // 3. Отрисовка
-        // 3. Функция отрисовки списка с группировкой
     const renderList = (filterLetter = 'ALL', searchQuery = '') => {
         let filtered = sortedTerms;
 
@@ -1643,14 +1727,12 @@ function renderGlossaryView() {
             return;
         }
 
-        // Группировка
         const grouped = {};
         filtered.forEach(term => {
             if (!grouped[term.letter]) grouped[term.letter] = [];
             grouped[term.letter].push(term);
         });
 
-        // Формирование HTML
         let html = '';
         for (const letter in grouped) {
             const termsInGroup = grouped[letter];
@@ -1672,16 +1754,11 @@ function renderGlossaryView() {
 
         listContainer.innerHTML = html;
 
-        // --- ЛОГИКА АККОРДЕОНА (Клик по карточке) ---
         const cards = listContainer.querySelectorAll('.term-card');
         cards.forEach(card => {
             card.addEventListener('click', () => {
                 const isActive = card.classList.contains('active');
-
-                // Сначала закрываем ВСЕ открытые карточки
                 cards.forEach(c => c.classList.remove('active'));
-
-                // Если текущая не была открыта, открываем её
                 if (!isActive) {
                     card.classList.add('active');
                 }
@@ -1689,10 +1766,8 @@ function renderGlossaryView() {
         });
     };
 
-    // 4. Инициализация
     renderList();
 
-    // 5. Клики по алфавиту
     alphabetContainer.addEventListener('click', (e) => {
         const letterEl = e.target.closest('.alpha-letter');
         if (!letterEl) return;
@@ -1703,11 +1778,9 @@ function renderGlossaryView() {
         const letter = letterEl.dataset.letter;
         renderList(letter, searchInput.value);
 
-        // Прокрутка вверх при смене буквы
         listContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    // 6. Поиск
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value;
 
@@ -1736,7 +1809,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openMenu = () => {
         menuNav.classList.add('active');
         menuOverlay.classList.add('active');
-        menuBtn.classList.add('active'); // Для изменения стиля кнопки
+        menuBtn.classList.add('active');
         document.body.style.overflow = 'hidden';
     };
 
@@ -1766,4 +1839,120 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentView = document.documentElement.getAttribute('data-view');
     const activeLink = document.querySelector(`.mobile-nav-link[data-view="${currentView}"]`);
     if (activeLink) activeLink.classList.add('active');
+});
+
+/* ============================================================
+   КЛИК ПО ЛОГОТИПУ -> ГЛАВНАЯ СТРАНИЦА
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const brandLogo = document.getElementById('brand-logo');
+
+    if (brandLogo) {
+        brandLogo.addEventListener('click', () => {
+            // Находим скрытую кнопку "Главная" и программно нажимаем на неё
+            const homeBtn = document.querySelector('.view-btn[data-view="home"]');
+            if (homeBtn) {
+                homeBtn.click();
+            } else {
+                // На всякий случай, если кнопки нет, просто меняем атрибут
+                document.documentElement.setAttribute('data-view', 'home');
+                localStorage.setItem('werth69-view', 'home');
+            }
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const reveals = document.querySelectorAll('.reveal');
+    const homeView = document.getElementById('home-view');
+
+    const revealOnScroll = () => {
+        const windowHeight = window.innerHeight;
+        const elementVisible = 100;
+
+        reveals.forEach((reveal) => {
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - elementVisible) {
+                reveal.classList.add('active');
+            }
+        });
+    };
+
+    if (homeView) homeView.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('scroll', revealOnScroll);
+    setTimeout(revealOnScroll, 100);
+});
+
+/* ============================================================
+   ЛОГИКА ВЫПАДАЮЩИХ МЕНЮ (ТОЛЬКО ПО КЛИКУ)
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const navDropdowns = document.querySelectorAll('.nav-dropdown');
+
+    navDropdowns.forEach(dropdown => {
+        const btn = dropdown.querySelector('.nav-btn');
+
+        // Открытие/закрытие по клику на кнопку
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Предотвращаем закрытие другими обработчиками
+
+            // Закрываем все другие открытые меню
+            navDropdowns.forEach(otherDropdown => {
+                if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove('active');
+                }
+            });
+
+            // Переключаем текущее меню
+            dropdown.classList.toggle('active');
+        });
+    });
+
+    // Закрытие меню при клике в любом другом месте страницы
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-dropdown')) {
+            navDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+
+    // Закрытие меню при клике на любую ссылку внутри него
+    document.querySelectorAll('.dropdown-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        });
+    });
+});
+
+/* ============================================================
+   АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК ПРИ ПРОКРУТКЕ
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.interest-card');
+    const homeView = document.getElementById('home-view');
+
+    const revealCards = () => {
+        const windowHeight = window.innerHeight;
+        const triggerPoint = windowHeight - 100; // Срабатывает, когда до карточки остается 100px
+
+        cards.forEach(card => {
+            const cardTop = card.getBoundingClientRect().top;
+            if (cardTop < triggerPoint) {
+                card.classList.add('reveal-card');
+            }
+        });
+    };
+
+    // Слушаем скролл внутри главной страницы и окна
+    if (homeView) {
+        homeView.addEventListener('scroll', revealCards);
+    }
+    window.addEventListener('scroll', revealCards);
+
+    // Запускаем проверку при загрузке
+    setTimeout(revealCards, 100);
 });
