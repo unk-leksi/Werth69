@@ -1685,7 +1685,7 @@ const GLOSSARY_TERMS = [
     { term: 'Халвинг', letter: 'Х', title: 'Халвинг (Halving)', desc: 'Сокращение вознаграждения за майнинг биткоина вдвое, происходит примерно каждые 4 года.' }
 ];
 
-function renderGlossaryView() {
+async function renderGlossaryView() {
     const container = document.getElementById('glossary-view');
     if (!container || container.dataset.rendered === 'true') return;
     container.dataset.rendered = 'true';
@@ -1694,11 +1694,26 @@ function renderGlossaryView() {
     const listContainer = document.getElementById('glossary-list');
     const searchInput = document.getElementById('glossary-search-input');
 
-    const sortedTerms = [...GLOSSARY_TERMS].sort((a, b) => {
+    let glossaryData = [];
+
+    // Загружаем данные из файла glossary.json
+    try {
+        const response = await fetch('glossary.json');
+        if (!response.ok) throw new Error('Ошибка загрузки файла');
+        glossaryData = await response.json();
+    } catch (error) {
+        console.error('Не удалось загрузить глоссарий:', error);
+        listContainer.innerHTML = `<div class="search-no-results" style="padding: 40px; text-align: center; color: var(--text-muted); font-size: 18px;">Не удалось загрузить термины. Проверьте наличие файла glossary.json.</div>`;
+        return;
+    }
+
+    // Сортировка данных
+    const sortedTerms = [...glossaryData].sort((a, b) => {
         if (a.letter !== b.letter) return a.letter.localeCompare(b.letter, 'ru');
         return a.title.localeCompare(b.title, 'ru');
     });
 
+    // Генерация алфавита
     const cyrillicAlphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
     const latinAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const allLetters = [...new Set([...cyrillicAlphabet, ...latinAlphabet, '#'])];
@@ -1707,6 +1722,7 @@ function renderGlossaryView() {
         `<div class="alpha-letter" data-letter="${letter}">${letter}</div>`
     ).join('');
 
+    // Функция отрисовки списка
     const renderList = (filterLetter = 'ALL', searchQuery = '') => {
         let filtered = sortedTerms;
 
