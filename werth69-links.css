@@ -3895,21 +3895,21 @@ body.crypto-modal-open {
     position: relative;
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.55);
-    border: 1px solid rgba(168, 255, 62, 0.22);
+    background: rgba(10, 19, 16, 0.9);
+    border: 1px solid var(--accent);
+    box-shadow: 0 0 20px rgba(168, 255, 62, 0.2), inset 0 0 10px rgba(168, 255, 62, 0.05);
     border-radius: 999px;
     padding: 0 16px;
-    height: 36px;
-    width: 220px;
+    height: 48px;
+    width: 320px; /* Bigger */
     transition: all 0.3s ease;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
 
 .search-box:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 15px var(--accent-glow);
-    width: 260px;
+    width: 360px;
+    box-shadow: 0 0 30px rgba(168, 255, 62, 0.4);
 }
 
 .search-icon {
@@ -3926,7 +3926,7 @@ body.crypto-modal-open {
     outline: none;
     color: #ffffff;
     font-family: inherit;
-    font-size: 13px;
+    ffont-size: 15px;
     font-weight: 600;
     width: 100%;
     padding: 0;
@@ -4773,4 +4773,1566 @@ body.crypto-modal-open {
     .topbar {
         justify-content: space-between;
     }
+}
+
+/* ============================================================
+   ГЛАВНАЯ СТРАНИЦА (LANDING)
+   ============================================================ */
+
+.home-view {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1;
+    background: #060c09;
+    animation: viewFadeIn 0.6s ease both;
+    display: none;
+    scroll-behavior: smooth;
+}
+
+html[data-view="home"] .home-view {
+    display: block;
+}
+
+/* Скрываем остальные вкладки, когда открыта главная */
+html[data-view="home"] .bubbles-view,
+html[data-view="home"] .list-view,
+html[data-view="home"] .crypto-view,
+html[data-view="home"] .mypath-view,
+html[data-view="home"] .finance-view,
+html[data-view="home"] .merch-view,
+html[data-view="home"] .glossary-view,
+html[data-view="home"] .hint {
+    display: none !important;
+}
+
+/* --- 1. HERO СЕКЦИЯ (Реальный фон) --- */
+.home-hero {
+    position: relative;
+    min-height: 85vh; /* Уменьшили с 100vh до 85vh */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 8% 60px; /* Уменьшили верхний отступ (было 100px, стало 80px) */
+    background-size: cover;
+    background-position: center right;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+}
+
+.home-hero::after {
+    content: none; /* Полностью отключаем псевдоэлемент */
+    display: none;
+}
+
+.home-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+        rgba(10, 19, 16, 0.7) 0%,    /* Легкая тень слева для текста */
+        rgba(10, 19, 16, 0.2) 45%,   /* Плавный переход */
+        transparent 70%);            /* Справа полностью прозрачно */
+    z-index: 1;
+    pointer-events: none;
+}
+
+.home-hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 650px; /* Сделали блок текста уже */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    animation: slideUpFade 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.home-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(168, 255, 62, 0.1);
+    border: 1px solid rgba(168, 255, 62, 0.3);
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Уменьшили размер заголовка для профессионализма */
+.home-title {
+    font-family: 'Bungee', 'Inter', sans-serif;
+    font-size: clamp(32px, 4vw, 52px); /* Было 72px, стало 52px */
+    line-height: 1.15;
+    margin: 0;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+    animation: titleGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from { text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8); }
+    to { text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 255, 62, 0.2); }
+}
+
+.home-title .text-accent {
+    color: var(--accent);
+    text-shadow: 0 0 40px rgba(168, 255, 62, 0.4);
+}
+
+/* Уменьшили размер подзаголовка */
+.home-subtitle {
+    font-size: clamp(14px, 1.2vw, 16px); /* Было 20px, стало 16px */
+    color: #d1e0c5;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 500px;
+}
+
+/* Кнопки */
+.home-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.home-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--text-invert);
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.home-btn-primary:hover {
+    background: #ffffff;
+    box-shadow: 0 0 30px rgba(168, 255, 62, 0.6);
+    transform: translateY(-2px);
+}
+
+.home-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.home-btn-secondary svg {
+    width: 16px;
+    height: 16px;
+}
+
+.home-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* --- 2. ДОРОЖНАЯ КАРТА (Темный фон) --- */
+.home-roadmap-section {
+    padding: 100px 5% 120px; /* Увеличили отступы */
+    background: #0a1310; /* Цвет совпадает с нижней частью градиента предыдущей секции */
+    position: relative;
+}
+
+/* Плавный переход от темного фона к светлому */
+.home-roadmap-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(to bottom, transparent, #0a1310);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.home-roadmap-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+}
+
+.roadmap-visual {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    border: 1px solid rgba(168, 255, 62, 0.2);
+    /* Убираем ограничение по высоте, чтобы картинка тянулась */
+    height: 100%;
+}
+
+.roadmap-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.roadmap-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(10, 19, 16, 0.95) 0%, rgba(10, 19, 16, 0.2) 60%);
+}
+
+.roadmap-visual-text {
+    position: relative;
+    z-index: 2;
+}
+
+.roadmap-visual-text h2 {
+    font-family: 'Bungee', sans-serif;
+    font-size: 36px;
+    color: #ffffff;
+    line-height: 1.1;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+}
+
+.roadmap-visual-text p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin: 0 0 24px;
+    line-height: 1.6;
+}
+
+.roadmap-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.roadmap-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(15, 26, 21, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.roadmap-step:hover {
+    background: rgba(15, 26, 21, 0.8);
+    border-color: rgba(168, 255, 62, 0.3);
+    transform: translateX(10px);
+}
+
+.step-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(168, 255, 62, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.step-icon svg { width: 28px; height: 28px; }
+
+.step-content h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.step-content p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ============================================================
+   ПЛАТФОРМЫ (НОВЫЙ ДИЗАЙН В СТИЛЕ СКРИНШОТА)
+   ============================================================ */
+
+/* Секция платформ с фоновой картинкой */
+.home-platforms-section {
+    padding: 120px 5%; /* Увеличили отступы сверху и снизу для воздуха */
+    position: relative;
+
+    /* Плавный переход: черный -> картинка -> черный */
+    background-image:
+        linear-gradient(to bottom, #060c09 0%, rgba(6, 12, 9, 0.6) 15%, rgba(6, 12, 9, 0.6) 85%, #060c09 100%),
+        url('icons/werth_picture_path.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.platforms-container {
+    max-width: 1600px; /* Увеличили ширину контейнера с 1200px до 1600px */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Верхний блок (вытянутый) */
+.platforms-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    background: rgba(10, 19, 16, 0.65); /* Чуть плотнее фон для читаемости */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(168, 255, 62, 0.15);
+    border-radius: 30px;
+    padding: 50px 40px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1600px; /* Увеличили ширину блока (было 900px) */
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.platforms-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1600px;
+}
+
+
+.platforms-hero::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(168, 255, 62, 0.05));
+    pointer-events: none;
+    mask-image: linear-gradient(to left, black, transparent);
+    -webkit-mask-image: linear-gradient(to left, black, transparent);
+}
+
+.platforms-hero:hover {
+    border-color: rgba(168, 255, 62, 0.3);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 255, 62, 0.05);
+}
+
+
+.platforms-title {
+    font-family: 'Bungee', 'Inter', sans-serif;
+    font-size: clamp(28px, 3.5vw, 42px);
+    line-height: 1.2;
+    color: #ffffff;
+    margin: 0 0 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.platforms-title .text-accent {
+    color: var(--accent);
+    text-shadow: 0 0 90px rgba(168, 255, 62, 0.4);
+}
+
+.platforms-subtitle {
+    font-size: 16px;
+    color: #d1e0c5;
+    line-height: 1.6;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Тень для читаемости на фоне */
+}
+
+/* Фичи справа */
+.platforms-hero-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(168, 255, 62, 0.1);
+    border: 1px solid rgba(168, 255, 62, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+    box-shadow: 0 0 15px rgba(168, 255, 62, 0.1);
+}
+
+.feature-icon svg { width: 18px; height: 18px; }
+
+/* --- ЗАГОЛОВОК СЕТКИ --- */
+.platforms-grid-header {
+    display: flex;
+    justify-content: flex-start; /* Выравниваем по левому краю */
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.platforms-grid-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.platforms-all-link {
+    color: var(--text-muted);
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.platforms-all-link:hover {
+    color: var(--accent);
+}
+
+/* --- СЕТКА КАРТОЧЕК --- */
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Ровно 5 колонок */
+    gap: 20px;
+    width: 100%;
+}
+
+.platform-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(15, 26, 21, 0.7); /* Полупрозрачный фон */
+    backdrop-filter: blur(12px); /* Эффект матового стекла */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 24px 20px;
+    text-decoration: none;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardAppear 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.platform-card:nth-child(1) { animation-delay: 0.1s; }
+.platform-card:nth-child(2) { animation-delay: 0.2s; }
+.platform-card:nth-child(3) { animation-delay: 0.3s; }
+.platform-card:nth-child(4) { animation-delay: 0.4s; }
+.platform-card:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes cardAppear {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.platform-card:hover {
+    background: rgba(20, 32, 25, 0.85);
+    border-color: rgba(168, 255, 62, 0.5);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 255, 62, 0.15);
+    z-index: 10;
+}
+
+.platform-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(168, 255, 62, 0.1), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.7s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.platform-card:hover::before {
+    left: 150%;
+}
+
+.platform-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.platform-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+}
+
+.platform-icon-wrapper img,
+.platform-icon-wrapper svg {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.platform-arrow-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.platform-card:hover .platform-arrow-circle {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--text-invert);
+    transform: translateX(4px) rotate(-45deg);
+}
+
+.platform-name {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.platform-desc {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ============================================================
+   ВОДЯНЫЕ БЛОКИ (Внизу) - оставляем как было
+   ============================================================ */
+.home-glass-section {
+    padding: 60px 5% 100px;
+    background: #0a1310;
+    position: relative;
+}
+
+.home-glass-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.glass-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: rgba(15, 26, 21, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: floatCard 6s ease-in-out infinite;
+}
+
+.glass-card:nth-child(1) { animation-delay: 0s; }
+.glass-card:nth-child(2) { animation-delay: 1.5s; }
+.glass-card:nth-child(3) { animation-delay: 3s; }
+.glass-card:nth-child(4) { animation-delay: 4.5s; }
+
+@keyframes floatCard {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.7s ease;
+    pointer-events: none;
+}
+
+.glass-card:hover::before {
+    left: 150%;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--accent);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(168, 255, 62, 0.15);
+}
+
+.glass-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(168, 255, 62, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+}
+
+.glass-icon svg { width: 22px; height: 22px; }
+
+.glass-card:hover .glass-icon {
+    background: var(--accent);
+    color: var(--text-invert);
+    transform: rotate(-5deg) scale(1.1);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.glass-text h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.glass-text p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ============================================================
+   АДАПТИВ ДЛЯ НОВЫХ СЕКЦИЙ
+   ============================================================ */
+
+@media (max-width: 992px) {
+    .platforms-hero { grid-template-columns: 1fr; padding: 30px; }
+    .platforms-hero-features { grid-template-columns: 1fr; }
+    .platforms-grid { grid-template-columns: repeat(2, 1fr); }
+    .home-glass-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .platforms-grid { grid-template-columns: 1fr; }
+    .platforms-title { font-size: 24px; }
+    .home-glass-cards { grid-template-columns: 1fr; }
+}
+
+/* --- ФУТЕР --- */
+.home-footer {
+    background: #050a08;
+    border-top: 1px solid rgba(168, 255, 62, 0.1);
+    padding: 80px 5% 30px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 10;
+}
+
+.home-footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 2.5fr;
+    gap: 60px;
+}
+
+.home-footer-brand h2 {
+    font-family: 'Bungee', sans-serif;
+    font-size: 32px;
+    color: #ffffff;
+    margin: 0 0 20px;
+    letter-spacing: 1px;
+}
+
+.home-footer-brand h2 span {
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.home-footer-brand p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 320px;
+}
+
+.home-footer-links {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.footer-col h4 {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0 0 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.footer-col a {
+    display: block;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 14px;
+    transition: all 0.3s ease;
+    position: relative;
+    width: fit-content;
+}
+
+.footer-col a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.footer-col a:hover {
+    color: var(--accent);
+    transform: translateX(3px);
+}
+
+.footer-col a:hover::after {
+    width: 100%;
+}
+
+.home-footer-bottom {
+    max-width: 1400px;
+    margin: 60px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    font-size: 12px;
+    color: rgba(111, 138, 104, 0.6);
+}
+
+/* --- 6. АНИМАЦИИ ПОЯВЛЕНИЯ (REVEAL) --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal:nth-child(1) { transition-delay: 0.1s; }
+.reveal:nth-child(2) { transition-delay: 0.2s; }
+.reveal:nth-child(3) { transition-delay: 0.3s; }
+.reveal:nth-child(4) { transition-delay: 0.4s; }
+.reveal:nth-child(5) { transition-delay: 0.5s; }
+.reveal:nth-child(6) { transition-delay: 0.6s; }
+
+/* --- АДАПТИВ --- */
+@media (max-width: 1100px) {
+    .home-glass-cards { grid-template-columns: repeat(2, 1fr); }
+    .home-roadmap-container { grid-template-columns: 1fr; gap: 40px; }
+    .roadmap-visual { min-height: 400px; }
+    .home-links-grid { grid-template-columns: repeat(2, 1fr); }
+    .glass-cards { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .home-hero { padding: 80px 20px 30px; min-height: 90vh; }
+    .home-title { font-size: 34px; }
+    .home-subtitle { font-size: 14px; }
+    .home-hero-actions { flex-direction: column; width: 100%; }
+    .home-btn-primary, .home-btn-secondary { justify-content: center; width: 100%; }
+
+    .home-glass-cards { grid-template-columns: 1fr; gap: 12px; }
+    .glass-card { padding: 16px; }
+
+    .home-roadmap-section { padding: 40px 20px; }
+    .roadmap-visual { padding: 24px; min-height: 350px; }
+    .roadmap-visual-text h2 { font-size: 26px; }
+    .roadmap-step { padding: 16px; gap: 16px; }
+    .step-icon { width: 44px; height: 44px; }
+    .step-icon svg { width: 22px; height: 22px; }
+    .step-content h3 { font-size: 14px; }
+    .step-content p { font-size: 12px; }
+
+    .home-platforms-section { padding: 40px 20px; }
+    .home-platforms-section .list-header h2 { font-size: 24px; }
+    .glass-cards { grid-template-columns: 1fr; }
+
+    .home-glass-section { padding: 40px 20px; }
+
+    .home-links-section { padding: 40px 20px 60px; }
+    .links-title { font-size: 24px; margin-bottom: 24px; }
+    .home-links-grid { grid-template-columns: 1fr; }
+    .link-card { padding: 24px 20px; }
+
+    .home-footer-container { grid-template-columns: 1fr; gap: 40px; }
+    .home-footer-links { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .home-footer { padding: 50px 20px 20px; }
+    .home-footer-brand h2 { font-size: 26px; }
+    .home-footer-links { grid-template-columns: 1fr; gap: 20px; }
+    .footer-col h4 { margin-bottom: 10px; }
+    .footer-col a { margin-bottom: 10px; }
+}
+
+/* Анимация появления для всех секций главной */
+.home-view > section,
+.home-view > footer {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-view > section:nth-child(1) { animation-delay: 0.1s; }
+.home-view > section:nth-child(2) { animation-delay: 0.2s; }
+.home-view > section:nth-child(3) { animation-delay: 0.3s; }
+.home-view > section:nth-child(4) { animation-delay: 0.4s; }
+.home-view > section:nth-child(5) { animation-delay: 0.5s; }
+.home-view > footer { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   ОБНОВЛЕННАЯ НАВИГАЦИЯ (ОТКРЫТИЕ ТОЛЬКО ПО КЛИКУ)
+   ============================================================ */
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    z-index: 10;
+}
+
+.nav-dropdown {
+    position: relative;
+}
+
+/* Кнопки верхнего уровня */
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: #b8c9a8;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-btn .nav-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* Эффект при наведении на кнопку (но без открытия меню) */
+.nav-btn:hover {
+    background: rgba(168, 255, 62, 0.08);
+    border-color: rgba(168, 255, 62, 0.4);
+    color: var(--accent);
+    box-shadow: 0 0 20px rgba(168, 255, 62, 0.15);
+}
+
+.nav-btn:hover .nav-icon {
+    opacity: 1;
+}
+
+/* Активное состояние (когда меню открыто по клику) */
+.nav-dropdown.active .nav-btn {
+    background: rgba(168, 255, 62, 0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 25px rgba(168, 255, 62, 0.3);
+}
+
+.nav-btn .chevron {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+    opacity: 0.5;
+}
+
+.nav-dropdown.active .nav-btn .chevron {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+/* Неоновая полоска под активным пунктом */
+.nav-dropdown.active .nav-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    border-radius: 3px;
+}
+
+/* Выпадающее меню */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(10, 19, 16, 0.95);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(168, 255, 62, 0.3);
+    border-radius: 20px;
+    padding: 16px;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 255, 62, 0.05);
+    margin-top: 15px;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Инвестиции (вертикальный список) */
+.dropdown-menu.wide-dropdown {
+    flex-direction: column;
+    min-width: 340px;
+    padding: 16px;
+}
+
+.wide-dropdown .dropdown-link {
+    width: 100%;
+}
+
+/* Стрелочка сверху */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(10, 19, 16, 0.95);
+    border-left: 1px solid rgba(168, 255, 62, 0.3);
+    border-top: 1px solid rgba(168, 255, 62, 0.3);
+}
+
+/* Открытие меню только при наличии класса .active */
+.nav-dropdown.active .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+}
+
+/* Ссылки внутри меню */
+.dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    position: relative;
+}
+
+.dropdown-link::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(168, 255, 62, 0.3);
+    margin-right: 12px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-link:hover {
+    background: rgba(168, 255, 62, 0.08);
+    border-color: rgba(168, 255, 62, 0.3);
+    transform: translateX(4px);
+}
+
+.dropdown-link:hover::before {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    transform: scale(1.5);
+}
+
+.dd-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(168, 255, 62, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.dropdown-link:hover .dd-icon {
+    background: var(--accent);
+    color: var(--text-invert);
+    box-shadow: 0 0 15px rgba(168, 255, 62, 0.4);
+}
+
+.dd-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.dd-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dd-title {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.dd-desc {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+
+
+/* ============================================================
+   СТРАНИЦА "СКОРО"
+   ============================================================ */
+
+.soon-view {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: hidden;
+    display: none; /* Скрыто по умолчанию */
+}
+
+html[data-view="soon"] .soon-view {
+    display: flex;
+}
+
+/* Скрываем остальные вкладки, когда открыта страница "Скоро" */
+html[data-view="soon"] .bubbles-view,
+html[data-view="soon"] .list-view,
+html[data-view="soon"] .crypto-view,
+html[data-view="soon"] .mypath-view,
+html[data-view="soon"] .finance-view,
+html[data-view="soon"] .merch-view,
+html[data-view="soon"] .glossary-view,
+html[data-view="soon"] .home-view,
+html[data-view="soon"] .hint {
+    display: none !important;
+}
+
+/* ============================================================
+   СКРЫТИЕ СТАРОЙ ПАНЕЛИ ВКЛАДОК
+   ============================================================ */
+.view-switch {
+    display: none !important;
+}
+
+
+/* ============================================================
+   ЧТО ТЫ НАЙДЁШЬ (ОГРОМНЫЕ КАРТОЧКИ НА ВСЮ ШИРИНУ)
+   ============================================================ */
+
+/* ============================================================
+   ЧТО ТЫ НАЙДЁШЬ (АККУРАТНЫЕ КАРТОЧКИ С НЕОНОВЫМИ РАМКАМИ)
+   ============================================================ */
+
+.home-interests-section {
+    padding: 80px 5%; /* Вернули отступы по бокам, чтобы карточки не прилипали к краям */
+    background: #060c09;
+    position: relative;
+    overflow: hidden;
+}
+
+.interests-header {
+    max-width: 1400px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: clamp(24px, 3vw, 36px);
+    color: #ffffff;
+    margin: 0;
+    font-family: 'Bungee', sans-serif;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(168, 255, 62, 0.2);
+}
+
+/* Сетка карточек */
+.interests-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px; /* Вернули расстояние между карточками */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.interest-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: rgba(15, 26, 21, 0.8);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    min-height: 340px; /* Сделали карточки компактнее */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Анимация появления при прокрутке (класс будет добавляться через JS) */
+.interest-card.reveal-card {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: cardFadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.interest-card.reveal-card:nth-child(1) { animation-delay: 0.1s; }
+.interest-card.reveal-card:nth-child(2) { animation-delay: 0.2s; }
+.interest-card.reveal-card:nth-child(3) { animation-delay: 0.3s; }
+.interest-card.reveal-card:nth-child(4) { animation-delay: 0.4s; }
+.interest-card.reveal-card:nth-child(5) { animation-delay: 0.5s; }
+.interest-card.reveal-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardFadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Красивая неоновая рамка (псевдоэлемент) */
+.interest-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px; /* Толщина рамки */
+    background: linear-gradient(135deg, rgba(168, 255, 62, 0.5), transparent 40%, transparent 60%, rgba(168, 255, 62, 0.5));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.interest-card:hover::before {
+    opacity: 1;
+}
+
+/* Пробегающий блик */
+.interest-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(168, 255, 62, 0.1), transparent);
+    transform: skewX(-25deg);
+    transition: left 0.8s ease;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.interest-card:hover::after {
+    left: 150%;
+}
+
+/* Эффект при наведении */
+.interest-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(20, 32, 25, 0.95);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(168, 255, 62, 0.2);
+    z-index: 10;
+}
+
+/* Картинка */
+.interest-image {
+    width: 100%;
+    height: 180px; /* Уменьшили высоту картинки */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 1px solid rgba(168, 255, 62, 0.1);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 1;
+}
+
+.interest-card:hover .interest-image {
+    transform: scale(1.1);
+}
+
+.interest-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(15, 26, 21, 1) 100%);
+}
+
+/* Текст */
+.interest-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.interest-content h3 {
+    margin: 0 0 8px;
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: 900;
+    text-transform: uppercase;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.interest-card:hover .interest-content h3 {
+    color: var(--accent);
+    text-shadow: 0 0 15px rgba(168, 255, 62, 0.5);
+}
+
+.interest-content p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* ============================================================
+   АДАПТИВ ДЛЯ КАРТОЧЕК
+   ============================================================ */
+
+@media (max-width: 1200px) {
+    .interests-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .interests-grid { grid-template-columns: repeat(2, 1fr); }
+    .interest-card { min-height: 300px; }
+    .interest-image { height: 150px; }
+}
+
+@media (max-width: 480px) {
+    .interests-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   ПУТЬ К ОСОЗНАННЫМ ИНВЕСТИЦИЯМ (ROADMAP)
+   ============================================================ */
+
+.home-roadmap-section {
+    padding: 100px 5% 120px; /* Увеличили отступы */
+    background: #0a1310; /* Цвет совпадает с нижней частью градиента предыдущей секции */
+    position: relative;
+}
+
+.home-roadmap-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.roadmap-visual {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    border: 1px solid rgba(168, 255, 62, 0.2);
+    height: 100%; /* Растягиваем на всю доступную высоту */
+}
+
+.roadmap-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.roadmap-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(10, 19, 16, 0.95) 0%, rgba(10, 19, 16, 0.2) 60%);
+}
+
+.roadmap-visual-text {
+    position: relative;
+    z-index: 2;
+}
+
+.roadmap-visual-text h2 {
+    font-family: 'Bungee', sans-serif;
+    font-size: 36px;
+    color: #ffffff;
+    line-height: 1.1;
+    margin: 0 0 16px;
+    text-transform: uppercase;
+}
+
+.roadmap-visual-text p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.roadmap-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.roadmap-step {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: rgba(15, 26, 21, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.roadmap-step:hover {
+    background: rgba(15, 26, 21, 0.8);
+    border-color: rgba(168, 255, 62, 0.3);
+    transform: translateX(10px);
+}
+
+.step-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(168, 255, 62, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.step-icon svg { width: 28px; height: 28px; }
+
+.step-content h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.step-content p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ============================================================
+   АДАПТИВ ДЛЯ НОВЫХ СЕКЦИЙ
+   ============================================================ */
+
+@media (max-width: 1200px) {
+    .interests-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 1100px) {
+    .home-roadmap-container { grid-template-columns: 1fr; gap: 40px; }
+    .roadmap-visual { min-height: 400px; }
+}
+
+@media (max-width: 768px) {
+    .interests-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .interest-card { min-height: 280px; }
+    .interest-image { height: 140px; }
+    .interest-content h3 { font-size: 16px; }
+
+    .section-title { font-size: 24px; }
+    .home-roadmap-section { padding: 40px 20px; }
+    .roadmap-visual { padding: 24px; min-height: 350px; }
+    .roadmap-visual-text h2 { font-size: 26px; }
+    .roadmap-step { padding: 16px; gap: 16px; }
+    .step-icon { width: 44px; height: 44px; }
+    .step-icon svg { width: 22px; height: 22px; }
+    .step-content h3 { font-size: 14px; }
+    .step-content p { font-size: 12px; }
+}
+
+@media (max-width: 480px) {
+    .interests-grid { grid-template-columns: 1fr; }
+    .interest-card { min-height: 250px; }
+    .interest-image { height: 160px; }
+}
+
+/* Стили для реальных картинок платформ */
+.platform-icon-wrapper {
+    width: 56px; /* Увеличили размер контейнера под картинку */
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    position: relative;
+    overflow: hidden;
+    padding: 8px; /* Внутренний отступ, чтобы картинка не прилипала */
+}
+
+.platform-real-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    /* УБРАНО: filter: brightness(0) invert(1); */
+}
+
+/* Если картинки нет и используется SVG-иконка, делаем её белой */
+.platform-icon-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.platform-icon-inner img,
+.platform-icon-inner svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
 }
