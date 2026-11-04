@@ -14,7 +14,6 @@
 
     <script>
         (function () {
-            // По умолчанию открываем 'home', если ничего не сохранено
             const savedView = localStorage.getItem('werth69-view') || 'home';
             document.documentElement.setAttribute('data-view', savedView);
         })();
@@ -52,14 +51,14 @@
                     <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="dropdown-menu wide-dropdown">
-                    <a href="#" class="dropdown-link" data-view="soon" data-title="Облигации">
+                    <a href="#" class="dropdown-link" data-view="bonds">
                         <div class="dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="7" y1="15" x2="17" y2="15"/></svg></div>
                         <div class="dd-text">
                             <span class="dd-title">Облигации</span>
                             <span class="dd-desc">Надежные инструменты</span>
                         </div>
                     </a>
-                    <a href="#" class="dropdown-link" data-view="soon" data-title="Акции">
+                    <a href="#" class="dropdown-link" data-view="stocks">
                         <div class="dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 20h18v-2H5V4H3v16zm4-3h2v-5H7v5zm4 0h2v-8h-2v8zm4 0h2V6h-2v11z"/></svg></div>
                         <div class="dd-text">
                             <span class="dd-title">Акции</span>
@@ -73,7 +72,7 @@
                             <span class="dd-desc">Новые возможности цифрового мира</span>
                         </div>
                     </a>
-                    <a href="#" class="dropdown-link" data-view="soon" data-title="Вклады">
+                    <a href="#" class="dropdown-link" data-view="deposits">
                         <div class="dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg></div>
                         <div class="dd-text">
                             <span class="dd-title">Вклады</span>
@@ -123,7 +122,7 @@
                     <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
                 <div class="dropdown-menu">
-                    <a href="#" class="dropdown-link" data-view="soon" data-title="Методические материалы">
+                    <a href="#" class="dropdown-link" data-view="methodology">
                         <div class="dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
                         <div class="dd-text">
                             <span class="dd-title">Методички</span>
@@ -183,6 +182,10 @@
             <button class="view-btn" data-view="finance">Финансы</button>
             <button class="view-btn" data-view="merch">Мерч</button>
             <button class="view-btn" data-view="glossary">Глоссарий</button>
+            <button class="view-btn" data-view="bonds">Облигации</button>
+            <button class="view-btn" data-view="stocks">Акции</button>
+            <button class="view-btn" data-view="deposits">Вклады</button>
+            <button class="view-btn" data-view="methodology">Методички</button>
         </div>
 
         <!-- Кнопка мобильного меню (Бургер) -->
@@ -222,13 +225,13 @@
             <button class="mobile-nav-link" data-view="finance">Финансы</button>
             <button class="mobile-nav-link" data-view="merch">Мерч</button>
             <button class="mobile-nav-link" data-view="glossary">Глоссарий</button>
-            <button class="mobile-nav-link" data-view="soon" data-title="Облигации">Облигации</button>
-            <button class="mobile-nav-link" data-view="soon" data-title="Акции">Акции</button>
-            <button class="mobile-nav-link" data-view="soon" data-title="Вклады">Вклады</button>
+            <button class="mobile-nav-link" data-view="bonds">Облигации</button>
+            <button class="mobile-nav-link" data-view="stocks">Акции</button>
+            <button class="mobile-nav-link" data-view="deposits">Вклады</button>
+            <button class="mobile-nav-link" data-view="methodology">Методички</button>
             <button class="mobile-nav-link" data-view="soon" data-title="Активы">Активы</button>
             <button class="mobile-nav-link" data-view="soon" data-title="События">События</button>
             <button class="mobile-nav-link" data-view="soon" data-title="Аналитика">Аналитика</button>
-            <button class="mobile-nav-link" data-view="soon" data-title="Методички">Методички</button>
             <button class="mobile-nav-link" data-view="soon" data-title="Истории">Истории</button>
             <button class="mobile-nav-link" data-view="soon" data-title="Практика">Практика</button>
         </div>
@@ -278,6 +281,419 @@
                     <h2 class="soon-title" id="soon-title-dynamic">Скоро</h2>
                     <p class="soon-subtitle">Раздел в разработке</p>
                     <div class="soon-loader" aria-hidden="true"><span></span><span></span><span></span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= РАЗДЕЛ ОБЛИГАЦИИ ================= -->
+        <div class="bonds-view" id="bonds-view">
+            <div class="bonds-container">
+                <h1 class="bonds-title">Облигации</h1>
+                <p class="bonds-subtitle">
+                    Покупайте долговые ценные бумаги государства и компаний с заранее известной доходностью и сроком — выбирайте подходящий выпуск и оформляйте онлайн за пару минут.
+                </p>
+
+                <div class="bonds-filter-card">
+                    <div class="bonds-search-row">
+                        <div class="bonds-search-input">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" placeholder="Поиск по эмитенту, тикеру или коду">
+                        </div>
+                        <button class="bonds-reset-btn">Сбросить</button>
+                    </div>
+
+                    <div class="bonds-filter-row">
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">доходность</span>
+                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">срок</span>
+                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">тип</span>
+                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">отрасль</span>
+                            <div class="bonds-dropdown-value">Все отрасли <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                    </div>
+
+                    <div class="bonds-stats-row">
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">29</div>
+                            <div class="bonds-stat-label">Выпусков в подборке</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value highlight">28.00%</div>
+                            <div class="bonds-stat-label">Доходность до</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">1 000 сум</div>
+                            <div class="bonds-stat-label">Мин. номинал</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">—</div>
+                            <div class="bonds-stat-label">Срок от</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bonds-list-header">
+                    <span>Объём торгов за день: <strong>по убыванию</strong></span>
+                </div>
+
+                <div class="bonds-grid" id="bonds-grid"></div>
+            </div>
+        </div>
+
+        <!-- ================= РАЗДЕЛ АКЦИИ ================= -->
+        <div class="stocks-view" id="stocks-view">
+            <div class="bonds-container">
+                <h1 class="bonds-title">Акции</h1>
+                <p class="bonds-subtitle">
+                    Акции узбекских компаний, торгуемые на Республиканской фондовой бирже «Тошкент» (РФБ). Сравнивайте котировки, дивиденды и динамику — выбирайте бумаги для долгосрочного портфеля.
+                </p>
+
+                <div class="bonds-filter-card">
+                    <div class="bonds-search-row">
+                        <div class="bonds-search-input">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" placeholder="Поиск по тикеру или названию компании">
+                        </div>
+                        <button class="bonds-reset-btn">Сбросить</button>
+                    </div>
+
+                    <div class="bonds-filter-row">
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Отрасль</span>
+                            <div class="bonds-dropdown-value">Все отрасли <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Дивидендная доходность</span>
+                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Капитализация</span>
+                            <div class="bonds-dropdown-value">Любая <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Тип акции</span>
+                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                    </div>
+
+                    <div class="bonds-stats-row">
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">151</div>
+                            <div class="bonds-stat-label">Выпусков в подборке</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value highlight">3410.57%</div>
+                            <div class="bonds-stat-label">Дивидендная доходность до</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">0,01 сум</div>
+                            <div class="bonds-stat-label">Мин. номинальная стоимость</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">7,24 млрд. сум</div>
+                            <div class="bonds-stat-label">Дневной объём торгов</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bonds-list-header">
+                    <span>Объём торгов за день: <strong>по убыванию</strong></span>
+                </div>
+
+                <div class="bonds-grid" id="stocks-grid"></div>
+            </div>
+        </div>
+
+        <!-- ================= РАЗДЕЛ ВКЛАДЫ ================= -->
+        <div class="deposits-view" id="deposits-view">
+            <div class="bonds-container">
+                <h1 class="bonds-title">Вклады</h1>
+                <p class="bonds-subtitle">
+                    Банковские вклады узбекских банков в одном каталоге. Сравнивайте ставки, сроки, минимальные суммы и условия — от срочных вкладов с капитализацией до накопительных счетов с частичным снятием.
+                </p>
+
+                <div class="bonds-filter-card">
+                    <div class="bonds-search-row">
+                        <div class="bonds-search-input">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                            <input type="text" placeholder="Поиск по названию вклада или банку">
+                        </div>
+                        <button class="bonds-reset-btn">Сбросить</button>
+                    </div>
+
+                    <div class="bonds-filter-row">
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Тип вклада</span>
+                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Валюта</span>
+                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Ставка</span>
+                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                        <div class="bonds-dropdown">
+                            <span class="bonds-dropdown-label">Срок</span>
+                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        </div>
+                    </div>
+
+                    <div class="bonds-tags-row">
+                        <span class="bonds-tag">Капитализация процентов</span>
+                        <span class="bonds-tag">Пополняемый</span>
+                        <span class="bonds-tag">Частичное снятие</span>
+                        <span class="bonds-tag">Автопродление</span>
+                        <span class="bonds-tag">Открытие онлайн</span>
+                    </div>
+
+                    <div class="bonds-stats-row">
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">125</div>
+                            <div class="bonds-stat-label">Вкладов в подборке</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value highlight">22.00%</div>
+                            <div class="bonds-stat-label">Ставка до</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">0 сум</div>
+                            <div class="bonds-stat-label">Мин. сумма от</div>
+                        </div>
+                        <div class="bonds-stat">
+                            <div class="bonds-stat-value">28</div>
+                            <div class="bonds-stat-label">Банков в подборке</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bonds-list-header">
+                    <span>Ставка: <strong>по убыванию</strong></span>
+                </div>
+
+                <div class="bonds-grid" id="deposits-grid"></div>
+            </div>
+        </div>
+
+        <!-- ================= РАЗДЕЛ КРИПТОВАЛЮТЫ (НОВЫЙ ДИЗАЙН) ================= -->
+        <div class="crypto-market-view" id="crypto-market-view">
+            <div class="crypto-market-container">
+                
+
+                <h1 class="bonds-title" style="text-align: left; margin-bottom: 10px;">Криптовалюты</h1>
+                <p class="bonds-subtitle" style="text-align: left; margin: 0 0 40px 0; max-width: 700px;">
+                    Курсы, капитализация и динамика крупнейших криптовалют мирового рынка. Сравнивайте монеты между собой и следите за движением цены за час, сутки и неделю.
+                </p>
+
+                <!-- Блок 4 карточек статистики -->
+                <div class="crypto-stats-grid">
+                    <div class="crypto-stat-card">
+                        <div class="crypto-stat-header">
+                            <span>Капитализация рынка</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <div class="crypto-stat-value">$2,68 трлн. <span class="up">▲ +3,1%</span></div>
+                        <div class="crypto-stat-desc">Доминирование: BTC 60,11% · ETH 11,03%</div>
+                        <svg class="crypto-sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,25 Q10,20 20,22 T40,15 T60,18 T80,10 T100,12" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
+                    </div>
+                    <div class="crypto-stat-card">
+                        <div class="crypto-stat-header">
+                            <span>Индекс CMC20</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <div class="crypto-stat-value">164,77 <span class="up">▲ +3,57%</span></div>
+                        <div class="crypto-stat-desc">Топ-20 монет по капитализации</div>
+                        <svg class="crypto-sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,20 Q15,25 30,18 T50,15 T70,20 T100,10" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
+                    </div>
+                    <div class="crypto-stat-card">
+                        <div class="crypto-stat-header">
+                            <span>Объём торгов за 24 часа</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <div class="crypto-stat-value">$89,78 млрд. <span class="up">▲ +40,94%</span></div>
+                        <div class="crypto-stat-desc">Отслеживается монет — 40 122</div>
+                        <svg class="crypto-sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,25 Q10,22 20,24 T40,18 T60,20 T80,8 T100,15" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
+                    </div>
+                    <div class="crypto-stat-card index-card">
+                        <div class="crypto-stat-header">
+                            <span>Индекс страха и жадности</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        </div>
+                        <div class="crypto-index-gauge">
+                            <div class="gauge-arc"></div>
+                            <div class="gauge-needle" style="transform: rotate(-30deg);"></div>
+                            <div class="gauge-value">42</div>
+                            <div class="gauge-label">Страх</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Блок 3 таблиц -->
+                <div class="crypto-tables-grid">
+                    <!-- Популярные -->
+                    <div class="crypto-table-card">
+                        <div class="crypto-table-header">
+                            <div class="crypto-table-title">Популярные <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+                            <a href="#" class="crypto-table-link">Все монеты</a>
+                        </div>
+                        <div class="crypto-table-body">
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #F7931A;">₿</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Bitcoin</div>
+                                        <div class="crypto-coin-symbol">BTC</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$78 420</div>
+                                    <div class="price-change down">▼ -0,9%</div>
+                                </div>
+                            </div>
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #627EEA;">Ξ</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Ethereum</div>
+                                        <div class="crypto-coin-symbol">ETH</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$2 481</div>
+                                    <div class="price-change down">▼ -0,75%</div>
+                                </div>
+                            </div>
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #9945FF;">◎</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Solana</div>
+                                        <div class="crypto-coin-symbol">SOL</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$101,98</div>
+                                    <div class="price-change down">▼ -2,4%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Лидеры роста -->
+                    <div class="crypto-table-card">
+                        <div class="crypto-table-header">
+                            <div class="crypto-table-title">Лидеры роста <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+                            <span class="crypto-table-sub">за 24 часа</span>
+                        </div>
+                        <div class="crypto-table-body">
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #00C08B;">N</div>
+                                    <div>
+                                        <div class="crypto-coin-name">NEAR Protocol</div>
+                                        <div class="crypto-coin-symbol">NEAR</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$2,49</div>
+                                    <div class="price-change up">▲ +4,31%</div>
+                                </div>
+                            </div>
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #F4B728;">Z</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Zcash</div>
+                                        <div class="crypto-coin-symbol">ZEC</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$1 234</div>
+                                    <div class="price-change up">▲ +0,72%</div>
+                                </div>
+                            </div>
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #000000;">W</div>
+                                    <div>
+                                        <div class="crypto-coin-name">World Liberty Financial</div>
+                                        <div class="crypto-coin-symbol">WLFI</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$0,0563</div>
+                                    <div class="price-change up">▲ +0,54%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Лидеры падения -->
+                    <div class="crypto-table-card">
+                        <div class="crypto-table-header">
+                            <div class="crypto-table-title">Лидеры падения <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+                            <span class="crypto-table-sub">за 24 часа</span>
+                        </div>
+                        <div class="crypto-table-body">
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #FF007A;">U</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Uniswap</div>
+                                        <div class="crypto-coin-symbol">UNI</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$6,04</div>
+                                    <div class="price-change down">▼ -12,62%</div>
+                                </div>
+                            </div>
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #40E0D0;">P</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Pump.fun</div>
+                                        <div class="crypto-coin-symbol">PUMP</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$0,004021</div>
+                                    <div class="price-change down">▼ -12,07%</div>
+                                </div>
+                            </div>
+                            <div class="crypto-row">
+                                <div class="crypto-coin-info">
+                                    <div class="crypto-coin-icon" style="background: #000000;">W</div>
+                                    <div>
+                                        <div class="crypto-coin-name">Worldcoin</div>
+                                        <div class="crypto-coin-symbol">WLD</div>
+                                    </div>
+                                </div>
+                                <div class="crypto-coin-price">
+                                    <div class="price-val">$0,4146</div>
+                                    <div class="price-change down">▼ -8,96%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TradingView виджет -->
+                <div class="bonds-tradingview-section" style="margin-top: 40px;">
+                    <h3>График рынка криптовалют</h3>
+                    <div class="tradingview-widget-container">
+                        <div id="crypto-tradingview-widget" style="height: 100%; width: 100%;"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -366,7 +782,7 @@
                 </div>
             </section>
 
-                        <!-- 4. ПЛАТФОРМЫ (Новый дизайн) -->
+            <!-- 4. ПЛАТФОРМЫ (Новый дизайн) -->
             <section class="home-platforms-section">
                 <div class="platforms-container">
                     <!-- Верхний блок с текстом -->
@@ -432,6 +848,7 @@
                     © 2026 WERTH69. Все права защищены. Информация на сайте не является индивидуальной инвестиционной рекомендацией.
                 </div>
             </footer>
+
         </div>
 
         <!-- ================= ОСТАЛЬНЫЕ РАЗДЕЛЫ ================= -->
@@ -446,9 +863,13 @@
             <div class="cards" id="cards"></div>
         </div>
 
-        <div class="crypto-view" id="crypto-view"></div>
-
         <div class="mypath-view" id="mypath-view"></div>
+
+        <!-- ================= РАЗДЕЛ МЕТОДИЧКИ (БЫВШАЯ КРИПТА) ================= -->
+                <!-- ================= РАЗДЕЛ МЕТОДИЧКИ (БЫВШАЯ КРИПТА) ================= -->
+        <div class="methodology-view" id="methodology-view">
+            <div id="crypto-view" class="crypto-view-inner"></div>
+        </div>
 
         <!-- ================= ГЛОССАРИЙ ================= -->
         <div class="glossary-view" id="glossary-view">
