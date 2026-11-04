@@ -677,7 +677,6 @@ function buildPatternDataUrl(svg, color) {
 }
 
 function renderCards() {
-    // Рендерим в стандартный контейнер (для вкладки "Список")
     const container = document.getElementById('cards');
     if (container) {
         container.innerHTML = '';
@@ -712,12 +711,10 @@ function renderCards() {
     if (homeContainer) {
         homeContainer.innerHTML = '';
 
-        // Словарь с путями к картинкам для каждой платформы
         const platformImages = {
             'Binance': 'binance.png',
             'GoInvest': 'goinvest.png',
             'TradingView': 'icons/tradingview.png',
-            // Сюда можно добавить другие, если нужно
         };
 
         PLATFORMS.forEach(data => {
@@ -727,13 +724,10 @@ function renderCards() {
             item.target = '_blank';
             item.rel = 'noopener';
 
-            // Формируем HTML для картинки
             let iconHtml = '';
             if (platformImages[data.label]) {
-                // Если есть готовая картинка, используем её
                 iconHtml = `<img src="${platformImages[data.label]}" alt="${data.label}" class="platform-real-img">`;
             } else {
-                // Для остальных (LinkedIn, Telegram) используем старые SVG-иконки
                 iconHtml = `<div class="platform-icon-inner">${data.icon}${data.fallback}</div>`;
             }
 
@@ -1410,17 +1404,24 @@ const bubblesView = document.getElementById('bubbles-view');
 const bubbles = [];
 
 function createBubbles() {
+    if (!bubblesView) return;
     bubblesView.querySelectorAll('.bubble').forEach(el => el.remove());
     bubbles.length = 0;
     PLATFORMS.forEach(data => bubbles.push(new Bubble(data, bubblesView)));
 }
 
 function animate() {
-    const w = bubblesView.clientWidth;
-    const h = bubblesView.clientHeight;
-    bubbles.forEach(b => b.update(1, w, h));
+    if (bubblesView) {
+        const w = bubblesView.clientWidth;
+        const h = bubblesView.clientHeight;
+        bubbles.forEach(b => b.update(1, w, h));
+    }
     requestAnimationFrame(animate);
 }
+
+/* ============================================================
+   ПЕРЕКЛЮЧЕНИЕ РАЗДЕЛОВ
+   ============================================================ */
 
 const viewBtns = document.querySelectorAll('.view-btn');
 viewBtns.forEach(btn => {
@@ -1430,12 +1431,9 @@ viewBtns.forEach(btn => {
         localStorage.setItem('werth69-view', view);
         viewBtns.forEach(b => b.classList.toggle('active', b.dataset.view === view));
 
-        // Обработка рендеринга для разных разделов
+        // Рендер разделов
         if (view === 'bubbles') {
             requestAnimationFrame(() => createBubbles());
-        }
-        if (view === 'crypto') {
-            renderCryptoView();
         }
         if (view === 'mypath') {
             renderMypathView();
@@ -1443,7 +1441,23 @@ viewBtns.forEach(btn => {
         if (view === 'glossary') {
             renderGlossaryView();
         }
-        // home, finance и merch рендерятся статично из HTML
+        if (view === 'bonds') {
+            renderBondsView();
+        }
+        if (view === 'stocks') {
+            renderStocksView();
+        }
+        if (view === 'deposits') {
+            renderDepositsView();
+        }
+        // НОВОЕ: страница рынка криптовалют (в стиле Акций/Облигаций)
+        if (view === 'crypto') {
+            renderCryptoMarketView();
+        }
+        // НОВОЕ: раздел "Методички" — старый роутер с монетами
+        if (view === 'methodology') {
+            renderCryptoView();
+        }
     });
 });
 
@@ -1470,6 +1484,7 @@ let resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
+        if (!bubblesView) return;
         const w = bubblesView.clientWidth, h = bubblesView.clientHeight;
         bubbles.forEach(b => {
             const r = b.size / 2;
@@ -1487,14 +1502,26 @@ requestAnimationFrame(() => {
     renderCards();
 
     // Рендеринг в зависимости от initialView
-    if (initialView === 'crypto') {
-        renderCryptoView();
-    }
     if (initialView === 'mypath') {
         renderMypathView();
     }
     if (initialView === 'glossary') {
         renderGlossaryView();
+    }
+    if (initialView === 'crypto') {
+        renderCryptoMarketView();
+    }
+    if (initialView === 'methodology') {
+        renderCryptoView();
+    }
+    if (initialView === 'bonds') {
+        renderBondsView();
+    }
+    if (initialView === 'stocks') {
+        renderStocksView();
+    }
+    if (initialView === 'deposits') {
+        renderDepositsView();
     }
 
     // Частицы для финансов и мерча
@@ -1511,7 +1538,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!searchInput || !searchResults) return;
 
-    // Собираем все возможные страницы/ссылки для поиска
     const searchData = [
         { title: 'Главная', type: 'Раздел', action: () => clickViewBtn('home') },
         ...PLATFORMS.map(p => ({
@@ -1523,15 +1549,24 @@ document.addEventListener('DOMContentLoaded', () => {
         })),
         { title: 'Плавающие пузыри', type: 'Раздел', action: () => clickViewBtn('bubbles') },
         { title: 'Список', type: 'Раздел', action: () => clickViewBtn('list') },
-        { title: 'Крипта', type: 'Раздел', action: () => clickViewBtn('crypto') },
+        { title: 'Криптовалюты', type: 'Раздел', action: () => clickViewBtn('crypto') },
         { title: 'Мой путь', type: 'Раздел', action: () => clickViewBtn('mypath') },
         { title: 'Финансы', type: 'Раздел', action: () => clickViewBtn('finance') },
         { title: 'Мерч', type: 'Раздел', action: () => clickViewBtn('merch') },
         { title: 'Глоссарий', type: 'Раздел', action: () => clickViewBtn('glossary') },
+        { title: 'Методички', type: 'Раздел', action: () => clickViewBtn('methodology') },
+        { title: 'Облигации', type: 'Раздел', action: () => clickViewBtn('bonds') },
+        { title: 'Акции', type: 'Раздел', action: () => clickViewBtn('stocks') },
+        { title: 'Вклады', type: 'Раздел', action: () => clickViewBtn('deposits') },
         ...CRYPTO_POSTS.map(p => ({
             title: p.title,
-            type: 'Крипта',
-            action: () => { clickViewBtn('crypto'); setTimeout(() => openCryptoModal(0), 300); }
+            type: 'Методичка',
+            action: () => { clickViewBtn('methodology'); }
+        })),
+        ...CRYPTO_POSTS_2.map(p => ({
+            title: p.title,
+            type: 'Методичка',
+            action: () => { clickViewBtn('methodology'); }
         })),
         ...MYPATH.posts.map(p => ({
             title: p.title,
@@ -1606,7 +1641,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-        // Обработка кликов по карточкам на главной странице
+    // Обработка кликов по карточкам на главной странице
     document.querySelectorAll('.home-view [data-view]').forEach(el => {
         el.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1628,38 +1663,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const view = link.dataset.view;
 
             if (view === 'soon') {
-                // Если это раздел в разработке
                 const title = link.dataset.title || 'Скоро';
-                document.getElementById('soon-title-dynamic').textContent = title;
+                const soonTitle = document.getElementById('soon-title-dynamic');
+                if (soonTitle) soonTitle.textContent = title;
                 document.documentElement.setAttribute('data-view', 'soon');
-            } else {
-                // Если это существующий раздел (Крипта, Мой путь, Глоссарий)
+                localStorage.setItem('werth69-view', 'soon');
+            } else if (view) {
                 const desktopBtn = document.querySelector(`.view-btn[data-view="${view}"]`);
                 if (desktopBtn) desktopBtn.click();
             }
-
-            // Синхронизируем мобильное меню (если нужно)
-            localStorage.setItem('werth69-view', view);
         });
     });
 
-    // 2. Переключение страниц через старые кнопки (скрытые)
-    // (Этот код уже есть, но на всякий случай убедимся, что он работает)
-    const viewBtns = document.querySelectorAll('.view-btn');
-    viewBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const view = btn.dataset.view;
-            document.documentElement.setAttribute('data-view', view);
-            localStorage.setItem('werth69-view', view);
-
-            if (view === 'bubbles') requestAnimationFrame(() => createBubbles());
-            if (view === 'crypto') renderCryptoView();
-            if (view === 'mypath') renderMypathView();
-            if (view === 'glossary') renderGlossaryView();
-        });
-    });
-
-    // 3. Добавляем частицы для страницы "Скоро"
+    // 2. Добавляем частицы для страницы "Скоро"
     if (document.getElementById('soon-particles')) {
         createSoonParticles('soon-particles', 30);
     }
@@ -1668,22 +1684,6 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ============================================================
    ГЛОССАРИЙ
    ============================================================ */
-
-const GLOSSARY_TERMS = [
-    { term: 'Блокчейн', letter: 'Б', title: 'Блокчейн (Blockchain)', desc: 'Цифровая база данных (реестр), которая хранится не на одном сервере, а сразу на тысячах компьютеров по всему миру. Информацию в ней невозможно подделать или удалить. Простыми словами: это огромная публичная бухгалтерская книга, которую нельзя тайно переписать.' },
-    { term: 'Биткоин', letter: 'Б', title: 'Биткоин (Bitcoin)', desc: 'Первая в мире криптовалюта, созданная в 2009 году. Это не просто «цифровые деньги», а целая децентрализованная система. Простыми словами: это цифровое золото, которое не контролируется ни одним банком или правительством.' },
-    { term: 'Альткоин', letter: 'А', title: 'Альткоин (Altcoin)', desc: 'Любая криптовалюта, кроме Биткоина. Простыми словами: если Биткоин — это король, то все остальные монеты (Ethereum, TRX, Solana) — это его свита или альтернативы.' },
-    { term: 'Кошелек', letter: 'К', title: 'Кошелек (Wallet)', desc: 'Программа или устройство для хранения ваших криптовалют. Важно понимать: монеты хранятся не в кошельке, а в блокчейне, а кошелек — это просто ключ к ним.' },
-    { term: 'Приватный ключ и Сид-фраза', letter: 'П', title: 'Приватный ключ и Сид-фраза', desc: 'Секретный набор слов (обычно 12 или 24), который дает доступ к вашему кошельку. Это самое важное, что у вас есть. Простыми словами: это пароль от вашего сейфа. Если вы его потеряете — вы потеряете все деньги. Если его украдут — украдут все деньги. Никому не показывайте.' },
-    { term: 'Транзакция', letter: 'Т', title: 'Транзакция (Transaction)', desc: 'Перевод криптовалюты с одного кошелька на другой. Запись об этом навсегда остается в блокчейне.' },
-    { term: 'Gas Fee', letter: 'G', title: 'Gas Fee (Комиссия сети)', desc: 'Плата за обработку транзакции. Простыми словами: это «бензин» для сети. Чем больше машин (транзакций) на дороге, тем дороже бензин.' },
-    { term: 'Стейкинг', letter: 'С', title: 'Стейкинг (Staking)', desc: 'Блокировка ваших монет в сети на определенное время для поддержки работы блокчейна. Простыми словами: вы «замораживаете» свои монеты, а сеть за это начисляет вам проценты (пассивный доход).' },
-    { term: 'Смарт-контракт', letter: 'С', title: 'Смарт-контракт (Smart Contract)', desc: 'Цифровой код, который автоматически выполняет условия сделки. Простыми словами: это робот-нотариус. Если условия выполнены — деньги переводятся, если нет — возвращаются обратно. Без участия человека и обмана.' },
-    { term: 'Стейблкоин', letter: 'С', title: 'Стейблкоин (Stablecoin)', desc: 'Криптовалюта, цена которой привязана к реальным деньгам (обычно к доллару США 1:1). Самые популярные: USDT, USDC. Простыми словами: это крипта, которая не скачет в цене. Удобно хранить сбережения, чтобы переждать падение рынка.' },
-    { term: 'DeFi', letter: 'D', title: 'DeFi (Децентрализованные финансы)', desc: 'Экосистема финансовых приложений на блокчейне, работающая без центрального управления.' },
-    { term: 'NFT', letter: 'N', title: 'NFT (Невзаимозаменяемый токен)', desc: 'Уникальный цифровой актив, подтверждающий право собственности на конкретный объект в блокчейне.' },
-    { term: 'Халвинг', letter: 'Х', title: 'Халвинг (Halving)', desc: 'Сокращение вознаграждения за майнинг биткоина вдвое, происходит примерно каждые 4 года.' }
-];
 
 async function renderGlossaryView() {
     const container = document.getElementById('glossary-view');
@@ -1694,9 +1694,10 @@ async function renderGlossaryView() {
     const listContainer = document.getElementById('glossary-list');
     const searchInput = document.getElementById('glossary-search-input');
 
+    if (!alphabetContainer || !listContainer || !searchInput) return;
+
     let glossaryData = [];
 
-    // Загружаем данные из файла glossary.json
     try {
         const response = await fetch('glossary.json');
         if (!response.ok) throw new Error('Ошибка загрузки файла');
@@ -1707,13 +1708,11 @@ async function renderGlossaryView() {
         return;
     }
 
-    // Сортировка данных
     const sortedTerms = [...glossaryData].sort((a, b) => {
         if (a.letter !== b.letter) return a.letter.localeCompare(b.letter, 'ru');
         return a.title.localeCompare(b.title, 'ru');
     });
 
-    // Генерация алфавита
     const cyrillicAlphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'.split('');
     const latinAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const allLetters = [...new Set([...cyrillicAlphabet, ...latinAlphabet, '#'])];
@@ -1722,7 +1721,6 @@ async function renderGlossaryView() {
         `<div class="alpha-letter" data-letter="${letter}">${letter}</div>`
     ).join('');
 
-    // Функция отрисовки списка
     const renderList = (filterLetter = 'ALL', searchQuery = '') => {
         let filtered = sortedTerms;
 
@@ -1843,8 +1841,16 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
             const view = link.dataset.view;
-            const desktopBtn = document.querySelector(`.view-btn[data-view="${view}"]`);
-            if (desktopBtn) desktopBtn.click();
+            if (view === 'soon') {
+                const title = link.dataset.title || 'Скоро';
+                const soonTitle = document.getElementById('soon-title-dynamic');
+                if (soonTitle) soonTitle.textContent = title;
+                document.documentElement.setAttribute('data-view', 'soon');
+                localStorage.setItem('werth69-view', 'soon');
+            } else {
+                const desktopBtn = document.querySelector(`.view-btn[data-view="${view}"]`);
+                if (desktopBtn) desktopBtn.click();
+            }
 
             mobileLinks.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
@@ -1865,19 +1871,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (brandLogo) {
         brandLogo.addEventListener('click', () => {
-            // Находим скрытую кнопку "Главная" и программно нажимаем на неё
             const homeBtn = document.querySelector('.view-btn[data-view="home"]');
             if (homeBtn) {
                 homeBtn.click();
             } else {
-                // На всякий случай, если кнопки нет, просто меняем атрибут
                 document.documentElement.setAttribute('data-view', 'home');
                 localStorage.setItem('werth69-view', 'home');
             }
         });
     }
 });
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const reveals = document.querySelectorAll('.reveal');
@@ -1909,23 +1912,19 @@ document.addEventListener('DOMContentLoaded', () => {
     navDropdowns.forEach(dropdown => {
         const btn = dropdown.querySelector('.nav-btn');
 
-        // Открытие/закрытие по клику на кнопку
         btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Предотвращаем закрытие другими обработчиками
+            e.stopPropagation();
 
-            // Закрываем все другие открытые меню
             navDropdowns.forEach(otherDropdown => {
                 if (otherDropdown !== dropdown) {
                     otherDropdown.classList.remove('active');
                 }
             });
 
-            // Переключаем текущее меню
             dropdown.classList.toggle('active');
         });
     });
 
-    // Закрытие меню при клике в любом другом месте страницы
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.nav-dropdown')) {
             navDropdowns.forEach(dropdown => {
@@ -1934,7 +1933,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Закрытие меню при клике на любую ссылку внутри него
     document.querySelectorAll('.dropdown-link').forEach(link => {
         link.addEventListener('click', () => {
             navDropdowns.forEach(dropdown => {
@@ -1953,7 +1951,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const revealCards = () => {
         const windowHeight = window.innerHeight;
-        const triggerPoint = windowHeight - 100; // Срабатывает, когда до карточки остается 100px
+        const triggerPoint = windowHeight - 100;
 
         cards.forEach(card => {
             const cardTop = card.getBoundingClientRect().top;
@@ -1963,12 +1961,319 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Слушаем скролл внутри главной страницы и окна
     if (homeView) {
         homeView.addEventListener('scroll', revealCards);
     }
     window.addEventListener('scroll', revealCards);
 
-    // Запускаем проверку при загрузке
     setTimeout(revealCards, 100);
 });
+
+/* ============================================================
+   СТРАНИЦА ОБЛИГАЦИИ
+   ============================================================ */
+function renderBondsView() {
+    const container = document.getElementById('bonds-grid');
+    if (!container) return;
+
+    const bondsData = [
+        {
+            ticker: 'CTFB3 21%',
+            issuer: 'ООО "CONTACT FINANCE"',
+            yield: '21.00%',
+            term: '3 лет',
+            price: '104 000 сум',
+            change: '+1 000 сум (+0,97%)',
+            changeType: 'up',
+            type: 'Корпоративные облигации',
+            sector: 'Финансы'
+        },
+        {
+            ticker: 'ACMT2B5 25%',
+            issuer: '"AGAT CREDIT" AJ',
+            yield: '25.00%',
+            term: '2 лет',
+            price: '110 500 сум',
+            change: '-1 110,01 сум (-0,99%)',
+            changeType: 'down',
+            type: 'Корпоративные облигации',
+            sector: 'Финансы'
+        },
+        {
+            ticker: 'ACMT1B3 27%',
+            issuer: '"AGAT CREDIT" AJ',
+            yield: '27.00%',
+            term: '1 г',
+            price: '102 400 сум',
+            change: '+1 400 сум (+1,39%)',
+            changeType: 'up',
+            type: 'Корпоративные облигации',
+            sector: 'Финансы'
+        },
+        {
+            ticker: 'BFMT3V4 28%',
+            issuer: 'ООО "BIZNES FINANS MIKROMOLIYA TASHKILOTI"',
+            yield: '28.00%',
+            term: '3 лет',
+            price: '120 000 сум',
+            change: '',
+            changeType: '',
+            type: 'Корпоративные облигации',
+            sector: 'Финансы'
+        }
+    ];
+
+    container.innerHTML = bondsData.map(bond => `
+        <div class="bond-card">
+            <div class="bond-card-header">
+                <div class="bond-logo">${bond.ticker.charAt(0)}</div>
+                <div class="bond-info">
+                    <h3>${bond.ticker}</h3>
+                    <p>${bond.issuer}</p>
+                </div>
+            </div>
+            <div class="bond-card-body">
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Доходность</div>
+                    <div class="bond-metric-value">${bond.yield}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Срок</div>
+                    <div class="bond-metric-value">${bond.term}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Цена</div>
+                    <div class="bond-metric-value price">
+                        ${bond.price}
+                        ${bond.change ? `<span class="bond-price-change ${bond.changeType}">${bond.change}</span>` : ''}
+                    </div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Тип</div>
+                    <div class="bond-metric-value" style="font-size: 15px;">${bond.type}</div>
+                </div>
+            </div>
+            <div class="bond-card-footer">
+                <div class="bond-sector">${bond.sector}</div>
+                <button class="bond-btn">Подробнее</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ============================================================
+   СТРАНИЦА АКЦИИ
+   ============================================================ */
+function renderStocksView() {
+    const container = document.getElementById('stocks-grid');
+    if (!container) return;
+
+    const stocksData = [
+        { ticker: 'UZTL', name: 'Узбектелеком', yield: '—', cap: '—', volume: '—', type: 'Обыкновенная', sector: 'Телеком' },
+        { ticker: 'HMKB', name: 'Хамкорбанк', yield: '15.2%', cap: '1.2 трлн', volume: '120 млн', type: 'Обыкновенная', sector: 'Финансы' },
+        { ticker: 'KSCB', name: 'Кишлок Курилиш Банк', yield: '12.5%', cap: '850 млрд', volume: '80 млн', type: 'Привилегированная', sector: 'Финансы' },
+        { ticker: 'SQBK', name: 'Узпромстройбанк', yield: '18.0%', cap: '2.5 трлн', volume: '300 млн', type: 'Обыкновенная', sector: 'Финансы' }
+    ];
+
+    container.innerHTML = stocksData.map(stock => `
+        <div class="bond-card">
+            <div class="bond-card-header">
+                <div class="bond-logo">${stock.ticker.charAt(0)}</div>
+                <div class="bond-info">
+                    <h3>${stock.ticker}</h3>
+                    <p>${stock.name}</p>
+                </div>
+            </div>
+            <div class="bond-card-body">
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Дивидендная доходность</div>
+                    <div class="bond-metric-value">${stock.yield}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Капитализация</div>
+                    <div class="bond-metric-value">${stock.cap}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Объём за день</div>
+                    <div class="bond-metric-value">${stock.volume}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Тип акции</div>
+                    <div class="bond-metric-value" style="font-size: 14px;">${stock.type}</div>
+                </div>
+            </div>
+            <div class="bond-card-footer">
+                <div class="bond-sector">${stock.sector}</div>
+                <button class="bond-btn">Подробнее</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ============================================================
+   СТРАНИЦА ВКЛАДЫ
+   ============================================================ */
+function renderDepositsView() {
+    const container = document.getElementById('deposits-grid');
+    if (!container) return;
+
+    const depositsData = [
+        { bank: 'Агробанк', name: 'Срочный вклад', rate: '22.00%', term: '12 мес', minSum: '1 000 000 сум', currency: 'UZS' },
+        { bank: 'Узпромстройбанк', name: 'Накопительный', rate: '20.50%', term: '6 мес', minSum: '500 000 сум', currency: 'UZS' },
+        { bank: 'Ипотека-банк', name: 'Пенсионный', rate: '19.00%', term: '36 мес', minSum: '0 сум', currency: 'UZS' },
+        { bank: 'Капиталбанк', name: 'Валютный', rate: '5.50%', term: '12 мес', minSum: '100 USD', currency: 'USD' }
+    ];
+
+    container.innerHTML = depositsData.map(deposit => `
+        <div class="bond-card">
+            <div class="bond-card-header">
+                <div class="bond-logo">${deposit.bank.charAt(0)}</div>
+                <div class="bond-info">
+                    <h3>${deposit.bank}</h3>
+                    <p>${deposit.name}</p>
+                </div>
+            </div>
+            <div class="bond-card-body">
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Ставка</div>
+                    <div class="bond-metric-value" style="color: var(--accent);">${deposit.rate}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Срок</div>
+                    <div class="bond-metric-value">${deposit.term}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Мин. сумма</div>
+                    <div class="bond-metric-value" style="font-size: 16px;">${deposit.minSum}</div>
+                </div>
+                <div class="bond-metric">
+                    <div class="bond-metric-label">Валюта</div>
+                    <div class="bond-metric-value">${deposit.currency}</div>
+                </div>
+            </div>
+            <div class="bond-card-footer">
+                <div class="bond-sector">Вклад</div>
+                <button class="bond-btn">Подробнее</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ============================================================
+   СТРАНИЦА КРИПТОВАЛЮТЫ (в стиле Акций/Облигаций)
+   ============================================================ */
+
+const CRYPTO_MARKET_DATA = [
+    { symbol: 'BTC',  name: 'Bitcoin',  price: '$67,432.12', change:  2.48, cap: '$1.33T', volume: '$28.4B', color: '#F7931A' },
+    { symbol: 'ETH',  name: 'Ethereum', price: '$3,245.67',  change:  3.12, cap: '$389.5B', volume: '$15.2B', color: '#627EEA' },
+    { symbol: 'BNB',  name: 'BNB',      price: '$598.44',    change:  1.87, cap: '$89.2B',  volume: '$2.1B',  color: '#F0B90B' },
+    { symbol: 'SOL',  name: 'Solana',   price: '$142.08',    change:  4.12, cap: '$65.1B',  volume: '$3.8B',  color: '#9945FF' },
+    { symbol: 'XRP',  name: 'XRP',      price: '$0.5821',    change: -1.24, cap: '$32.4B',  volume: '$1.2B',  color: '#23292F' },
+    { symbol: 'ADA',  name: 'Cardano',  price: '$0.4412',    change:  0.85, cap: '$15.6B',  volume: '$420M',  color: '#0033AD' },
+    { symbol: 'DOGE', name: 'Dogecoin', price: '$0.1524',    change:  6.78, cap: '$21.8B',  volume: '$1.8B',  color: '#C2A633' },
+    { symbol: 'TRX',  name: 'TRON',     price: '$0.1248',    change:  1.05, cap: '$11.2B',  volume: '$380M',  color: '#EF0027' },
+    { symbol: 'AVAX', name: 'Avalanche',price: '$34.21',     change:  5.43, cap: '$13.4B',  volume: '$640M',  color: '#E84142' },
+    { symbol: 'PEPE', name: 'Pepe',     price: '$0.0000124', change: 12.34, cap: '$5.2B',   volume: '$890M',  color: '#16a34a' },
+];
+
+function renderCryptoMarketView() {
+    const topEl    = document.getElementById('crypto-table-top');
+    const volEl    = document.getElementById('crypto-table-volume');
+    const gainEl   = document.getElementById('crypto-table-gainers');
+    const tvContainer = document.getElementById('crypto-tradingview-widget');
+
+    if (!topEl && !volEl && !gainEl && !tvContainer) return;
+
+    // Топ по капитализации
+    const byCap = [...CRYPTO_MARKET_DATA]
+        .sort((a, b) => parseFloat(b.cap.replace(/[$,TB]/g, '')) - parseFloat(a.cap.replace(/[$,TB]/g, '')))
+        .slice(0, 5);
+
+    // Топ по объёму
+    const byVolume = [...CRYPTO_MARKET_DATA]
+        .sort((a, b) => {
+            const parse = (s) => {
+                const num = parseFloat(s.replace(/[$,]/g, ''));
+                if (/T/.test(s)) return num * 1000;
+                if (/B/.test(s)) return num;
+                if (/M/.test(s)) return num / 1000;
+                return num;
+            };
+            return parse(b.volume) - parse(a.volume);
+        })
+        .slice(0, 5);
+
+    // Топ по росту
+    const byChange = [...CRYPTO_MARKET_DATA]
+        .sort((a, b) => b.change - a.change)
+        .slice(0, 5);
+
+    const buildRow = (coin) => {
+        const changeClass = coin.change >= 0 ? 'up' : 'down';
+        const sign = coin.change >= 0 ? '+' : '';
+        return `
+            <div class="crypto-row">
+                <div class="crypto-coin-info">
+                    <div class="crypto-coin-icon" style="background: ${coin.color}33; color: ${coin.color};">
+                        ${coin.symbol.charAt(0)}
+                    </div>
+                    <div>
+                        <div class="crypto-coin-name">${coin.name}</div>
+                        <div class="crypto-coin-symbol">${coin.symbol}</div>
+                    </div>
+                </div>
+                <div class="crypto-coin-price">
+                    <div class="price-val">${coin.price}</div>
+                    <div class="price-change ${changeClass}">${sign}${coin.change.toFixed(2)}%</div>
+                </div>
+            </div>
+        `;
+    };
+
+    if (topEl)  topEl.innerHTML  = byCap.map(buildRow).join('');
+    if (volEl)  volEl.innerHTML  = byVolume.map(buildRow).join('');
+    if (gainEl) gainEl.innerHTML = byChange.map(buildRow).join('');
+
+    // TradingView виджет
+    if (tvContainer && !tvContainer.dataset.loaded) {
+        tvContainer.dataset.loaded = 'true';
+        const script = document.createElement('script');
+        script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+        script.async = true;
+        script.innerHTML = JSON.stringify({
+            colorTheme: 'dark',
+            dateRange: '12M',
+            showChart: true,
+            locale: 'ru',
+            width: '100%',
+            height: '500',
+            largeChartUrl: '',
+            isTransparent: true,
+            showSymbolLogo: true,
+            showFloatingTooltip: true,
+            plotLineColorGrowing: 'rgba(168, 255, 62, 1)',
+            plotLineColorFalling: 'rgba(220, 38, 38, 1)',
+            gridLineColor: 'rgba(168, 255, 62, 0.06)',
+            scaleFontColor: 'rgba(214, 230, 200, 1)',
+            belowLineFillColorGrowing: 'rgba(168, 255, 62, 0.12)',
+            belowLineFillColorFalling: 'rgba(220, 38, 38, 0.12)',
+            belowLineFillColorGrowingBottom: 'rgba(168, 255, 62, 0)',
+            belowLineFillColorFallingBottom: 'rgba(220, 38, 38, 0)',
+            symbolActiveColor: 'rgba(168, 255, 62, 0.12)',
+            tabs: [
+                {
+                    title: 'Криптовалюты',
+                    symbols: [
+                        { s: 'BINANCE:BTCUSDT', d: 'Bitcoin' },
+                        { s: 'BINANCE:ETHUSDT', d: 'Ethereum' },
+                        { s: 'BINANCE:SOLUSDT', d: 'Solana' },
+                        { s: 'BINANCE:BNBUSDT', d: 'BNB' },
+                        { s: 'BINANCE:XRPUSDT', d: 'XRP' },
+                    ],
+                    originalTitle: 'Криптовалюты'
+                },
+            ],
+        });
+        tvContainer.appendChild(script);
+    }
+}
