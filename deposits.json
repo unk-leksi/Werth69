@@ -1,0 +1,62 @@
+[
+  {
+    "bank": "AVO bank",
+    "name": "AVO вклад",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "22.00%",
+    "term": "12 мес.",
+    "minSum": "0 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Капитализация", "Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Tayanch mikromoliya banki",
+    "name": "Tayanchim",
+    "type": "СРОЧНЫЙ",
+    "rate": "21.00%",
+    "term": "24 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Еженедельно",
+    "tags": ["Капитализация", "Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Tayanch mikromoliya banki",
+    "name": "Bugunq Foyda",
+    "type": "СРОЧНЫЙ",
+    "rate": "20.00%",
+    "term": "24 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Авансом",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Anor bank",
+    "name": "Milliy har kunlik",
+    "type": "СРОЧНЫЙ",
+    "rate": "20.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежедневно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "OYMA-OY",
+    "type": "СРОЧНЫЙ",
+    "rate": "20.00%",
+    "term": "1–24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Apex Bank",
+    "name": "Vector",
+    "type": "СРОЧНЫЙ",
+    "rate": "20.00%",
+    "term": "25 мес.",
+    "minSum": "500 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  }
+]
