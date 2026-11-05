@@ -413,74 +413,44 @@
             </div>
         </div>
 
-        <!-- ================= РАЗДЕЛ ВКЛАДЫ ================= -->
+                <!-- ================= РАЗДЕЛ ВКЛАДЫ ================= -->
         <div class="deposits-view" id="deposits-view">
             <div class="bonds-container">
                 <h1 class="bonds-title">Вклады</h1>
                 <p class="bonds-subtitle">
-                    Банковские вклады узбекских банков в одном каталоге. Сравнивайте ставки, сроки, минимальные суммы и условия — от срочных вкладов с капитализацией до накопительных счетов с частичным снятием.
+                    Банковские вклады узбекских банков в одном каталоге. Сравнивайте ставки, сроки, минимальные суммы и условия.
                 </p>
 
-                <div class="bonds-filter-card">
-                    <div class="bonds-search-row">
-                        <div class="bonds-search-input">
+                <div class="bonds-filter-card" style="padding-bottom: 30px;">
+                    <!-- Поиск -->
+                    <div class="bonds-search-row" style="margin-bottom: 20px;">
+                        <div class="bonds-search-input" id="deposit-search-wrapper">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            <input type="text" placeholder="Поиск по названию вклада или банку">
+                            <input type="text" id="deposit-search-input" placeholder="Поиск по названию вклада или банку">
                         </div>
-                        <button class="bonds-reset-btn">Сбросить</button>
+                        <button class="bonds-reset-btn" id="deposit-search-reset">Сбросить</button>
                     </div>
 
-                    <div class="bonds-filter-row">
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Тип вклада</span>
-                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-                        </div>
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Валюта</span>
-                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-                        </div>
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Ставка</span>
-                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-                        </div>
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Срок</span>
-                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-                        </div>
-                    </div>
-
-                    <div class="bonds-tags-row">
-                        <span class="bonds-tag">Капитализация процентов</span>
-                        <span class="bonds-tag">Пополняемый</span>
-                        <span class="bonds-tag">Частичное снятие</span>
-                        <span class="bonds-tag">Автопродление</span>
-                        <span class="bonds-tag">Открытие онлайн</span>
-                    </div>
-
-                    <div class="bonds-stats-row">
-                        <div class="bonds-stat">
+                    <!-- Статистика (выровнена по центру) -->
+                    <div class="bonds-stats-row" style="border-top: none; padding-top: 0; justify-content: center; gap: 80px;">
+                        <div class="bonds-stat" style="text-align: center;">
                             <div class="bonds-stat-value">125</div>
                             <div class="bonds-stat-label">Вкладов в подборке</div>
                         </div>
-                        <div class="bonds-stat">
+                        <div class="bonds-stat" style="text-align: center;">
                             <div class="bonds-stat-value highlight">22.00%</div>
                             <div class="bonds-stat-label">Ставка до</div>
                         </div>
-                        <div class="bonds-stat">
-                            <div class="bonds-stat-value">0 сум</div>
-                            <div class="bonds-stat-label">Мин. сумма от</div>
-                        </div>
-                        <div class="bonds-stat">
+                        <div class="bonds-stat" style="text-align: center;">
                             <div class="bonds-stat-value">28</div>
                             <div class="bonds-stat-label">Банков в подборке</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bonds-list-header">
-                    <span>Ставка: <strong>по убыванию</strong></span>
-                </div>
+                <!-- Убран заголовок "Сортировка: по ставке (убывание)" -->
 
+                <!-- Сетка карточек -->
                 <div class="bonds-grid" id="deposits-grid"></div>
             </div>
         </div>
@@ -488,7 +458,7 @@
         <!-- ================= РАЗДЕЛ КРИПТОВАЛЮТЫ (НОВЫЙ ДИЗАЙН) ================= -->
         <div class="crypto-market-view" id="crypto-market-view">
             <div class="crypto-market-container">
-                
+
 
                 <h1 class="bonds-title" style="text-align: left; margin-bottom: 10px;">Криптовалюты</h1>
                 <p class="bonds-subtitle" style="text-align: left; margin: 0 0 40px 0; max-width: 700px;">
@@ -809,39 +779,49 @@
             </section>
 
             <!-- 6. ФУТЕР -->
+                        <!-- 6. ФУТЕР -->
             <footer class="home-footer">
                 <div class="home-footer-container">
                     <div class="home-footer-brand">
-                        <h2>Werth<span>69</span></h2>
+                        <!-- Копируем классы шапки для точного совпадения шрифта -->
+                        <div class="brand-text" style="margin-bottom: 20px;">
+                            <h1 style="margin: 0;">
+                                <span class="brand-w">W</span><span class="brand-rest">erth<span>69</span></span>
+                            </h1>
+                            <p class="brand-tagline" style="margin-top: 10px;">Investments for a brighter future</p>
+                        </div>
                         <p>Финансовый сервис для жителей Узбекистана: облигации, акции, вклады и личный кабинет инвестора.</p>
                     </div>
                     <div class="home-footer-links">
+
                         <div class="footer-col">
                             <h4>Инвестиции</h4>
-                            <a href="#">Акции</a>
-                            <a href="#">Облигации</a>
-                            <a href="#">Вклады</a>
+                            <a href="#" data-view="bonds">Облигации</a>
+                            <a href="#" data-view="stocks">Акции</a>
+                            <a href="#" data-view="crypto">Криптовалюты</a>
+                            <a href="#" data-view="deposits">Вклады</a>
                         </div>
+
                         <div class="footer-col">
-                            <h4>Знания</h4>
-                            <a href="#">Журнал</a>
-                            <a href="#">Новости</a>
-                            <a href="#">Глоссарий</a>
+                            <h4>Новости</h4>
+                            <a href="#" data-view="soon" data-title="Активы">Активы</a>
+                            <a href="#" data-view="soon" data-title="События">События</a>
+                            <a href="#" data-view="soon" data-title="Аналитика">Аналитика</a>
                         </div>
+
                         <div class="footer-col">
-                            <h4>Справочник</h4>
-                            <a href="#">Курсы валют</a>
-                            <a href="#">Эмитенты</a>
-                            <a href="#">Банки</a>
-                            <a href="#">Брокеры</a>
+                            <h4>База знаний</h4>
+                            <a href="#" data-view="methodology">Методические материалы</a>
+                            <a href="#" data-view="glossary">Глоссарий</a>
                         </div>
+
                         <div class="footer-col">
-                            <h4>О сервисе</h4>
-                            <a href="#">Контакты</a>
-                            <a href="#">+998 (94) 694-27-41</a>
-                            <a href="#">mail@werth69.uz</a>
-                            <a href="#">ИИ-ассистент</a>
+                            <h4>Кейсы</h4>
+                            <a href="#" data-view="mypath">Мой путь</a>
+                            <a href="#" data-view="soon" data-title="Истории">Истории</a>
+                            <a href="#" data-view="soon" data-title="Практика">Практика</a>
                         </div>
+
                     </div>
                 </div>
                 <div class="home-footer-bottom">
