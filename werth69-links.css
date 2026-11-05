@@ -31,12 +31,13 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+    /* Осветлили фон (опустили плотность темного слоя с 0.80 до 0.50) */
     background-color: var(--bg-base);
     background-image:
         linear-gradient(180deg,
-            rgba(10, 19, 16, 0.80) 0%,
-            rgba(10, 19, 16, 0.70) 50%,
-            rgba(10, 19, 16, 0.85) 100%),
+            rgba(10, 19, 16, 0.50) 0%,
+            rgba(10, 19, 16, 0.35) 50%,
+            rgba(10, 19, 16, 0.55) 100%),
         url("icons/W_picture.png");
     background-size: cover, cover;
     background-position: center center, center center;
@@ -6416,8 +6417,8 @@ html[data-view="bonds"] .hint {
 
 /* Блок фильтров (Стеклянный) */
 .bonds-filter-card {
-    background: rgba(15, 26, 21, 0.85);
-    backdrop-filter: blur(20px);
+    background: rgba(15, 26, 21, 0.65); /* Сделали полупрозрачным */
+    backdrop-filter: blur(20px);        /* Усилили размытие заднего фона */
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(168, 255, 62, 0.15);
     border-radius: 20px;
@@ -6569,10 +6570,10 @@ html[data-view="bonds"] .hint {
 
 /* Карточка облигации (Стеклянная) */
 .bond-card {
-    background: rgba(15, 26, 21, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(10, 19, 16, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 24px;
     display: flex;
@@ -7091,4 +7092,122 @@ html[data-view="methodology"] .hint {
 }
 @media (max-width: 600px) {
     .crypto-stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   СТИЛИ ДЛЯ КАРТОЧЕК ВКЛАДОВ
+   ============================================================ */
+
+.deposit-card {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Бейдж с типом вклада (Срочный / Накопительный) */
+.deposit-type-badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: rgba(168, 255, 62, 0.15);
+    color: var(--accent);
+    border: 1px solid rgba(168, 255, 62, 0.3);
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Сетка для цифр внутри карточки */
+.deposit-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 24px 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.deposit-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.deposit-label {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.deposit-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.deposit-value.highlight {
+    font-size: 20px;
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(168, 255, 62, 0.3);
+}
+
+/* Футер карточки (теги + кнопка) */
+.deposit-footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.deposit-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+}
+
+/* Теги с галочками */
+.deposit-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #d1e0c5;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.deposit-tag svg {
+    width: 12px;
+    height: 12px;
+    color: var(--accent);
+}
+
+/* Адаптив для мобильных устройств */
+@media (max-width: 900px) {
+    .deposit-metrics-grid {
+        grid-template-columns: repeat(2, 1fr); /* в 2 колонки на планшетах */
+    }
+}
+
+@media (max-width: 600px) {
+    .deposit-metrics-grid {
+        grid-template-columns: 1fr; /* в 1 колонку на телефонах */
+        gap: 12px;
+    }
+    .deposit-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .bond-btn {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+    }
 }
