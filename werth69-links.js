@@ -2113,50 +2113,110 @@ function renderStocksView() {
 /* ============================================================
    СТРАНИЦА ВКЛАДЫ
    ============================================================ */
-function renderDepositsView() {
+async function renderDepositsView() {
     const container = document.getElementById('deposits-grid');
     if (!container) return;
 
-    const depositsData = [
-        { bank: 'Агробанк', name: 'Срочный вклад', rate: '22.00%', term: '12 мес', minSum: '1 000 000 сум', currency: 'UZS' },
-        { bank: 'Узпромстройбанк', name: 'Накопительный', rate: '20.50%', term: '6 мес', minSum: '500 000 сум', currency: 'UZS' },
-        { bank: 'Ипотека-банк', name: 'Пенсионный', rate: '19.00%', term: '36 мес', minSum: '0 сум', currency: 'UZS' },
-        { bank: 'Капиталбанк', name: 'Валютный', rate: '5.50%', term: '12 мес', minSum: '100 USD', currency: 'USD' }
-    ];
+    try {
+        // Загружаем данные из JSON
+        const response = await fetch('deposits.json');
+        if (!response.ok) throw new Error('Ошибка сети');
+        let depositsData = await response.json();
 
-    container.innerHTML = depositsData.map(deposit => `
-        <div class="bond-card">
-            <div class="bond-card-header">
-                <div class="bond-logo">${deposit.bank.charAt(0)}</div>
-                <div class="bond-info">
-                    <h3>${deposit.bank}</h3>
-                    <p>${deposit.name}</p>
-                </div>
-            </div>
-            <div class="bond-card-body">
-                <div class="bond-metric">
-                    <div class="bond-metric-label">Ставка</div>
-                    <div class="bond-metric-value" style="color: var(--accent);">${deposit.rate}</div>
-                </div>
-                <div class="bond-metric">
-                    <div class="bond-metric-label">Срок</div>
-                    <div class="bond-metric-value">${deposit.term}</div>
-                </div>
-                <div class="bond-metric">
-                    <div class="bond-metric-label">Мин. сумма</div>
-                    <div class="bond-metric-value" style="font-size: 16px;">${deposit.minSum}</div>
-                </div>
-                <div class="bond-metric">
-                    <div class="bond-metric-label">Валюта</div>
-                    <div class="bond-metric-value">${deposit.currency}</div>
-                </div>
-            </div>
-            <div class="bond-card-footer">
-                <div class="bond-sector">Вклад</div>
-                <button class="bond-btn">Подробнее</button>
-            </div>
-        </div>
-    `).join('');
+        // Сортируем по убыванию ставки
+        depositsData.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
+
+        // Функция отрисовки
+        const renderCards = (data) => {
+            if (data.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">Ничего не найдено</div>`;
+                return;
+            }
+
+            container.innerHTML = data.map(deposit => {
+                // Генерируем HTML для тегов (зеленые галочки)
+                const tagsHTML = deposit.tags.map(tag => `
+                    <span class="deposit-tag">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                        ${tag}
+                    </span>
+                `).join('');
+
+                // Берем первую букву для логотипа
+                const logoLetter = deposit.bank.charAt(0).toUpperCase();
+
+                return `
+                    <div class="bond-card deposit-card">
+                        <div class="bond-card-header" style="align-items: flex-start;">
+                            <div class="bond-logo" style="background: rgba(168, 255, 62, 0.1); border: 1px solid rgba(168, 255, 62, 0.3); color: var(--accent); font-size: 22px;">
+                                ${logoLetter}
+                            </div>
+                            <div class="bond-info" style="flex: 1;">
+                                <h3 style="font-size: 20px; margin-bottom: 2px;">${deposit.name}</h3>
+                                <p style="text-transform: none; font-size: 13px;">${deposit.bank}</p>
+                            </div>
+                            <div class="deposit-type-badge">${deposit.type}</div>
+                        </div>
+
+                        <div class="deposit-metrics-grid">
+                            <div class="deposit-metric">
+                                <span class="deposit-label">Ставка</span>
+                                <span class="deposit-value highlight">до ${deposit.rate}</span>
+                            </div>
+                            <div class="deposit-metric">
+                                <span class="deposit-label">Срок</span>
+                                <span class="deposit-value">${deposit.term}</span>
+                            </div>
+                            <div class="deposit-metric">
+                                <span class="deposit-label">Мин. сумма</span>
+                                <span class="deposit-value">${deposit.minSum}</span>
+                            </div>
+                            <div class="deposit-metric">
+                                <span class="deposit-label">Выплата процентов</span>
+                                <span class="deposit-value">${deposit.payout}</span>
+                            </div>
+                        </div>
+
+                        <div class="deposit-footer">
+                            <div class="deposit-tags">
+                                ${tagsHTML}
+                            </div>
+                            <button class="bond-btn" style="padding: 10px 24px;">Подробнее</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        };
+
+        // Первичная отрисовка
+        renderCards(depositsData);
+
+        // --- Поиск ---
+        const searchInput = document.getElementById('deposit-search-input');
+        const resetBtn = document.getElementById('deposit-search-reset');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                const filtered = depositsData.filter(d =>
+                    d.name.toLowerCase().includes(query) ||
+                    d.bank.toLowerCase().includes(query)
+                );
+                renderCards(filtered);
+            });
+        }
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (searchInput) searchInput.value = '';
+                renderCards(depositsData);
+            });
+        }
+
+    } catch (error) {
+        console.error('Ошибка загрузки вкладов:', error);
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #dc2626;">Не удалось загрузить данные. Проверьте файл deposits.json.</div>`;
+    }
 }
 
 /* ============================================================
