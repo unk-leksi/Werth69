@@ -415,43 +415,62 @@
 
                 <!-- ================= РАЗДЕЛ ВКЛАДЫ ================= -->
         <div class="deposits-view" id="deposits-view">
-            <div class="bonds-container">
-                <h1 class="bonds-title">Вклады</h1>
-                <p class="bonds-subtitle">
-                    Банковские вклады узбекских банков в одном каталоге. Сравнивайте ставки, сроки, минимальные суммы и условия.
+            <div class="bonds-container" style="max-width: 1000px;">
+                <h1 class="bonds-title" style="text-align: center; margin-bottom: 10px;">Вклады</h1>
+                <p class="bonds-subtitle" style="text-align: center; margin: 0 auto 30px; max-width: 600px;">
+                    Банковским вкладом удобно, делится с выгодой. Ставьте цели, максимизируйте суммой и условиями.
                 </p>
 
-                <div class="bonds-filter-card" style="padding-bottom: 30px;">
-                    <!-- Поиск -->
-                    <div class="bonds-search-row" style="margin-bottom: 20px;">
-                        <div class="bonds-search-input" id="deposit-search-wrapper">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            <input type="text" id="deposit-search-input" placeholder="Поиск по названию вклада или банку">
-                        </div>
-                        <button class="bonds-reset-btn" id="deposit-search-reset">Сбросить</button>
+                <!-- Поиск -->
+                <div class="bonds-search-row" style="max-width: 800px; margin: 0 auto 20px; gap: 10px;">
+                    <div class="bonds-search-input new-search-style">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        <input type="text" id="deposit-search-input" placeholder="Поиск по инвестициям или тегам">
                     </div>
+                    <button class="bonds-reset-btn new-reset-btn" id="deposit-search-reset">Сбросить</button>
+                </div>
 
-                    <!-- Статистика (выровнена по центру) -->
-                    <div class="bonds-stats-row" style="border-top: none; padding-top: 0; justify-content: center; gap: 80px;">
-                        <div class="bonds-stat" style="text-align: center;">
-                            <div class="bonds-stat-value">125</div>
-                            <div class="bonds-stat-label">Вкладов в подборке</div>
+                <!-- Блок статистики -->
+                <div class="new-stats-row">
+                    <div class="new-stat-card">
+                        <div class="new-stat-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
                         </div>
-                        <div class="bonds-stat" style="text-align: center;">
-                            <div class="bonds-stat-value highlight">22.00%</div>
-                            <div class="bonds-stat-label">Ставка до</div>
+                        <div class="new-stat-text">
+                            <span class="new-stat-value">125</span>
+                            <span class="new-stat-label">Доступных вкладов</span>
                         </div>
-                        <div class="bonds-stat" style="text-align: center;">
-                            <div class="bonds-stat-value">28</div>
-                            <div class="bonds-stat-label">Банков в подборке</div>
+                    </div>
+                    <div class="new-stat-card">
+                        <div class="new-stat-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5L5 19M6.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm11 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+                        </div>
+                        <div class="new-stat-text">
+                            <span class="new-stat-value">22.00%</span>
+                            <span class="new-stat-label">Средний доход</span>
+                        </div>
+                    </div>
+                    <div class="new-stat-card">
+                        <div class="new-stat-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div class="new-stat-text">
+                            <span class="new-stat-value">28</span>
+                            <span class="new-stat-label">Пользователей</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Убран заголовок "Сортировка: по ставке (убывание)" -->
 
-                <!-- Сетка карточек -->
-                <div class="bonds-grid" id="deposits-grid"></div>
+                <div class="bonds-grid" id="deposits-grid" style="grid-template-columns: repeat(2, 1fr); gap: 20px;"></div>
+
+                <!-- Кнопка "Показать еще" -->
+                <div class="load-more-wrapper" style="display: flex; justify-content: center; margin-top: 30px;">
+                    <button id="deposits-load-more" class="ndc-load-more-btn" style="display: none;">
+                        Показать еще
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px; margin-left: 8px;"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
 
