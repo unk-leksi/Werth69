@@ -2111,85 +2111,121 @@ function renderStocksView() {
 }
 
 /* ============================================================
-   СТРАНИЦА ВКЛАДЫ
+   СТРАНИЦА ВКЛАДЫ (с пагинацией по 6 штук)
    ============================================================ */
 async function renderDepositsView() {
     const container = document.getElementById('deposits-grid');
+    const loadMoreBtn = document.getElementById('deposits-load-more');
     if (!container) return;
 
+    // Состояние пагинации
+    let allDeposits = [];
+    let filteredDeposits = [];
+    let currentItems = 6;
+    const itemsPerPage = 6;
+
     try {
-        // Загружаем данные из JSON
         const response = await fetch('deposits.json');
         if (!response.ok) throw new Error('Ошибка сети');
-        let depositsData = await response.json();
 
+        allDeposits = await response.json();
         // Сортируем по убыванию ставки
-        depositsData.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
+        allDeposits.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));
+        filteredDeposits = [...allDeposits];
 
-        // Функция отрисовки
-        const renderCards = (data) => {
-            if (data.length === 0) {
+        // Функция отрисовки карточек
+                // Функция отрисовки карточек
+        const updateGrid = () => {
+            const itemsToRender = filteredDeposits.slice(0, currentItems);
+
+            if (itemsToRender.length === 0) {
                 container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-muted);">Ничего не найдено</div>`;
+                if (loadMoreBtn) loadMoreBtn.style.display = 'none';
                 return;
             }
 
-            container.innerHTML = data.map(deposit => {
-                // Генерируем HTML для тегов (зеленые галочки)
-                const tagsHTML = deposit.tags.map(tag => `
-                    <span class="deposit-tag">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                        ${tag}
-                    </span>
-                `).join('');
-
-                // Берем первую букву для логотипа
+            container.innerHTML = itemsToRender.map(deposit => {
                 const logoLetter = deposit.bank.charAt(0).toUpperCase();
 
+                // Форматируем ставку (убираем "до", если оно уже есть в JSON)
+                const rateText = deposit.rate.replace(/до\s*/i, '');
+                const displayRate = `до ${rateText}`;
+
+                // Генерируем все теги
+                const tagsHTML = deposit.tags && deposit.tags.length > 0
+                    ? deposit.tags.map(tag => `
+                        <div class="ndc-tag small-tag">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>${tag}</span>
+                        </div>
+                    `).join('')
+                    : '';
+
                 return `
-                    <div class="bond-card deposit-card">
-                        <div class="bond-card-header" style="align-items: flex-start;">
-                            <div class="bond-logo" style="background: rgba(168, 255, 62, 0.1); border: 1px solid rgba(168, 255, 62, 0.3); color: var(--accent); font-size: 22px;">
-                                ${logoLetter}
+                    <div class="new-deposit-card">
+                        <div class="ndc-header">
+                            <div class="ndc-logo-wrapper">
+                                <div class="ndc-logo">${logoLetter}</div>
+                                <div class="ndc-titles">
+                                    <h3>${deposit.name}</h3>
+                                    <div class="ndc-bank-name">${deposit.bank}</div>
+                                    <div class="ndc-subtitle" style="margin-top: 4px; color: #a8ff3e; font-weight: 700;">
+                                        ${deposit.term}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="bond-info" style="flex: 1;">
-                                <h3 style="font-size: 20px; margin-bottom: 2px;">${deposit.name}</h3>
-                                <p style="text-transform: none; font-size: 13px;">${deposit.bank}</p>
-                            </div>
-                            <div class="deposit-type-badge">${deposit.type}</div>
-                        </div>
-
-                        <div class="deposit-metrics-grid">
-                            <div class="deposit-metric">
-                                <span class="deposit-label">Ставка</span>
-                                <span class="deposit-value highlight">до ${deposit.rate}</span>
-                            </div>
-                            <div class="deposit-metric">
-                                <span class="deposit-label">Срок</span>
-                                <span class="deposit-value">${deposit.term}</span>
-                            </div>
-                            <div class="deposit-metric">
-                                <span class="deposit-label">Мин. сумма</span>
-                                <span class="deposit-value">${deposit.minSum}</span>
-                            </div>
-                            <div class="deposit-metric">
-                                <span class="deposit-label">Выплата процентов</span>
-                                <span class="deposit-value">${deposit.payout}</span>
+                            <div class="ndc-rate-badge">
+                                ${displayRate}
                             </div>
                         </div>
 
-                        <div class="deposit-footer">
-                            <div class="deposit-tags">
+                        <div class="ndc-metrics">
+                            <div class="ndc-metric">
+                                <span class="ndc-label">Мин. сумма</span>
+                                <span class="ndc-value">${deposit.minSum}</span>
+                            </div>
+                            <div class="ndc-metric">
+                                <span class="ndc-label">Выплата</span>
+                                <span class="ndc-value">${deposit.payout || '—'}</span>
+                            </div>
+                            <div class="ndc-metric">
+                                <span class="ndc-label">Тип</span>
+                                <span class="ndc-value">${deposit.type}</span>
+                            </div>
+                        </div>
+
+                        <div class="ndc-footer" style="flex-wrap: wrap;">
+                            <div class="ndc-tags-container">
                                 ${tagsHTML}
                             </div>
-                            <button class="bond-btn" style="padding: 10px 24px;">Подробнее</button>
                         </div>
                     </div>
                 `;
             }).join('');
+
+            if (loadMoreBtn) {
+                if (currentItems >= filteredDeposits.length) {
+                    loadMoreBtn.style.display = 'none';
+                } else {
+                    loadMoreBtn.style.display = 'inline-flex';
+                }
+            }
         };
 
         // Первичная отрисовка
-        renderCards(depositsData);
+        updateGrid();
+
+        // Обработчик кнопки "Показать еще"
+        if (loadMoreBtn) {
+            // Удаляем старый обработчик, чтобы не дублировался при повторном заходе
+            const newLoadMoreBtn = loadMoreBtn.cloneNode(true);
+            loadMoreBtn.parentNode.replaceChild(newLoadMoreBtn, loadMoreBtn);
+
+            newLoadMoreBtn.addEventListener('click', () => {
+                currentItems += itemsPerPage;
+                updateGrid();
+            });
+        }
 
         // --- Поиск ---
         const searchInput = document.getElementById('deposit-search-input');
@@ -2198,24 +2234,27 @@ async function renderDepositsView() {
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
-                const filtered = depositsData.filter(d =>
+                filteredDeposits = allDeposits.filter(d =>
                     d.name.toLowerCase().includes(query) ||
                     d.bank.toLowerCase().includes(query)
                 );
-                renderCards(filtered);
+                currentItems = itemsPerPage; // Сбрасываем счетчик при поиске
+                updateGrid();
             });
         }
 
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
                 if (searchInput) searchInput.value = '';
-                renderCards(depositsData);
+                filteredDeposits = [...allDeposits];
+                currentItems = itemsPerPage;
+                updateGrid();
             });
         }
 
     } catch (error) {
         console.error('Ошибка загрузки вкладов:', error);
-        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #dc2626;">Не удалось загрузить данные. Проверьте файл deposits.json.</div>`;
+        container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #dc2626;">Не удалось загрузить данные.</div>`;
     }
 }
 
