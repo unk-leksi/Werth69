@@ -58,5 +58,1145 @@
     "minSum": "500 000 сум",
     "payout": "Ежемесячно",
     "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Mikrokreditbank",
+    "name": "Байрамона",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 20.00%",
+    "term": "20 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежедневно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Garant bank",
+    "name": "Кунлик",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 20.00%",
+    "term": "18 мес.",
+    "minSum": "10 000 сум",
+    "payout": "Ежедневно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "TBC Bank",
+    "name": "Срочный вклад TBC",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 20.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Капитализация", "Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Mikrokreditbank",
+    "name": "Универсал",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 20.00%",
+    "term": "1–24 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Davr bank",
+    "name": "Yangi Davr",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 19.50%",
+    "term": "25 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Hamkorbank",
+    "name": "Maksimal Daromad",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 19.00%",
+    "term": "24 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "SOF FOYDA",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 19.00%",
+    "term": "1–18 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Оддий-19",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 19.00%",
+    "term": "18 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Орзу-19",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 19.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Tenge Bank",
+    "name": "Срочный",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 19.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "365 kun",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "Avans",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "18 мес.",
+    "minSum": "—",
+    "payout": "Авансом",
+    "tags": []
+  },
+  {
+    "bank": "Invest Finance Bank",
+    "name": "Infin Daromad",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "18 мес.",
+    "minSum": "500 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "O'zsanoatqurilishbank",
+    "name": "Ishonchli daromad UZS",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "13 мес.",
+    "minSum": "5 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Kapitalbank",
+    "name": "Kapital Ziy nat",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "25 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "O'zsanoatqurilishbank",
+    "name": "Maqsadli sarmoya",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "18 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Ipoteka-bank",
+    "name": "Oddiy",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "1–12 мес.",
+    "minSum": "500 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Ipoteka",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 18.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Ishonch",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "13 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Oltin Kelajak",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 18.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Garant bank",
+    "name": "Orzu sari",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "24 мес.",
+    "minSum": "10 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Universal bank",
+    "name": "Premium",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "18 мес.",
+    "minSum": "500 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Hamkorbank",
+    "name": "Qulay Jamg'arma",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "18 мес.",
+    "minSum": "500 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "O'zmillyibank",
+    "name": "Для всех",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "13 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Biznesni rivojlantirish banki",
+    "name": "Мечта",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "13 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Tenge Bank",
+    "name": "Удобный онлайн",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 18.00%",
+    "term": "13 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Biznesni rivojlantirish banki",
+    "name": "Гарантия+",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 17.00%",
+    "term": "13 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Invest Finance Bank",
+    "name": "Infin Foydali 3",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 16.00%",
+    "term": "18 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Intellekt",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 16.00%",
+    "term": "24 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "Kids biznes",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 16.00%",
+    "term": "12–192 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Elite",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 16.00%",
+    "term": "10 мес.",
+    "minSum": "10 млн. сум",
+    "payout": "В конце срока",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "Tez jamg'arma",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 16.00%",
+    "term": "6 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Trastbank",
+    "name": "Замин",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 16.00%",
+    "term": "18 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Biznesni rivojlantirish banki",
+    "name": "Целевой ипотечный вклад — субсидия",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 16.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Biznesni rivojlantirish banki",
+    "name": "Целевой ипотечный накопительный вклад",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 16.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Barqaror",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Barqaror online",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Biznesni rivojlantirish banki",
+    "name": "Start 18",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 15.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Алокачи",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "13 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие"]
+  },
+  {
+    "bank": "Mikrokreditbank",
+    "name": "Бахтли бола лик",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 15.00%",
+    "term": "12–192 мес.",
+    "minSum": "100 000 сум",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "O'zmillyibank",
+    "name": "Возможно все",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "18 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Uzum Bank",
+    "name": "Гибкий вклад",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "9 мес.",
+    "minSum": "500 000 сум",
+    "payout": "Ежедневно",
+    "tags": ["Капитализация", "Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Жозиба",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "6 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Авансом",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Жозиба плюс",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 15.00%",
+    "term": "6 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Авансом",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "O'zsanoatqurilishbank",
+    "name": "Кафолат-3",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 15.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Kapitalbank",
+    "name": "% ежемесячно",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "25 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Kapitalbank",
+    "name": "% каждый день",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "25 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежедневно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Standard",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "6 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Universal bank",
+    "name": "Poydevor",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "12 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Trastbank",
+    "name": "Болажон",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 14.00%",
+    "term": "–260 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Келажак учун",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "36–216 мес.",
+    "minSum": "0 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "O'zmillyibank",
+    "name": "Максад сари",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 14.00%",
+    "term": "1–12 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Asakabank",
+    "name": "Максимальный доход",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "13 мес.",
+    "minSum": "100 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Ipoteka-bank",
+    "name": "Накопительный счет",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 14.00%",
+    "term": "без срока",
+    "minSum": "15 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Biznesni rivojlantirish banki",
+    "name": "Первоначальный взнос по ипотеке",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 14.00%",
+    "term": "13 мес.",
+    "minSum": "5 000 сум",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Asakabank",
+    "name": "Целевая ипотека",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 14.00%",
+    "term": "12 мес.",
+    "minSum": "0 сум",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "TBC Bank",
+    "name": "Odat",
+    "type": "ДО ВОСТРЕБОВАНИЯ",
+    "rate": "до 13.00%",
+    "term": "без срока",
+    "minSum": "1 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Капитализация", "Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Ипотечный вклад",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 13.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": []
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Start",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 12.50%",
+    "term": "3 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Maqsadli ipoteka omonati",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 12.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Light",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 11.00%",
+    "term": "1 мес.",
+    "minSum": "1 млн. сум",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Фойдали",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 11.00%",
+    "term": "без срока",
+    "minSum": "1 000 сум",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Garant bank",
+    "name": "Bingo",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 8.00%",
+    "term": "13 мес.",
+    "minSum": "$5 000",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Universal bank",
+    "name": "Invest 7.5",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 7.50%",
+    "term": "18 мес.",
+    "minSum": "$200",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Apex Bank",
+    "name": "Progress",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 7.50%",
+    "term": "24 мес.",
+    "minSum": "$500",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "Samarali",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 7.50%",
+    "term": "13 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Частичное снятие"]
+  },
+  {
+    "bank": "Trastbank",
+    "name": "Онлайн-Кулай сармоя",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 7.50%",
+    "term": "18 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Farovon online",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 7.00%",
+    "term": "25 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Trastbank",
+    "name": "Ишончли сармоя",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 7.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Apex Bank",
+    "name": "Финансовый пик",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 7.00%",
+    "term": "36 мес.",
+    "minSum": "$100 000",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие"]
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Comfort плюс",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.50%",
+    "term": "24 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие"]
+  },
+  {
+    "bank": "Hamkorbank",
+    "name": "Maksimum Dollar",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.50%",
+    "term": "18 мес.",
+    "minSum": "$500",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Universal bank",
+    "name": "Profit 6.5",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.50%",
+    "term": "18 мес.",
+    "minSum": "$1 000",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Davr bank",
+    "name": "Silver-2",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.50%",
+    "term": "25 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Bahor",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "13 мес.",
+    "minSum": "—",
+    "payout": "Авансом",
+    "tags": []
+  },
+  {
+    "bank": "Aloqabank",
+    "name": "Comfort",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "12 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Anor bank",
+    "name": "Mustahkam",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Mybank (Madad Invest Bank)",
+    "name": "My Capital USD",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "13 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие"]
+  },
+  {
+    "bank": "Poytaxt bank",
+    "name": "Optimal",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Prime Premium",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Kapitalbank",
+    "name": "Zor 6%",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "24 мес.",
+    "minSum": "$1 000",
+    "payout": "В конце срока",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Trastbank",
+    "name": "Истиклол",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "13 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Trastbank",
+    "name": "Онлайн-Истиклол",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "13 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Apex Bank",
+    "name": "Путь к вершине",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 6.00%",
+    "term": "24 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Hamkorbank",
+    "name": "Erkin Dollar",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.50%",
+    "term": "15 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Invest Finance Bank",
+    "name": "Infin ga 15 yil",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.50%",
+    "term": "18 мес.",
+    "minSum": "$500",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Miracle",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.50%",
+    "term": "24 мес.",
+    "minSum": "$1 500 000",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Prime Classic",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.00%",
+    "term": "24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Anor bank",
+    "name": "Qadam",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.00%",
+    "term": "24 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Mikrokreditbank",
+    "name": "Stimul",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.00%",
+    "term": "1–24 мес.",
+    "minSum": "$1 000",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Asakabank",
+    "name": "Максимальный доход (USD)",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.00%",
+    "term": "24 мес.",
+    "minSum": "$100",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "TBC Bank",
+    "name": "Срочный вклад (USD)",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 5.00%",
+    "term": "18–24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Elegant",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 4.50%",
+    "term": "24 мес.",
+    "minSum": "$100 000",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Gold",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 4.50%",
+    "term": "1–24 мес.",
+    "minSum": "$1 000 000",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "O'zsanoatqurilishbank",
+    "name": "Ishonchli daromad USD",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 4.00%",
+    "term": "13 мес.",
+    "minSum": "$1 000",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
+  },
+  {
+    "bank": "Mikrokreditbank",
+    "name": "Luxe",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 4.00%",
+    "term": "1–18 мес.",
+    "minSum": "€100",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Вклад в евро",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 4.00%",
+    "term": "12–24 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Kapitalbank",
+    "name": "Люкс 4%",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 4.00%",
+    "term": "36 мес.",
+    "minSum": "$500",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Horizon",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 3.00%",
+    "term": "16 мес.",
+    "minSum": "$1 000",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Asakabank",
+    "name": "Максимальный доход (EUR)",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 3.00%",
+    "term": "18 мес.",
+    "minSum": "€50",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Навбахор-12",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 3.00%",
+    "term": "12 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Навбахор-6",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 3.00%",
+    "term": "6 мес.",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Ipak Yo'li",
+    "name": "Обод турмуш",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 3.00%",
+    "term": "3 мес.",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Luxora",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 2.75%",
+    "term": "25 мес.",
+    "minSum": "$500 000",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Ultra",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 2.50%",
+    "term": "16 мес.",
+    "minSum": "$5 000",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Bright",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 2.00%",
+    "term": "12 мес.",
+    "minSum": "$1 000",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Kapitalbank",
+    "name": "Евро онлайн 2%",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 2.00%",
+    "term": "24 мес.",
+    "minSum": "€100",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Конструктор USD",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 2.00%",
+    "term": "18–24 мес.",
+    "minSum": "$500",
+    "payout": "Ежемесячно",
+    "tags": ["Капитализация", "Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Orient finans bank",
+    "name": "OFB Lux",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 1.50%",
+    "term": "12 мес.",
+    "minSum": "$1 000",
+    "payout": "Ежемесячно",
+    "tags": []
+  },
+  {
+    "bank": "Ipoteka-bank",
+    "name": "До востребования",
+    "type": "ДО ВОСТРЕБОВАНИЯ",
+    "rate": "до 0.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Частичное снятие"]
+  },
+  {
+    "bank": "Asia Alliance Bank",
+    "name": "Farovon",
+    "type": "НАКОПИТЕЛЬНЫЙ",
+    "rate": "до 0.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "В конце срока",
+    "tags": ["Пополняемый"]
+  },
+  {
+    "bank": "Agrobank",
+    "name": "Progress",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 0.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Открытие онлайн"]
+  },
+  {
+    "bank": "Turonbank",
+    "name": "Turon Oltin",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 0.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Частичное снятие", "Открытие онлайн"]
+  },
+  {
+    "bank": "Turonbank",
+    "name": "Имконият плюс",
+    "type": "СРОЧНЫЙ",
+    "rate": "до 0.00%",
+    "term": "без срока",
+    "minSum": "—",
+    "payout": "Ежемесячно",
+    "tags": ["Пополняемый", "Открытие онлайн"]
   }
 ]
