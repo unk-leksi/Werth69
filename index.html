@@ -474,210 +474,65 @@
             </div>
         </div>
 
-        <!-- ================= РАЗДЕЛ КРИПТОВАЛЮТЫ (НОВЫЙ ДИЗАЙН) ================= -->
+                <!-- ================= РАЗДЕЛ КРИПТОВАЛЮТЫ ================= -->
         <div class="crypto-market-view" id="crypto-market-view">
-            <div class="crypto-market-container">
+            <div class="crypto-market-container" style="max-width: 1200px; padding: 40px 20px 80px;">
 
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <h1 class="bonds-title" style="margin-bottom: 10px;">Криптовалюты</h1>
+                    <p class="bonds-subtitle" style="margin: 0 auto; max-width: 700px;">
+                        Курсы, капитализация и динамика крупнейших криптовалют мирового рынка.
+                    </p>
+                </div>
 
-                <h1 class="bonds-title" style="text-align: left; margin-bottom: 10px;">Криптовалюты</h1>
-                <p class="bonds-subtitle" style="text-align: left; margin: 0 0 40px 0; max-width: 700px;">
-                    Курсы, капитализация и динамика крупнейших криптовалют мирового рынка. Сравнивайте монеты между собой и следите за движением цены за час, сутки и неделю.
-                </p>
-
-                <!-- Блок 4 карточек статистики -->
+                                <!-- 3 карточки статистики -->
                 <div class="crypto-stats-grid">
+                    <!-- Капитализация -->
                     <div class="crypto-stat-card">
                         <div class="crypto-stat-header">
                             <span>Капитализация рынка</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                         </div>
-                        <div class="crypto-stat-value">$2,68 трлн. <span class="up">▲ +3,1%</span></div>
-                        <div class="crypto-stat-desc">Доминирование: BTC 60,11% · ETH 11,03%</div>
+                        <div class="crypto-stat-value" id="stat-market-cap">$2.52 трлн. <span class="up">▲</span></div>
+                        <div class="crypto-stat-desc" id="stat-dominance">Доминирование: BTC 59.60%</div>
                         <svg class="crypto-sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,25 Q10,20 20,22 T40,15 T60,18 T80,10 T100,12" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
                     </div>
+
+                    <!-- Объём торгов -->
                     <div class="crypto-stat-card">
                         <div class="crypto-stat-header">
-                            <span>Индекс CMC20</span>
+                            <span>Объём торгов (24ч)</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                         </div>
-                        <div class="crypto-stat-value">164,77 <span class="up">▲ +3,57%</span></div>
-                        <div class="crypto-stat-desc">Топ-20 монет по капитализации</div>
-                        <svg class="crypto-sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,20 Q15,25 30,18 T50,15 T70,20 T100,10" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
-                    </div>
-                    <div class="crypto-stat-card">
-                        <div class="crypto-stat-header">
-                            <span>Объём торгов за 24 часа</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                        </div>
-                        <div class="crypto-stat-value">$89,78 млрд. <span class="up">▲ +40,94%</span></div>
-                        <div class="crypto-stat-desc">Отслеживается монет — 40 122</div>
+                        <div class="crypto-stat-value" id="stat-volume">$86.76 млрд. <span class="up">▲</span></div>
+                        <div class="crypto-stat-desc" id="stat-total-coins">Отслеживается монет — 40 122</div>
                         <svg class="crypto-sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,25 Q10,22 20,24 T40,18 T60,20 T80,8 T100,15" fill="none" stroke="#16a34a" stroke-width="2"/></svg>
                     </div>
+
+                    <!-- Индекс страха и жадности -->
                     <div class="crypto-stat-card index-card">
-                        <div class="crypto-stat-header">
+                        <div class="crypto-stat-header" style="cursor: help;" title="Источник данных: CoinMarketCap. Сводный показатель настроений рынка: 0 — страх, 100 — жадность.">
                             <span>Индекс страха и жадности</span>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                         </div>
                         <div class="crypto-index-gauge">
                             <div class="gauge-arc"></div>
-                            <div class="gauge-needle" style="transform: rotate(-30deg);"></div>
-                            <div class="gauge-value">42</div>
-                            <div class="gauge-label">Страх</div>
+                            <div class="gauge-needle" id="stat-fear-needle" style="transform: rotate(-30deg);"></div>
+                            <div class="gauge-value" id="stat-fear-value">29</div>
+                            <div class="gauge-label" id="stat-fear-label">Страх</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Блок 3 таблиц -->
-                <div class="crypto-tables-grid">
-                    <!-- Популярные -->
-                    <div class="crypto-table-card">
-                        <div class="crypto-table-header">
-                            <div class="crypto-table-title">Популярные <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
-                            <a href="#" class="crypto-table-link">Все монеты</a>
-                        </div>
-                        <div class="crypto-table-body">
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #F7931A;">₿</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Bitcoin</div>
-                                        <div class="crypto-coin-symbol">BTC</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$78 420</div>
-                                    <div class="price-change down">▼ -0,9%</div>
-                                </div>
-                            </div>
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #627EEA;">Ξ</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Ethereum</div>
-                                        <div class="crypto-coin-symbol">ETH</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$2 481</div>
-                                    <div class="price-change down">▼ -0,75%</div>
-                                </div>
-                            </div>
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #9945FF;">◎</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Solana</div>
-                                        <div class="crypto-coin-symbol">SOL</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$101,98</div>
-                                    <div class="price-change down">▼ -2,4%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Полноценная широкая таблица со скриншота -->
+                <div class="crypto-full-table-container">
 
-                    <!-- Лидеры роста -->
-                    <div class="crypto-table-card">
-                        <div class="crypto-table-header">
-                            <div class="crypto-table-title">Лидеры роста <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
-                            <span class="crypto-table-sub">за 24 часа</span>
-                        </div>
-                        <div class="crypto-table-body">
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #00C08B;">N</div>
-                                    <div>
-                                        <div class="crypto-coin-name">NEAR Protocol</div>
-                                        <div class="crypto-coin-symbol">NEAR</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$2,49</div>
-                                    <div class="price-change up">▲ +4,31%</div>
-                                </div>
-                            </div>
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #F4B728;">Z</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Zcash</div>
-                                        <div class="crypto-coin-symbol">ZEC</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$1 234</div>
-                                    <div class="price-change up">▲ +0,72%</div>
-                                </div>
-                            </div>
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #000000;">W</div>
-                                    <div>
-                                        <div class="crypto-coin-name">World Liberty Financial</div>
-                                        <div class="crypto-coin-symbol">WLFI</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$0,0563</div>
-                                    <div class="price-change up">▲ +0,54%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Лидеры падения -->
-                    <div class="crypto-table-card">
-                        <div class="crypto-table-header">
-                            <div class="crypto-table-title">Лидеры падения <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
-                            <span class="crypto-table-sub">за 24 часа</span>
-                        </div>
-                        <div class="crypto-table-body">
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #FF007A;">U</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Uniswap</div>
-                                        <div class="crypto-coin-symbol">UNI</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$6,04</div>
-                                    <div class="price-change down">▼ -12,62%</div>
-                                </div>
-                            </div>
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #40E0D0;">P</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Pump.fun</div>
-                                        <div class="crypto-coin-symbol">PUMP</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$0,004021</div>
-                                    <div class="price-change down">▼ -12,07%</div>
-                                </div>
-                            </div>
-                            <div class="crypto-row">
-                                <div class="crypto-coin-info">
-                                    <div class="crypto-coin-icon" style="background: #000000;">W</div>
-                                    <div>
-                                        <div class="crypto-coin-name">Worldcoin</div>
-                                        <div class="crypto-coin-symbol">WLD</div>
-                                    </div>
-                                </div>
-                                <div class="crypto-coin-price">
-                                    <div class="price-val">$0,4146</div>
-                                    <div class="price-change down">▼ -8,96%</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="crypto-full-table-body">
+                        <!-- Сюда JS будет рендерить строки -->
                     </div>
                 </div>
 
-                <!-- TradingView виджет -->
+                <!-- График TradingView -->
                 <div class="bonds-tradingview-section" style="margin-top: 40px;">
                     <h3>График рынка криптовалют</h3>
                     <div class="tradingview-widget-container">
@@ -976,7 +831,6 @@
             </div>
         </div>
 
-        <div class="hint">Наведи — подсветится · Кликни — откроется</div>
     </div>
 
     <!-- ======================= МОДАЛЬНЫЕ ОКНА ======================= -->
