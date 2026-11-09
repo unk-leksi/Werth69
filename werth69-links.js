@@ -2333,12 +2333,19 @@ function renderCryptoMarketView() {
     if (volEl)  volEl.innerHTML  = byVolume.map(buildRow).join('');
     if (gainEl) gainEl.innerHTML = byChange.map(buildRow).join('');
 
+    // Вызываем загрузку реальных статов ВНЕ зависимости от TradingView
+    loadCryptoLiveStats();
+
     // TradingView виджет
     if (tvContainer && !tvContainer.dataset.loaded) {
         tvContainer.dataset.loaded = 'true';
+
+        tvContainer.innerHTML = '';
+
         const script = document.createElement('script');
         script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
         script.async = true;
+
         script.innerHTML = JSON.stringify({
             colorTheme: 'dark',
             dateRange: '12M',
@@ -2346,33 +2353,113 @@ function renderCryptoMarketView() {
             locale: 'ru',
             width: '100%',
             height: '500',
-            largeChartUrl: '',
             isTransparent: true,
             showSymbolLogo: true,
             showFloatingTooltip: true,
             plotLineColorGrowing: 'rgba(168, 255, 62, 1)',
-            plotLineColorFalling: 'rgba(220, 38, 38, 1)',
-            gridLineColor: 'rgba(168, 255, 62, 0.06)',
-            scaleFontColor: 'rgba(214, 230, 200, 1)',
+            plotLineColorFalling: 'rgba(255, 62, 106, 1)',
+            gridLineColor: 'rgba(255, 255, 255, 0.05)',
+            scaleFontColor: 'rgba(184, 201, 168, 1)',
             belowLineFillColorGrowing: 'rgba(168, 255, 62, 0.12)',
-            belowLineFillColorFalling: 'rgba(220, 38, 38, 0.12)',
-            belowLineFillColorGrowingBottom: 'rgba(168, 255, 62, 0)',
-            belowLineFillColorFallingBottom: 'rgba(220, 38, 38, 0)',
-            symbolActiveColor: 'rgba(168, 255, 62, 0.12)',
+            belowLineFillColorFalling: 'rgba(255, 62, 106, 0.12)',
+            symbolActiveColor: 'rgba(138, 43, 226, 0.2)',
             tabs: [
                 {
                     title: 'Криптовалюты',
                     symbols: [
+                        // Первая партия (ваши предыдущие монеты)
                         { s: 'BINANCE:BTCUSDT', d: 'Bitcoin' },
                         { s: 'BINANCE:ETHUSDT', d: 'Ethereum' },
                         { s: 'BINANCE:SOLUSDT', d: 'Solana' },
-                        { s: 'BINANCE:BNBUSDT', d: 'BNB' },
-                        { s: 'BINANCE:XRPUSDT', d: 'XRP' },
+                        { s: 'BINANCE:TRXUSDT', d: 'TRON' },
+                        { s: 'BINANCE:ZECUSDT', d: 'Zcash' },
+                        { s: 'BINANCE:DOGEUSDT', d: 'Dogecoin' },
+                        { s: 'BINANCE:LINKUSDT', d: 'Chainlink' },
+                        { s: 'BINANCE:ADAUSDT', d: 'Cardano' },
+                        { s: 'BINANCE:XLMUSDT', d: 'Stellar' },
+                        { s: 'BINANCE:USDEUSDT', d: 'Ethena USDe' },
+
+                        // Новые монеты со скриншотов
+                        { s: 'BINANCE:BCHUSDT', d: 'Bitcoin Cash' },
+                        { s: 'BINANCE:NEARUSDT', d: 'NEAR Protocol' },
+                        { s: 'BINANCE:UNIUSDT', d: 'Uniswap' },
+                        { s: 'BINANCE:LTCUSDT', d: 'Litecoin' },
+                        { s: 'BINANCE:AVAXUSDT', d: 'Avalanche' },
+                        { s: 'BINANCE:SUIUSDT', d: 'Sui' },
+                        { s: 'BINANCE:XAUTUSDT', d: 'Tether Gold' },
+                        { s: 'BINANCE:HBARUSDT', d: 'Hedera' },
+                        { s: 'BINANCE:SHIBUSDT', d: 'Shiba Inu' },
+                        { s: 'BINANCE:ENAUSDT', d: 'Ethena' },
+                        { s: 'BINANCE:AAVEUSDT', d: 'Aave' },
+                        { s: 'BINANCE:PAXGUSDT', d: 'PAX Gold' },
+
+                        // Монеты, которых может не быть на Binance (берем с других бирж TradingView)
+                        { s: 'GATEIO:GRAMUSDT', d: 'Gram' },
+                        { s: 'GATEIO:PYUSDUSDT', d: 'PayPal USD' },
+                        { s: 'GATEIO:RLUSDUSDT', d: 'Ripple USD' },
+                        { s: 'GATEIO:USDGUSDT', d: 'Global Dollar' },
+                        { s: 'GATEIO:TAOUSDT', d: 'Bittensor' },
+                        { s: 'GATEIO:CROUSDT', d: 'Cronos' },
+                        { s: 'GATEIO:OKBUSDT', d: 'OKB' },
+                        { s: 'MEXC:CCUSDT', d: 'Canton' },
+                        { s: 'MEXC:USD1USDT', d: 'World Liberty Financial' },
+                        { s: 'BINANCE:HYPEUSDT', d: 'Hyperliquid' },
+
+                        { s: 'BINANCE:ONDOUSDT', d: 'Ondo' },
+                        { s: 'BINANCE:ASTERUSDT', d: 'Aster' },
+                        { s: 'BINANCE:PUMPUSDT', d: 'Pump.fun' },
+                        { s: 'BINANCE:WLFIUSDT', d: 'World Liberty Financial' },
+                        { s: 'BINANCE:DOTUSDT', d: 'Polkadot' },
+                        { s: 'BINANCE:SKYUSDT', d: 'Sky' },
+                        { s: 'BINANCE:ICPUSDT', d: 'Internet Computer' },
+                        { s: 'BINANCE:WLDUSDT', d: 'Worldcoin' }// На некоторых биржах уже есть
                     ],
                     originalTitle: 'Криптовалюты'
-                },
+                }
             ],
         });
         tvContainer.appendChild(script);
+    }
+}
+
+async function loadCryptoLiveStats() {
+    try {
+        // 1. Запрос глобальных метрик (Капитализация, Объем, Доминация)
+        const globalRes = await fetch('https://pro-api.coinmarketcap.com/public-api/v1/global-metrics/quotes/latest');
+        const globalData = await globalRes.json();
+
+        if (globalData.data) {
+            const d = globalData.data;
+            const cap = (d.quote.USD.total_market_cap / 1e12).toFixed(2);
+            const vol = (d.quote.USD.total_volume_24h / 1e9).toFixed(2);
+            const btcDom = d.btc_dominance.toFixed(2);
+
+            document.getElementById('stat-market-cap').innerHTML = `$${cap} трлн. <span class="up">▲</span>`;
+            document.getElementById('stat-dominance').textContent = `Доминирование: BTC ${btcDom}%`;
+            document.getElementById('stat-volume').innerHTML = `$${vol} млрд. <span class="up">▲</span>`;
+        }
+
+        // 2. Запрос Индекса страха и жадности
+        const fngRes = await fetch('https://pro-api.coinmarketcap.com/public-api/v3/fear-and-greed/latest');
+        const fngData = await fngRes.json();
+
+        if (fngData.data) {
+            const val = fngData.data.value;
+
+            let ruLabel = 'Нейтрально';
+            if (val <= 24) ruLabel = 'Экстремальный страх';
+            else if (val <= 49) ruLabel = 'Страх';
+            else if (val >= 75) ruLabel = 'Экстремальная жадность';
+            else if (val >= 51) ruLabel = 'Жадность';
+
+            document.getElementById('stat-fear-value').textContent = val;
+            document.getElementById('stat-fear-label').textContent = ruLabel;
+
+            const rotation = (val / 100) * 180 - 90;
+            document.getElementById('stat-fear-needle').style.transform = `rotate(${rotation}deg)`;
+        }
+
+    } catch (error) {
+        console.error('Ошибка загрузки данных CoinMarketCap:', error);
     }
 }
