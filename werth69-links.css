@@ -7839,3 +7839,39 @@ html[data-view="crypto"] body {
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* ============================================================
+   ИНДИВИДУАЛЬНЫЕ ФОНЫ ДЛЯ РАЗДЕЛОВ
+   ============================================================ */
+
+/* Фон для раздела Акции */
+html[data-view="stocks"] body {
+    background-image:
+        linear-gradient(180deg,
+            rgba(10, 19, 16, 0.50) 0%,
+            rgba(10, 19, 16, 0.35) 50%,
+            rgba(10, 19, 16, 0.55) 100%),
+        url("icons/stocks.png") !important;
+}
+
+/* Фон для раздела Вклады */
+html[data-view="deposits"] body {
+    background-image:
+        linear-gradient(180deg,
+            rgba(10, 19, 16, 0.50) 0%,
+            rgba(10, 19, 16, 0.35) 50%,
+            rgba(10, 19, 16, 0.55) 100%),
+        url("icons/deposits.png") !important;
+}
+
+/* На всякий случай, если в предыдущем коде фон задавался для html, а не body, переопределяем и его */
+html[data-view="stocks"] {
+    background-image:
+        linear-gradient(180deg, rgba(10, 19, 16, 0.50) 0%, rgba(10, 19, 16, 0.35) 50%, rgba(10, 19, 16, 0.55) 100%),
+        url("icons/stocks.png") !important;
+}
+html[data-view="deposits"] {
+    background-image:
+        linear-gradient(180deg, rgba(10, 19, 16, 0.50) 0%, rgba(10, 19, 16, 0.35) 50%, rgba(10, 19, 16, 0.55) 100%),
+        url("icons/deposits.png") !important;
+}
