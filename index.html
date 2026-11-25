@@ -351,69 +351,72 @@
 
         <!-- ================= РАЗДЕЛ АКЦИИ ================= -->
         <div class="stocks-view" id="stocks-view">
-            <div class="bonds-container">
-                <h1 class="bonds-title">Акции</h1>
-                <p class="bonds-subtitle">
+            <div class="stk-container">
+                <h1 class="stk-title">Акции</h1>
+                <p class="stk-subtitle">
                     Акции узбекских компаний, торгуемые на Республиканской фондовой бирже «Тошкент» (РФБ). Сравнивайте котировки, дивиденды и динамику — выбирайте бумаги для долгосрочного портфеля.
                 </p>
 
-                <div class="bonds-filter-card">
-                    <div class="bonds-search-row">
-                        <div class="bonds-search-input">
+                <!-- Обертка для поиска и статистики -->
+                <div class="stk-top-wrapper">
+
+                    <!-- Поиск -->
+                    <div class="stk-search-row">
+                        <div class="stk-search-input">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                            <input type="text" placeholder="Поиск по тикеру или названию компании">
+                            <input type="text" placeholder="Поиск по инвестициям или тегам">
                         </div>
-                        <button class="bonds-reset-btn">Сбросить</button>
+                        <button class="stk-reset-btn">Сбросить</button>
                     </div>
 
-                    <div class="bonds-filter-row">
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Отрасль</span>
-                            <div class="bonds-dropdown-value">Все отрасли <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                    <!-- Блок статистики (3 карточки в ряд) -->
+                    <div class="stk-stats-row">
+                        <div class="stk-stat-card">
+                            <div class="stk-stat-icon green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+                            </div>
+                            <div class="stk-stat-text">
+                                <span class="stk-stat-value">151</span>
+                                <span class="stk-stat-label">Выпусков в подборке</span>
+                            </div>
                         </div>
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Дивидендная доходность</span>
-                            <div class="bonds-dropdown-value">Любой <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="stk-stat-card">
+                            <div class="stk-stat-icon purple">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 5L5 19M6.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm11 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>
+                            </div>
+                            <div class="stk-stat-text">
+                                <span class="stk-stat-value">3410.57%</span>
+                                <span class="stk-stat-label">Дивидендная доходность до</span>
+                            </div>
                         </div>
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Капитализация</span>
-                            <div class="bonds-dropdown-value">Любая <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
-                        </div>
-                        <div class="bonds-dropdown">
-                            <span class="bonds-dropdown-label">Тип акции</span>
-                            <div class="bonds-dropdown-value">Все <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+                        <div class="stk-stat-card">
+                            <div class="stk-stat-icon green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            </div>
+                            <div class="stk-stat-text">
+                                <span class="stk-stat-value">0,01 сум</span>
+                                <span class="stk-stat-label">Мин. номинальная стоимость</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="bonds-stats-row">
-                        <div class="bonds-stat">
-                            <div class="bonds-stat-value">151</div>
-                            <div class="bonds-stat-label">Выпусков в подборке</div>
-                        </div>
-                        <div class="bonds-stat">
-                            <div class="bonds-stat-value highlight">3410.57%</div>
-                            <div class="bonds-stat-label">Дивидендная доходность до</div>
-                        </div>
-                        <div class="bonds-stat">
-                            <div class="bonds-stat-value">0,01 сум</div>
-                            <div class="bonds-stat-label">Мин. номинальная стоимость</div>
-                        </div>
-                        <div class="bonds-stat">
-                            <div class="bonds-stat-value">7,24 млрд. сум</div>
-                            <div class="bonds-stat-label">Дневной объём торгов</div>
+                </div>
+
+                <!-- БЛОК С АКЦИЯМИ UZSE -->
+                <div class="uzse-stocks-section" style="margin: 40px auto;">
+                    <h2 style="font-family: 'Bungee', sans-serif; color: #fff; margin-bottom: 20px;">Популярные акции UZSE</h2>
+
+                    <div id="uzse-stocks-grid" class="uzse-stocks-grid">
+                        <div style="text-align: center; color: #8b7a9f; padding: 40px; grid-column: 1 / -1;">
+                            Загрузка данных с биржи...
                         </div>
                     </div>
                 </div>
 
-                <div class="bonds-list-header">
-                    <span>Объём торгов за день: <strong>по убыванию</strong></span>
-                </div>
-
-                <div class="bonds-grid" id="stocks-grid"></div>
             </div>
         </div>
 
-                <!-- ================= РАЗДЕЛ ВКЛАДЫ ================= -->
+        <!-- ================= РАЗДЕЛ ВКЛАДЫ ================= -->
         <div class="deposits-view" id="deposits-view">
             <div class="bonds-container" style="max-width: 1200px;">
                 <h1 class="bonds-title" style="text-align: center; margin-bottom: 10px;">Вклады</h1>
@@ -461,7 +464,6 @@
                     </div>
                 </div>
 
-
                 <div class="bonds-grid" id="deposits-grid" style="grid-template-columns: repeat(2, 1fr); gap: 20px;"></div>
 
                 <!-- Кнопка "Показать еще" -->
@@ -474,7 +476,7 @@
             </div>
         </div>
 
-                <!-- ================= РАЗДЕЛ КРИПТОВАЛЮТЫ ================= -->
+        <!-- ================= РАЗДЕЛ КРИПТОВАЛЮТЫ ================= -->
         <div class="crypto-market-view" id="crypto-market-view">
             <div class="crypto-market-container" style="max-width: 1200px; padding: 40px 20px 80px;">
 
@@ -485,7 +487,7 @@
                     </p>
                 </div>
 
-                                <!-- 3 карточки статистики -->
+                <!-- 3 карточки статистики -->
                 <div class="crypto-stats-grid">
                     <!-- Капитализация -->
                     <div class="crypto-stat-card">
@@ -526,7 +528,6 @@
 
                 <!-- Полноценная широкая таблица со скриншота -->
                 <div class="crypto-full-table-container">
-
                     <div id="crypto-full-table-body">
                         <!-- Сюда JS будет рендерить строки -->
                     </div>
@@ -653,7 +654,6 @@
             </section>
 
             <!-- 6. ФУТЕР -->
-                        <!-- 6. ФУТЕР -->
             <footer class="home-footer">
                 <div class="home-footer-container">
                     <div class="home-footer-brand">
@@ -720,7 +720,6 @@
         <div class="mypath-view" id="mypath-view"></div>
 
         <!-- ================= РАЗДЕЛ МЕТОДИЧКИ (БЫВШАЯ КРИПТА) ================= -->
-                <!-- ================= РАЗДЕЛ МЕТОДИЧКИ (БЫВШАЯ КРИПТА) ================= -->
         <div class="methodology-view" id="methodology-view">
             <div id="crypto-view" class="crypto-view-inner"></div>
         </div>
