@@ -711,12 +711,6 @@ function renderCards() {
     if (homeContainer) {
         homeContainer.innerHTML = '';
 
-        const platformImages = {
-            'Binance': 'binance.png',
-            'GoInvest': 'goinvest.png',
-            'TradingView': 'icons/tradingview.png',
-        };
-
         PLATFORMS.forEach(data => {
             const item = document.createElement('a');
             item.className = 'platform-card';
@@ -725,9 +719,16 @@ function renderCards() {
             item.rel = 'noopener';
 
             let iconHtml = '';
-            if (platformImages[data.label]) {
-                iconHtml = `<img src="${platformImages[data.label]}" alt="${data.label}" class="platform-real-img">`;
+
+            // Для тех у кого есть PNG картинки — используем их
+            if (data.label === 'Binance') {
+                iconHtml = `<img src="icons/binance.png" alt="Binance" class="platform-real-img">`;
+            } else if (data.label === 'GoInvest') {
+                iconHtml = `<img src="icons/goinvest.png" alt="GoInvest" class="platform-real-img">`;
+            } else if (data.label === 'TradingView') {
+                iconHtml = `<img src="icons/tradingview.png" alt="TradingView" class="platform-real-img tv-icon">`;
             } else {
+                // Для LinkedIn и Telegram оставляем старые SVG-иконки
                 iconHtml = `<div class="platform-icon-inner">${data.icon}${data.fallback}</div>`;
             }
 
@@ -1445,7 +1446,8 @@ viewBtns.forEach(btn => {
             renderBondsView();
         }
         if (view === 'stocks') {
-            renderStocksView();
+            //renderStocksView();
+            loadUzseStocks();   // <--- ДОБАВИТЬ ВОТ ЭТУ СТРОКУ
         }
         if (view === 'deposits') {
             renderDepositsView();
@@ -1731,8 +1733,7 @@ async function renderGlossaryView() {
         if (searchQuery) {
             const q = searchQuery.toLowerCase();
             filtered = filtered.filter(t =>
-                t.title.toLowerCase().includes(q) ||
-                t.desc.toLowerCase().includes(q)
+                t.title.toLowerCase().includes(q)
             );
         }
 
@@ -2463,3 +2464,102 @@ async function loadCryptoLiveStats() {
         console.error('Ошибка загрузки данных CoinMarketCap:', error);
     }
 }
+
+
+// Список тикеров с вашей фотографии
+// Список тикеров
+const UZSE_TICKERS = ['URTS', 'UZTL', 'UZNF', 'UZMK', 'QZSM'];
+
+async function loadUzseStocks() {
+    const grid = document.getElementById('uzse-stocks-grid');
+    if (!grid) return;
+
+    try {
+        const promises = UZSE_TICKERS.map(ticker => {
+            // ⚠️ МЕНЯЕМ URL НА НАШ ЛОКАЛЬНЫЙ СЕРВЕР
+            const url = `http://localhost:3000/api/stock/${ticker}`;
+
+            return fetch(url)
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return res.json();
+                })
+                .catch(err => {
+                    console.error(`Ошибка для ${ticker}:`, err);
+                    return null;
+                });
+        });
+
+        const results = await Promise.all(promises);
+        const validStocks = results.filter(data => data !== null && data.quote); // проверяем, что данные пришли
+
+        if (validStocks.length === 0) {
+            grid.innerHTML = `<div style="color: #ff3e6a; text-align: center; grid-column: 1 / -1; padding: 20px;">
+                Убедитесь, что сервер запущен (node server.js).
+            </div>`;
+            return;
+        }
+
+        grid.innerHTML = validStocks.map(data => {
+            const ticker = data.ticker || '—';
+            const name = data.issuer?.name || ticker;
+            const sector = data.issuer?.sector || '—';
+            const last = data.quote?.last || '—';
+            const changePct = data.quote?.change_pct || '0';
+
+            const isUp = parseFloat(changePct) >= 0;
+            const changeColor = isUp ? '#a8ff3e' : '#ff3e6a';
+            const changeSign = isUp ? '+' : '';
+            const logoLetter = ticker.charAt(0);
+
+            return `
+                <div class="uzse-stock-card">
+                    <div class="uzse-card-header">
+                        <div class="uzse-logo">${logoLetter}</div>
+                        <div class="uzse-title-block">
+                            <h3>${ticker}</h3>
+                            <span class="uzse-badge">Обыкновенная</span>
+                        </div>
+                    </div>
+                    <p class="uzse-company-name">${name}</p>
+                    <p class="uzse-sector">${sector}</p>
+
+                    <div class="uzse-price-row">
+                        <span class="uzse-price">${last} сум</span>
+                        <span class="uzse-change" style="color: ${changeColor};">
+                            ${isUp ? '▲' : '▼'} ${changeSign}${changePct}%
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+    } catch (error) {
+        console.error('Критическая ошибка:', error);
+        grid.innerHTML = `<div style="color: #ff3e6a; text-align: center; grid-column: 1 / -1; padding: 20px;">
+            Ошибка соединения с локальным сервером.
+        </div>`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('uzse-stocks-grid')) {
+        loadUzseStocks();
+    }
+});
+
+// Вызываем функцию при загрузке страницы (если контейнер есть)
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('uzse-stocks-grid')) {
+        loadUzseStocks();
+    }
+});
+
+// Вызываем функцию при загрузке раздела или просто при загрузке скрипта
+// Если у вас SPA, вызывайте loadUzseStocks() при открытии вкладки "Акции"
+document.addEventListener('DOMContentLoaded', () => {
+    // Проверяем, есть ли контейнер на странице
+    if (document.getElementById('uzse-stocks-grid')) {
+        loadUzseStocks();
+    }
+});
